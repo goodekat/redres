@@ -1,0 +1,12 @@
+---
+output: rmarkdown::github_document
+always_allow_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# redres
+
+redres is an R package developed to...
