@@ -1,12 +1,17 @@
 Package: redres
 Type: Package
-Title: What the Package Does (Title Case)
+Title: diagnostic plots for mixed models
 Version: 0.1.0
-Author: Who wrote it
+Author: Katherine Goode, Kellie McClernon, Jing Zhao, Yudi Zhang, Yonghui Huo.
 Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
+Description: 
     Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+URL: https://github.com/goodekat/redres.git
+BugReports: 
+Depends: R (>= 2.10)
+Suggests: testthat,ggplot2,rgeos, assertthat
+Imports:  
 RoxygenNote: 6.1.1
