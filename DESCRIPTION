@@ -1,9 +1,9 @@
 Package: redres
 Type: Package
-Title: diagnostic plots for mixed models
-Version: 0.1.0
+Title: Residuals and Diagnostic Plots for Mixed Models
+Version: 0.1.0.9
 Author: Katherine Goode, Kellie McClernon, Jing Zhao, Yudi Zhang, Yonghui Huo.
-Maintainer: The package maintainer <yourself@somewhere.net>
+Maintainer: Katherine Goode <kgoode@iastate.edu>
 Description: 
     Use four spaces when indenting paragraphs within the Description.
 License: MIT + file LICENSE
@@ -12,6 +12,12 @@ LazyData: true
 URL: https://github.com/goodekat/redres.git
 BugReports: 
 Depends: R (>= 2.10)
-Suggests: testthat,ggplot2,rgeos, assertthat
-Imports:  
+Suggests: 
+    testthat,
+    ggplot2,
+    rgeos,
+    assertthat,
+    knitr,
+    rmarkdown
 RoxygenNote: 6.1.1
+VignetteBuilder: knitr
