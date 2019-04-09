@@ -1,14 +1,6 @@
 # rawres: This is a function that is used to identify conditional or marginal raw
 # residules from the model.
 
-# # read data from stat510 of Iowa State University
-# d = read.delim("http://dnett.github.io/S510/SeedlingDryWeight2.txt")
-# d$Genotype = factor(d$Genotype)
-# # fit the mixed model
-# model <- lmer(SeedlingWeight ~ Genotype + (1|Tray), REML = F,data = d)
-# # using the condres function to get coditional residule of the model
-# condres(model)
-
 rawres <- function(model, cond = TRUE) {
 
   # Compute the conditional raw residuals
