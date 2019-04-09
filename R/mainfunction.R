@@ -35,11 +35,8 @@
 #' library(ggplot2)
 #' plot(result1, fit)
 
-redres <- function(model, type){
+redres <- function(model, type="pearson"){
 
-  if(is.null(type)){
-    type="pearson"
-  }
   assertthat::assert_that(is.character(type), msg='type must be a string.')
   stopifnot(class(model)[1] == "lmerMod")
 
