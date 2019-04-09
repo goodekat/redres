@@ -19,11 +19,11 @@
 #' # using the condres function to get coditional residule of the model
 #' condres(model)
 
-condres <- function (model){
+condres <- function(model) {
   BLUPs <- coef(model)[[1]][,1]                          ## BlupS for each subject
   subj <- table(unlist(model@flist[1]))                  ## number of levels for each subject
-  blups_y <- rep(BLUPs,c(as.numeric(as.matrix(subj))))   ## BLUP for each observation
-  res <- model@resp$y-blups_y                            ## conditional residule
+  blups_y <- rep(BLUPs, c(as.numeric(as.matrix(subj))))  ## BLUP for each observation
+  res <- model@resp$y - blups_y                          ## conditional residule
   res
 }
 

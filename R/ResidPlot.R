@@ -29,13 +29,18 @@
 #' family = gaussian, data = anorexia)
 #' ResidPlot(anorex.1, "deviance")
 #'
-#' # Fit a linear mixed effect model.
+#' # Fit a linear mixed effect model with a default residual type.
 #' fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
 #' ResidPlot(fm1, "response")
+#' # Fit a linear mixed effect model with a conditional residual type.
+#' d = read.delim("http://dnett.github.io/S510/SeedlingDryWeight2.txt")
+#' d$Genotype = factor(d$Genotype)
+#' model <- lmer(SeedlingWeight ~ Genotype + (1|Tray), REML = F,data = d)
+#' ResidPlot(model, type = "condres")
 
 ResidPlot <- function(model, type) {
-  if(!(class(model)[1] %in% c("lm", "glm", "lmerMod", "redres")))
-    stop("Models must be one of 'lm', 'glm' or 'lmer' or 'redres'.")
+  if(!(class(model)[1] %in% c("lm", "glm", "lmerMod")))
+    stop("Models must be one of 'lm', 'glm' or 'lmer'.")
 
   type <- tolower(type)
   if(!is.na(type)){
@@ -50,13 +55,8 @@ ResidPlot <- function(model, type) {
         }
     }
     else if(class(model)[1] == "lmerMod"){
-      if(!(type %in% c("response", "pearson"))){
+      if(!(type %in% c("response", "pearson", "condres", "stdres", "genres"))){
         stop("Residual type for 'lmer' model is not correct, please see the function documentation.")
-      }
-    }
-    else if(model == "redres"){
-      if(!(type %in% c("condres", "stdres", "genres"))){
-        stop("Residual type for 'redres' model is not correct, please see the function documentation.")
       }
     }
   }

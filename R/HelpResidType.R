@@ -1,12 +1,6 @@
 helper_resid <- function(type = NA, model){
-  # redres residuals
-  if (class(model)[1] == "redres"){
-      ifelse(type == "condres", resid(model, type = "condres"),
-              ifelse(type == "stdres"), resid(model, type = "stdres"),
-              stdres(model, type = "genres"))
-  }
   # lm residuals
-  else if(class(model)[1] == "lm"){
+ if(class(model)[1] == "lm"){
     if(is.na(type) | type == "response"){
       return(resid(model, type = "response"))
     }else if(type == "pearson"){
@@ -31,6 +25,12 @@ helper_resid <- function(type = NA, model){
       return(resid(model, type = "pearson"))
     }else if (type == "response"){
       return(resid(model, type = "response"))
+    }else if (type == "condres"){
+      return(redres(model, type = "condres"))
+    }else if (type == "stdres"){
+      return(redres(model, type = "stdres"))
+    }else if (type == "genres"){
+      return(redres(model, type = "genres"))
     }
   }
 }

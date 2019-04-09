@@ -42,7 +42,12 @@ anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
 family = gaussian, data = anorexia)
 ResidPlot(anorex.1, "deviance")
 
-# Fit a linear mixed effect model.
+# Fit a linear mixed effect model with a default residual type.
 fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
 ResidPlot(fm1, "response")
+# Fit a linear mixed effect model with a conditional residual type.
+d = read.delim("http://dnett.github.io/S510/SeedlingDryWeight2.txt")
+d$Genotype = factor(d$Genotype)
+model <- lmer(SeedlingWeight ~ Genotype + (1|Tray), REML = F,data = d)
+ResidPlot(model, type = "condres")
 }

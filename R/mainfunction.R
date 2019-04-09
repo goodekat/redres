@@ -52,7 +52,7 @@ redres <- function(model, type){
      return(result)
     }
     else if(type=="condres"){
-     result <- condres(model, type="condres")
+     result <- condres(model)
      return(result)
     }
     else if(type=="genres"){
@@ -60,7 +60,7 @@ redres <- function(model, type){
      return(result)
     }
     else{
-    printf("This type is not include in our method, please input correct one.")
+    printf("This type is not included in our method, please input a correct one.")
     }
 }
 
