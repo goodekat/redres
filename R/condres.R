@@ -12,10 +12,10 @@
 #' @examples
 #'
 #' # read data from stat510 of Iowa State University
-#' d=read.delim("http://dnett.github.io/S510/SeedlingDryWeight2.txt")
-#' d$Genotype=factor(d$Genotype)
+#' d = read.delim("http://dnett.github.io/S510/SeedlingDryWeight2.txt")
+#' d$Genotype = factor(d$Genotype)
 #' # fit the mixed model
-#' model <- lmer(SeedlingWeight~Genotype+(1|Tray),REML=F,data=d)
+#' model <- lmer(SeedlingWeight ~ Genotype + (1|Tray), REML = F,data = d)
 #' # using the condres function to get coditional residule of the model
 #' condres(model)
 

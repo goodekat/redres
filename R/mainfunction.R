@@ -48,7 +48,7 @@ redres <- function(model, type){
       return(result)
     }
     else if(type=="stdres"){
-     result <- stdres(model, type="stdres")
+     result <- stdres(model)
      return(result)
     }
     else if(type=="condres"){
@@ -56,7 +56,7 @@ redres <- function(model, type){
      return(result)
     }
     else if(type=="genres"){
-     result <- genres(model, type="genres")
+     result <- genres(model)
      return(result)
     }
     else{
