@@ -20,3 +20,43 @@ knitr::opts_chunk$set(
 
 The Merriam-Webster dictionary defines [redress](https://www.merriam-webster.com/dictionary/redress) as "to set right".
 
+# Residual Types
+
+## Linear Model Theory
+
+The linear mixed effects model can be written as
+  $$\textbf{Y}=\textbf{X}\boldsymbol{\beta}+\textbf{Z}\boldsymbol{\gamma}+\boldsymbol{\epsilon}$$
+where
+
+- $\textbf{Y}$ is an $n\times 1$ vector of $n$ response variable observations,
+- $\textbf{X}$ is an $n\times p$ matrix of $p$ explanatory variables with $n$ observations each,
+- $\boldsymbol{\beta}$ is a $p\times1$ vector of unknown fixed effects parameters,
+- $\textbf{Z}$ is an $n\times q$ matrix of $q$ random effect variables with $n$ observations each,
+- $\boldsymbol{\gamma}$ is a $1\times1$ vector of unknown random effects, and
+- $\boldsymbol{\epsilon}$ is an $n\times1$ vector of random errors.
+
+By assumption, it is the case that...
+
+## Raw
+
+- marginal: 
+  $$\textbf{r}^m_i = Y_i-\textbf{x}'_i\hat{\boldsymbol{\beta}}$$
+- conditional:
+  $$\textbf{r}^c_i = Y_i-\textbf{x}'_i\hat{\boldsymbol{\beta}}-\textbf{z}'_i\hat{\boldsymbol{\gamma}}$$
+
+## Pearson
+
+- marginal: 
+  $$\textbf{r}^{m,pearson}_{i} = \frac{r^m_i}{\sqrt{\hat{Var[Y_i]}}}$$
+- conditional: 
+  $$\textbf{r}^{c,pearson}_{i} = \frac{r^m_i}{\sqrt{\hat{Var[Y_i|\boldsymbol{\gamma}]}}}$$
+
+## Studentized
+
+### lmer residuals
+
+- `type = response, scaled = "FALSE``: $Y-X\hat{\beta}$
+- `type = "pearson", scaled = "FALSE`: $(Y-X\hat{\beta}) / w_i$ where $w_i$ is the user specified weights (set to 1 if not specified)
+- `type = "pearson", scaled = "TRUE`: $(Y-X\hat{\beta}) / \sigma$
+
+## Genearlized
