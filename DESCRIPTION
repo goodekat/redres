@@ -4,8 +4,10 @@ Title: Residuals and Diagnostic Plots for Mixed Models
 Version: 0.1.0.9
 Author: Katherine Goode, Kellie McClernon, Jing Zhao, Yudi Zhang, Yonghui Huo.
 Maintainer: Katherine Goode <kgoode@iastate.edu>
-Description: 
-    Use four spaces when indenting paragraphs within the Description.
+Description: An R package that computes various types of residuals for linear mixed
+             models fit using the function lmer from the R package lme4. Additional 
+             functions have been included to create diagnostic plots using the 
+             residuals.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -13,11 +15,11 @@ URL: https://github.com/goodekat/redres.git
 BugReports: 
 Depends: R (>= 2.10)
 Suggests: 
-    testthat,
-    ggplot2,
-    rgeos,
     assertthat,
+    ggplot2,
     knitr,
-    rmarkdown
+    rgeos,
+    rmarkdown,
+    testthat
 RoxygenNote: 6.1.1
 VignetteBuilder: knitr

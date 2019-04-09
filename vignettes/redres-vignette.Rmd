@@ -1,5 +1,5 @@
 ---
-title: "Redress Your Mixed Model Assumptions with `redres`"
+title: "redres: Redress Your Mixed Model Assumptions"
 author: "R Package Version `r packageVersion('redres')`"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# 
+# Introduction to `redres`
 
+The Merriam-Webster dictionary defines [redress](https://www.merriam-webster.com/dictionary/redress) as "to set right".
 
