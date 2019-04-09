@@ -30,16 +30,13 @@
 #' y=round(y,1)
 #' model=lmer(y~g*f+(1|block)+(1|block:g))
 #' #use function to get residuals
-#' result1 <- redres(model, type="pearson")
+#' result <- redres(model, type="pearson")
 #' # plot diagnostic plots for mixed models
 #' library(ggplot2)
-#' plot(result1, fit)
+#' ResidPlot(model, result)
 
-redres <- function(model, type){
+redres <- function(model, type="pearson"){
 
-  if(is.null(type)){
-    type="pearson"
-  }
   assertthat::assert_that(is.character(type), msg='type must be a string.')
   stopifnot(class(model)[1] == "lmerMod")
 
