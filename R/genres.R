@@ -13,7 +13,7 @@ genres <- function(model){
   muhat <- fm%*%fb
 
   # pulling out variance components
-  v2hat <- as.data.frame(VarCorr(model)
+  v2hat <- as.data.frame(VarCorr(model))
   tvar <- sum(v2hat$vcov) # summing over variance components
 
   # assumed distribution fitted to the data

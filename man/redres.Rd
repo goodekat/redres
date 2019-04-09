@@ -4,7 +4,7 @@
 \alias{redres}
 \title{REDRES}
 \usage{
-redres(model, type)
+redres(model, type = "raw_cond")
 }
 \arguments{
 \item{model}{the model we fit from lmer function in lme4 package.}
@@ -38,8 +38,8 @@ y=X\%*\%beta+Z\%*\%u+e
 y=round(y,1)
 model=lmer(y~g*f+(1|block)+(1|block:g))
 #use function to get residuals
-result1 <- redres(model, type="pearson")
+result <- redres(model, type="pearson")
 # plot diagnostic plots for mixed models
 library(ggplot2)
-plot(result1, fit)
+ResidPlot(model, result)
 }
