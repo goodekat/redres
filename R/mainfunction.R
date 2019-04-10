@@ -7,6 +7,7 @@
 #' @param model the model we fit from lmer function in lme4 package.
 #' @param type  type of residuals. we have generalized, standardized, conditional and pearson residuals.
 #'
+#' @importFrom assertthat assert_that
 #' @export
 #' @return return residuals according to different types.
 #'
@@ -43,7 +44,7 @@ redres <- function(model, type = "raw_cond"){
     result <- genres(model)
   }
   else{
-  printf("This type is not included in our method, please input a correct one.")
+  print("This type is not included in our method, please input a correct one.")
   }
 
   # Return the residuals
