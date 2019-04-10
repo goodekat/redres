@@ -13,7 +13,8 @@
 #'
 #' @examples
 #' #fit the model
-#' fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+#' library(lme4)
+#' fm1 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
 #' #compute the residuals
 #' result <- redres(model, type = "raw_cond")
 
@@ -49,7 +50,6 @@ redres <- function(model, type = "raw_cond"){
 
   # Return the residuals
   return(result)
+
 }
 
-# usethis::use_testthat()
-# usethis::use_test("redres")

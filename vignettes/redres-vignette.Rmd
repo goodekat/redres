@@ -32,7 +32,7 @@ where
 - $\textbf{X}$ is an $n\times p$ matrix of $p$ explanatory variables with $n$ observations each,
 - $\boldsymbol{\beta}$ is a $p\times1$ vector of unknown fixed effects parameters,
 - $\textbf{Z}$ is an $n\times q$ matrix of $q$ random effect variables with $n$ observations each,
-- $\boldsymbol{\gamma}$ is a $1\times1$ vector of unknown random effects, and
+- $\boldsymbol{\gamma}$ is a $q\times1$ vector of unknown random effects, and
 - $\boldsymbol{\epsilon}$ is an $n\times1$ vector of random errors.
 
 By assumption, it is the case that...

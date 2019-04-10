@@ -3,6 +3,9 @@
 # 1) normality assumption
 # 2) variance components are independent and identical distributioned normal with mean 0
 
+#' @importFrom lme4 VarCorr
+#' @importFrom stats integrate model.matrix
+
 genres <- function(model){
   # pulling out response data
   y <- model@resp$y
@@ -13,7 +16,7 @@ genres <- function(model){
   muhat <- fm%*%fb
 
   # pulling out variance components
-  v2hat <- as.data.frame(VarCorr(model))
+  v2hat <- as.data.frame(lme4::VarCorr(model))
   tvar <- sum(v2hat$vcov) # summing over variance components
 
   # assumed distribution fitted to the data

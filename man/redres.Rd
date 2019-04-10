@@ -21,7 +21,8 @@ conditional residuals.
 }
 \examples{
 #fit the model
-fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+library(lme4)
+fm1 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
 #compute the residuals
 result <- redres(model, type = "raw_cond")
 }
