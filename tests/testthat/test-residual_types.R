@@ -12,7 +12,7 @@ sas_resids$Tray = factor(sas_resids$Tray)
 sas_resids$Seedling = factor(sas_resids$Seedling)
 
 # fit a mixed model
-model <- lmer(SeedlingWeight ~ Genotype + (1|Tray), data = d)
+ model <- lmer(SeedlingWeight ~ Genotype + (1|Tray), data = d)
 
 d <- dplyr::full_join(d, sas_resids, by = c("Genotype", "Tray", "Seedling", "SeedlingWeight"))
 
