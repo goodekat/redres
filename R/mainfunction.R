@@ -54,7 +54,7 @@ redres <- function(model, type="raw_cond"){
   else if(type=="std_cond"){
     result <- stdres(model, cond = TRUE)
   }
-  else if(type=="std_mard"){
+  else if(type=="std_mar"){
     result <- stdres(model, cond = FALSE)
   }
   else if(type=="genres"){
