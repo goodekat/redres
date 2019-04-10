@@ -26,6 +26,8 @@ test_that("equal to SAS", {
   expect_equal(redres(model, type = "raw_mar"), joined$ResidMar, tolerance = .00001)
   expect_equal(redres(model, type = "pearson_cond"), joined$PearsonResidCond, tolerance = .00001)
   expect_equal(redres(model, type = "pearson_mar"), joined$PearsonResidMar, tolerance = .00001)
+  expect_equal(redres(model, type = "std_cond"), joined$StudentResidCond, tolerance = .00001)
+  expect_equal(redres(model, type = "std_mar"), joined$StudentResidMar, tolerance = .00001)
 
 })
 
