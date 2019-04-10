@@ -7,7 +7,7 @@ d$Tray = factor(d$Tray)
 d$Seedling = factor(d$Seedling)
 
 # fit a mixed model
- model <- lmer(SeedlingWeight ~ Genotype + (1|Tray), data = d)
+model <- lme4::lmer(SeedlingWeight ~ Genotype + (1|Tray), data = d)
 
 test_that("equal to SAS", {
 
