@@ -5,10 +5,12 @@ rawres <- function(model, cond = TRUE) {
 
   # Compute the conditional raw residuals
   if (cond == TRUE){
-    BLUPs <- coef(model)[[1]][,1]                          ## BlupS for each subject
-    subj <- table(unlist(model@flist[1]))                  ## number of levels for each subject
-    blups_y <- rep(BLUPs, c(as.numeric(as.matrix(subj))))  ## BLUP for each observation
-    res <- model@resp$y - blups_y                          ## conditional residule
+    #BLUPs <- coef(model)[[1]][,1]                          ## BlupS for each subject
+    #BLUPS <- ranef(model)[[1]][,1]
+    #subj <- table(unlist(model@flist[1]))                  ## number of levels for each subject
+    #blups_y <- rep(BLUPs, c(as.numeric(as.matrix(subj))))  ## BLUP for each observation
+    blups_y <- as.vector(predict(model))
+    res <- model@resp$y - blups_y                           ## conditional residule
     res
 
   # Compute the marginal raw residuals
