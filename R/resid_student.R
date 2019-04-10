@@ -61,28 +61,3 @@
 #
 #   return(rstum)
 # }
-#
-# data.frame(model@frame[,1] - (X %*% matrix(model@beta, nrow = 3)),
-#            resid(model, type = "response"))
-#
-#
-#
-# pearres <- function(model, cond = TRUE){
-#
-#   # Compute the conditional raw residuals
-#   if (cond == TRUE){
-#     BLUPs <- coef(model)[[1]][,1]                          ## BlupS for each subject
-#     subj <- table(unlist(model@flist[1]))                  ## number of levels for each subject
-#     blups_y <- rep(BLUPs, c(as.numeric(as.matrix(subj))))  ## BLUP for each observation
-#     res <- model@resp$y - blups_y                          ## conditional residule
-#     res
-#
-#     # Compute the marginal raw residuals
-#   } else {
-#     res <- as.vector(model@resp$y - (model@pp$X %*% matrix(model@beta, ncol = 1)))
-#   }
-#
-#   # Return the computed residuals
-#   return(res)
-#
-# }
