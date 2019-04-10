@@ -1,3 +1,8 @@
+# Help function to compute the residual type
+
+
+
+
 helper_resid <- function(type = NA, model){
   # lm residuals
  if(class(model)[1] == "lm"){
@@ -21,14 +26,18 @@ helper_resid <- function(type = NA, model){
   }
   # lmer residuals
   else if (class(model)[1] == "lmerMod"){
-    if(is.na(type) | type == "pearson"){
-      return(resid(model, type = "pearson"))
-    }else if (type == "response"){
-      return(resid(model, type = "response"))
-    }else if (type == "condres"){
-      return(redres(model, type = "condres"))
-    }else if (type == "stdres"){
-      return(redres(model, type = "stdres"))
+    if(is.na(type) | type == "raw_cond"){
+      return(redres(model, type = "raw_cond"))
+    }else if (type == "raw_mar"){
+      return(redres(model, type = "raw_mar"))
+    }else if (type == "pearson_cond"){
+      return(redres(model, type = "pearson_cond"))
+    }else if (type == "pearson_mar"){
+      return(redres(model, type = "pearson_mar"))
+    }else if (type == "std_cond"){
+      return(redres(model, type = "std_cond"))
+    } else if(type=="std_mar"){
+      return(redres(model, type = "std_mar"))
     }else if (type == "genres"){
       return(redres(model, type = "genres"))
     }

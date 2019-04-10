@@ -2,10 +2,7 @@
 % Please edit documentation in R/ResidPlot.R
 \name{ResidPlot}
 \alias{ResidPlot}
-\title{Residual Plots with multiple residual types choices given a model.
-Now have "lm", "glm", "lmer" three kinds of models, except the residual
-types included in those models, we also have other residual types, such as
-conditional residual, generalized residual and standrized residual.}
+\title{Plot Diagnostic Plots with Resoduals}
 \usage{
 ResidPlot(model, type)
 }
@@ -15,8 +12,8 @@ ResidPlot(model, type)
 
 \item{type}{Type of residuals to plot. For model \code{lm}, we have
 "response", "pearson", "standardized"; for \code{glm}, we have "response",
-"pearson", "deviance"; for \code{lmer}, we have "response", "pearson",
-"condres", "stdres", "genres", note the last three types are coded by ourself.}
+"pearson", "deviance"; for \code{lmer}, we have "raw_cond", "raw_mar", "pearson_cond",
+"pearson_mar", "std_cond", "std_mar", "genres".}
 }
 \value{
 A residual plot.
@@ -42,12 +39,12 @@ anorex.1 <- glm(Postwt ~ Prewt + Treat + offset(Prewt),
 family = gaussian, data = anorexia)
 ResidPlot(anorex.1, "deviance")
 
-# Fit a linear mixed effect model with a default residual type.
+# Fit a linear mixed effect model with a default (raw conditional) residual type.
 fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
 ResidPlot(fm1, "response")
 # Fit a linear mixed effect model with a conditional residual type.
-d = read.delim("http://dnett.github.io/S510/SeedlingDryWeight2.txt")
-d$Genotype = factor(d$Genotype)
+d <- read.delim("http://dnett.github.io/S510/SeedlingDryWeight2.txt")
+d$Genotype <- factor(d$Genotype)
 model <- lmer(SeedlingWeight ~ Genotype + (1|Tray), REML = F,data = d)
-ResidPlot(model, type = "condres")
+ResidPlot(model, type = "raw_cond")
 }

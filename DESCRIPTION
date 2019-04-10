@@ -20,6 +20,7 @@ Suggests:
     assertthat,
     dplyr,
     ggplot2,
+    broom,
     knitr,
     rgeos,
     rmarkdown,
