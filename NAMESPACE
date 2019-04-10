@@ -2,8 +2,9 @@
 
 export(ResidPlot)
 export(redres)
-import(broom)
-import(dplyr)
-import(ggplot2)
-import(lme4)
+importFrom(broom,augment)
+importFrom(ggplot2,aes)
+importFrom(ggplot2,geom_point)
+importFrom(ggplot2,ggplot)
+importFrom(ggplot2,xlab)
 importFrom(lme4,VarCorr)
