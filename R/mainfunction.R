@@ -16,7 +16,7 @@
 #' library(lme4)
 #' fm1 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
 #' #compute the residuals
-#' result <- redres(model, type = "raw_cond")
+#' result <- redres(fm1, type = "raw_cond")
 
 redres <- function(model, type = "raw_cond"){
 
