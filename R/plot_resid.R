@@ -37,7 +37,7 @@ plot_redres <- function(model, type = "raw_cond") {
 
   # Stop if residual type is not specified correctly
   type <- tolower(type)
-  if(!(type %in% c("raw_cond", "raw_mar", "pearson_cond", "pearson_mar", "std_cond", "std_mar", "genres"))){
+  if(!(type %in% c("raw_cond", "raw_mar", "pearson_cond", "pearson_mar", "std_cond", "std_mar"))){
         stop("Residual type requested is not provided by redres. Please see the documentation for the available types.")
   }
 
