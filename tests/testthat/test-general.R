@@ -45,6 +45,11 @@ test_that("residuals are uniform", {
 
 })
 
+test_that("wrong input triggers warning"){
+  non_rand_model <- lm(SeedlingWeight ~ Genotype, data = d)
+  expect_that(plot_genres(non_rand_model), throws_error())
+}
+
 test_that("generalized residual plot has correct output",{
 
 })
