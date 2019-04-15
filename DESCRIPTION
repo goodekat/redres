@@ -20,6 +20,7 @@ Imports:
   knitr,
   lme4,
   MASS,
+  qqplotr,
   stats
 Suggests: 
   dplyr,

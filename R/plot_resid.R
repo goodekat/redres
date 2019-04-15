@@ -1,4 +1,4 @@
-#' Plot Diagnostic Plots with Resoduals
+#' Plot Diagnostic Plots with Residuals
 #' @description
 #' Residual Plots with multiple residual types choices given a model.
 #' Now have "lm", "glm", "lmer" three kinds of models, except the residual
