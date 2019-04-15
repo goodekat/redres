@@ -15,7 +15,7 @@
 #' @export
 #'
 #' @importFrom broom augment
-#' @importFrom ggplot2 aes_string geom_point ggplot xlab
+#' @importFrom ggplot2 aes_string geom_point ggplot xlab ylab geom_hline theme_bw
 #'
 #' @return A residual plot.
 #'
@@ -25,15 +25,15 @@
 #' fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
 #' plot_redres(fm1)
 #' # Fit a linear mixed effect model with a conditional residual type.
-#' d <- read.delim("http://dnett.github.io/S510/SeedlingDryWeight2.txt")
-#' d$Genotype <- factor(d$Genotype)
-#' model <- lmer(SeedlingWeight ~ Genotype + (1|Tray), data = d)
-#' plot_redres(model, type = "raw_cond")
+#' plot_redres(fm1, type = "raw_cond")
 
 plot_redres <- function(model, type = "raw_cond") {
 
   # Stop if not an lmer model
-  if(class(model)[1] != "lmerMod") stop("Models must be fit using 'lmer'.")
+  if(!(class(model)[1]=="lmerMod")){
+    stop("The current version of plot_genres requires a model input.
+         Accepted model type is currently 'lmer'.")
+  }
 
   # Stop if residual type is not specified correctly
   type <- tolower(type)
@@ -48,6 +48,8 @@ plot_redres <- function(model, type = "raw_cond") {
   # Create the residual vs fitted plot
   ggplot(df, aes_string(x = "Fitted", y = "Residual")) +
     geom_point() +
-    xlab(label = "Fitted")
-
+    xlab(label = "fitted") +
+    ylab(paste0(type, " residuals")) +
+    geom_hline(yintercept = 0)
+    theme_bw()
 }

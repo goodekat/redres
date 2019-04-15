@@ -27,3 +27,9 @@ Package:
   - example
 
 Completed:
+- adjust y axis label in plot_redres to change based on residual type
+- add horizontal line through 0 on plot_redres
+- set a default theme in all plots (theme_bw)
+- change plot_resid documentation examples to use sleepdata
+- update errors and warnings in plot_resid
+

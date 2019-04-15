@@ -30,8 +30,5 @@ library(lme4)
 fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
 plot_redres(fm1)
 # Fit a linear mixed effect model with a conditional residual type.
-d <- read.delim("http://dnett.github.io/S510/SeedlingDryWeight2.txt")
-d$Genotype <- factor(d$Genotype)
-model <- lmer(SeedlingWeight ~ Genotype + (1|Tray), data = d)
-plot_redres(model, type = "raw_cond")
+plot_redres(fm1, type = "raw_cond")
 }
