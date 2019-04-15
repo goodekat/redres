@@ -19,8 +19,7 @@ plot_genres <- function(model){
 
   # Return an error if an acceptable model type is not entered in the function
   if(!(class(model)[1]=="lmerMod")){
-    stop("The current version of plot_genres requires a model input.
-         Accepted model type is currently 'lmer'.")
+    stop("The input model type is not accepted by plot_genres. Model must be fit using 'lmer'.")
   }
 
   # building dataframe

@@ -33,7 +33,9 @@
 plot_redres <- function(model, type = "raw_cond") {
 
   # Stop if not an lmer model
-  if(class(model)[1] != "lmerMod") stop("Models must be fit using 'lmer'.")
+  if(class(model)[1] != "lmerMod"){
+    stop("The input model type is not accepted by plot_genres. Model must be fit using 'lmer'.")
+  }
 
   # Stop if residual type is not specified correctly
   type <- tolower(type)

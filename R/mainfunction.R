@@ -21,7 +21,9 @@
 redres <- function(model, type = "raw_cond"){
 
   assertthat::assert_that(is.character(type), msg = 'type must be a string.')
-  stopifnot(class(model)[1] == "lmerMod")
+  if(class(model)[1] != "lmerMod"){
+    stop("The input model type is not accepted by plot_genres. Model must be fit using 'lmer'.")
+  }
 
   if(type=="raw_cond"){
     result <- rawres(model, cond = TRUE)
