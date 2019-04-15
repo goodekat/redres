@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @importFrom  ggplot2 aes_string ggplot theme_bw xlab ylab
-#' @importFrom qqplotrstat_qq_band stat_qq_line stat_qq_point
+#' @importFrom qqplotr stat_qq_band stat_qq_line stat_qq_point
 #'
 #' @details
 #'

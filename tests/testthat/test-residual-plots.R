@@ -13,3 +13,7 @@ test_that("plot works", {
   expect_error(ResidPlot(model, type = "response"))
   expect_error(ResidPlot(model, type = raw_mar))
 })
+
+test_that("validate plots", {
+  vdiffr::expect_doppelganger("basic", plot_redres(model))
+})

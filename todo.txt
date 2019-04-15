@@ -1,0 +1,29 @@
+To Do:
+
+Package:
+  - adjust y axis label in plot_redres to change based on residual type
+  - add horizontal line through 0 on plot_redres
+  - set a default theme in all plots (theme_bw)
+  - maybe provide option for theme
+  - keep working on documentation and testing
+  - change all documentation examples to use sleepdata
+  - update errors and warnings to give more helpful messages
+
+- Shiny app:
+  - create
+  - write a function that activates the app from our package
+  - see code here for example function:https://github.com/r-lib/vdiffr/blob/master/R/cases-ui.R)
+  - have an option for changing the variable on the y-axis
+  - have an option for plots to show (could be as tabs)
+  - make plots interactive using plotly
+  - have an option for residual type
+  - could print out observation in a table when point is clicked on the plot
+
+- vignette:
+  - write!
+  - section on residual types (when to use)
+  - section on interpreting all plots
+  - section on using the functions (redres, plotting functions, shiny app)
+  - example
+
+Completed:
