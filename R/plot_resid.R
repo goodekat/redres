@@ -1,4 +1,4 @@
-#' Plot Diagnostic Plots with Resoduals
+#' Plot Diagnostic Plots with Residuals
 #' @description
 #' Residual Plots with multiple residual types choices given a model.
 #' Now have "lm", "glm", "lmer" three kinds of models, except the residual
@@ -30,9 +30,14 @@
 plot_redres <- function(model, type = "raw_cond") {
 
   # Stop if not an lmer model
+<<<<<<< HEAD
   if(!(class(model)[1]=="lmerMod")){
     stop("The current version of plot_genres requires a model input.
          Accepted model type is currently 'lmer'.")
+=======
+  if(class(model)[1] != "lmerMod"){
+    stop("The input model type is not accepted by plot_genres. Model must be fit using 'lmer'.")
+>>>>>>> dda63b281c75c0bf9c6607fecf5c3a8fb8dda62d
   }
 
   # Stop if residual type is not specified correctly

@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_resid.R
 \name{plot_redres}
 \alias{plot_redres}
-\title{Plot Diagnostic Plots with Resoduals}
+\title{Plot Diagnostic Plots with Residuals}
 \usage{
 plot_redres(model, type = "raw_cond")
 }

@@ -6,7 +6,7 @@
 #'
 #' @export
 #'
-#' @importFrom  ggplot2 aes_string ggplot theme_bw xlab ylab
+#' @importFrom ggplot2 aes_string ggplot theme_bw xlab ylab
 #' @importFrom qqplotr stat_qq_band stat_qq_line stat_qq_point
 #'
 #' @details
@@ -17,8 +17,7 @@ plot_raneff <- function(model){
 
   # Return an error if an acceptable model type is not entered in the function
   if(!(class(model)[1]=="lmerMod")){
-    stop("The current version of plot_genres requires a model input.
-         Accepted model type is currently 'lmer'.")
+    stop("The input model type is not accepted by plot_genres. Model must be fit using 'lmer'.")
   }
 
   # building dataframe
