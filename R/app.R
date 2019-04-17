@@ -5,7 +5,8 @@ source(file = "./plot_genres.R")
 
 
 ui <- navbarPage("Diagnostic Plots under Linear Mixed-effects Model",
-
+                 
+    theme = "yeti",
     tabPanel("Data Import",
            sidebarLayout(
              sidebarPanel(
@@ -30,7 +31,7 @@ ui <- navbarPage("Diagnostic Plots under Linear Mixed-effects Model",
                 selectInput("residual_type", "Residual Type",
                     choices = c("raw_cond", "raw_mar",
                         "pearson_cond", "pearson_mar",
-                        "std_cond", "std_mar"))),
+                        "std_cond", "std_mar"), selected = "raw_cond")),
             mainPanel(
              tabsetPanel(
                tabPanel("Residual Plot", plotOutput("resid")),
