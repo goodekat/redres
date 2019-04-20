@@ -15,3 +15,10 @@ Use to compare the random effects to normal quantiles. How to use for diagnosing
 \details{
 Why random effects should be normally distributed and diagnosing qq-plot departures.
 }
+\examples{
+# Fit a linear mixed effect model with a default (raw conditional) residual type.
+library(lme4)
+fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+# Plot normal quantile of random effects vector to assess normality
+plot_raneff(fm1)
+}

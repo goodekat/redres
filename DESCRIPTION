@@ -21,6 +21,7 @@ Imports:
   lme4,
   MASS,
   qqplotr,
+  shiny,
   stats
 Suggests: 
   dplyr,

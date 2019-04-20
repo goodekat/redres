@@ -1,18 +1,12 @@
-library(tidyverse)
-
-source(file = "./plot_resid.R")
-source(file = "./plot_genres.R")
-
+#' @importFrom shiny checkboxInput div fileInput h5 helpText mainPanel navbarPage plotOutput radioButtons selectInput shinyApp sidebarLayout sidebarPanel tabPanel tabsetPanel tags p uiOutput verbatimTextOutput
 
 ui <- navbarPage(
      theme = "yeti",
-                 tags$title(" "),
-
-                 div(
-                   tags$header(p("Diagnostic Plots under Linear Mixed-effects Model", style="font-size:40px"),
+     tags$title(" "),
+     div(tags$header(p("Diagnostic Plots under Linear Mixed-effects Model", style="font-size:40px"),
                                p("group 6", style="font-size:30px")),
-                   align = "center", style="color:#ffffff; background-color: #4d728d"),            
-    
+                   align = "center", style="color:#ffffff; background-color: #4d728d"),
+
     tabPanel("Data Import",
            sidebarLayout(
              sidebarPanel(

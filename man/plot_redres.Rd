@@ -2,33 +2,29 @@
 % Please edit documentation in R/plot_resid.R
 \name{plot_redres}
 \alias{plot_redres}
-\title{Plot Diagnostic Plots with Residuals}
+\title{Diagnostic Residual Plot}
 \usage{
 plot_redres(model, type = "raw_cond")
 }
 \arguments{
-\item{model}{Model fit using either \code{lm}, \code{glm}, \code{lmer},
-\code{redres}.}
+\item{model}{Model fit using \code{lmer}.}
 
-\item{type}{Type of residuals to plot. For model \code{lm}, we have
-"response", "pearson", "standardized"; for \code{glm}, we have "response",
-"pearson", "deviance"; for \code{lmer}, we have "raw_cond", "raw_mar", "pearson_cond",
-"pearson_mar", "std_cond", "std_mar", "genres".}
+\item{type}{String identifying type of residual. Default is "raw_cond". See \code{\link{redres}} for details of available types.}
 }
 \value{
 A residual plot.
 }
 \description{
-Residual Plots with multiple residual types choices given a model.
-Now have "lm", "glm", "lmer" three kinds of models, except the residual
-types included in those models, we also have other residual types, such as
-conditional residual, generalized residual and standrized residual.
+Plots specified residual type by fitted values for a linear mixed effects model
+fitted using \code{lmer}. Plot used to assess whether the assumptions of constant
+variance and linear form are adequate.
 }
 \examples{
 # Fit a linear mixed effect model with a default (raw conditional) residual type.
 library(lme4)
 fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+# Plot raw conditional residuals by fitted values.
 plot_redres(fm1)
-# Fit a linear mixed effect model with a conditional residual type.
-plot_redres(fm1, type = "raw_cond")
+# Plot standardized conditional residuals by fitted values.
+plot_redres(fm1, type = "std_cond")
 }
