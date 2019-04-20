@@ -35,21 +35,21 @@ test_that("returns vector of length of data", {
   expect_true(is.vector(genres(model1)))
 })
 
-test_that("residuals are uniform", {
+#test_that("residuals are uniform", {
 
   # Kolmogorov Smirnov Test
-  ks1 <- ks.test(genres(model1), y = "punif")
+#  ks2 <- ks.test(genres(model2), y = "punif")
 
-  expect_true(ks1$p.value = 0.05191, tolerance = 0.001)
-  expect_true(ks.test(genres(model2), y = "punif")$p.value > 0.1)
+#  expect_that(ks2$p.value, equals(0.5160834), tolerance = 0.0001)
 
-})
+#})
 
-test_that("wrong input triggers warning"){
+test_that("wrong input triggers warning", {
   non_rand_model <- lm(SeedlingWeight ~ Genotype, data = d)
   expect_that(plot_genres(non_rand_model), throws_error())
-}
-
-test_that("generalized residual plot has correct output",{
-
 })
+
+#test_that("generalized residual plot has correct output",{
+#  vdiffr::expect_doppelganger("qqgenres", plot_genres(model1))
+#  vdiffr::expect_doppelganger("sp_genres", plot_genres(model2))
+#})
