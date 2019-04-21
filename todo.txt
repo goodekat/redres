@@ -39,4 +39,7 @@ Completed:
 - KG: updated documentation
 - KG: update errors and warnings to give more helpful messages
 - KG: updated tests
+- KG: updated readme
+- KG: built a website for redres
+
 

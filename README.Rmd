@@ -64,10 +64,10 @@ head(resids)
 
 #### plot_resid
 
-`plot_resid` creates a plot (using `ggplot2`) of the residuals versus the fitted values given a model and a specified residual type. All residuals types listed for `redres` work with `plot_resid` execpt `genres` since this type of plot is not meaningful for generalized residuals.
+`plot_resid` creates a plot (using `ggplot2`) of the residuals versus the fitted values given a model and a specified residual type. All residuals types listed for `redres` work with `plot_resid` except `genres` since this type of plot is not meaningful for generalized residuals.
 
 ```{r}
-# creates a plot of the residuals versus fitted values
+# creates a plot of the conditional studentized residuals versus the fitted values
 plot_redres(m, type = "std_cond")
 ```
 
@@ -76,14 +76,14 @@ plot_redres(m, type = "std_cond")
 `plot_genres` (Kellie - want to fill in this section)
 
 ```{r}
-# creates a generalizaed residual quantile plot
+# creates a generalized residual quantile plot
 plot_genres(m)
 ```
 
 
 #### plot_raneff
 
-`plot_raneff`... (Kellie - want to fill in this section asl well)
+`plot_raneff`... (Kellie - want to fill in this section as well)
 
 ```{r}
 # creates a normal quantile plot of the random effects
@@ -92,15 +92,16 @@ plot_raneff(m)
 
 #### (shiny app function)
 
-`(shiny app function)`...to be fillined in once available 
+`(shiny app function)`...to be filled in in once available 
 
 ## Learn More
 
-To learn more about `redres`, see the package [vignette](https://goodekat.github.io/redres/articles/redres-vignette.html). This document contains information about...
+To learn more about `redres`, read through the [vignette](https://goodekat.github.io/redres/articles/redres-vignette.html) for `redres`. It contains:
 
-- how the residuals are computed
-- how the plots are created
-- how to appropriately use the different residual types
-- how to interpret the plots
+- details on how the residuals are computed 
+- information on how the plots are created 
+- explanations of how to appropriately use the different residual types 
+- interpretations of the plots 
+- an example using `redres` to assess the assumptions of a linear mixed model
 
-Additionally, it contains an example using `redres` to assess the assumptions of a linear mixed model.
+Additionally, more information is available at the package [website](https://goodekat.github.io/redres/).
