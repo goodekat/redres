@@ -2,9 +2,6 @@ To Do:
 
 Package:
   - adjust y axis label in plot_redres to change based on residual type
-  - add horizontal line through 0 on plot_redres
-  - set a default theme in all plots (theme_bw)
-  - maybe provide option for theme
   - keep working on documentation and testing
   - change all documentation examples to use sleepdata
   - update errors and warnings to give more helpful messages
@@ -32,4 +29,7 @@ Completed:
 - set a default theme in all plots (theme_bw)
 - change plot_resid documentation examples to use sleepdata
 - update errors and warnings in plot_resid
+- maybe provide option for theme (I decided not to do this since we are only
+  outputting one figure at a time, so users can actually add their own options
+  just like you would with ggplot2.)
 

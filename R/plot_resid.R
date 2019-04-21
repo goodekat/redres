@@ -47,4 +47,5 @@ plot_redres <- function(model, type = "raw_cond") {
     ylab(paste0(type, " residuals")) +
     geom_hline(yintercept = 0) +
     theme_bw()
+
 }
