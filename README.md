@@ -105,11 +105,10 @@ plot_raneff(m)
 Learn More
 ----------
 
-To learn more about `redres`, read through the [vignette](https://goodekat.github.io/redres/articles/redres-vignette.html) for `redres`. It contains:
+To learn more about `redres`, read through the [vignette](https://goodekat.github.io/redres/articles/redres-vignette.html) for `redres` which contains:
 
 -   details on how the residuals are computed
--   information on how the plots are created
--   explanations of how to appropriately use the different residual types
+-   explanations of how to use the different residual types
 -   interpretations of the plots
 -   an example using `redres` to assess the assumptions of a linear mixed model
 
