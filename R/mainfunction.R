@@ -12,11 +12,13 @@
 #' @return return residuals according to different types.
 #'
 #' @examples
-#' #fit the model
+#' # fit the model
 #' library(lme4)
 #' fm1 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
-#' #compute the residuals
-#' result <- redres(fm1, type = "raw_cond")
+#' # compute the residuals
+#' redres(fm1, type = "raw_cond")
+#' # change the residual type
+#' redres(fm1, type = "std_mar")
 
 redres <- function(model, type = "raw_cond"){
 

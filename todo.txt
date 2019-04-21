@@ -2,7 +2,6 @@ To Do:
 
 Package:
   - keep working on documentation and testing
-  - change all documentation examples to use sleepdata
   - update errors and warnings to give more helpful messages
 
 - Shiny app:
@@ -28,7 +27,9 @@ Completed:
 - set a default theme in all plots (theme_bw)
 - change plot_resid documentation examples to use sleepdata
 - update errors and warnings in plot_resid
-- maybe provide option for theme (I decided not to do this since we are only
+- maybe provide option for theme (KG: I decided not to do this since we are only
   outputting one figure at a time, so users can actually add their own options
   just like you would with ggplot2.)
+- change all documentation examples to use sleepdata
+
 

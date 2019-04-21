@@ -20,9 +20,11 @@ which are pearson residuals, generalized residuals, standardized residuals and
 conditional residuals.
 }
 \examples{
-#fit the model
+# fit the model
 library(lme4)
 fm1 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
-#compute the residuals
-result <- redres(fm1, type = "raw_cond")
+# compute the residuals
+redres(fm1, type = "raw_cond")
+# change the residual type
+redres(fm1, type = "std_mar")
 }
