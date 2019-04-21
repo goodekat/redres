@@ -17,10 +17,6 @@ Shiny app:
 
 Vignette:
   - write!
-  - section on residual types (when to use)
-  - section on interpreting all plots
-  - section on using the functions (redres, plotting functions, shiny app)
-  - example
 
 Other:
   - make a sticker
@@ -41,5 +37,6 @@ Completed:
 - KG: updated tests
 - KG: updated readme
 - KG: built a website for redres
+- KG: set up sections in vignette
 
 

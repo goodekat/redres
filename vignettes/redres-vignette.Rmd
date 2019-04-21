@@ -2,7 +2,9 @@
 title: "redres: Redress Your Mixed Model Assumptions"
 author: "R Package Version `r packageVersion('redres')`"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
@@ -16,13 +18,27 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Introduction to `redres`
+# Introduction
 
 The Merriam-Webster dictionary defines [redress](https://www.merriam-webster.com/dictionary/redress) as "to set right".
 
+# Package Functions 
+
+Section describing what each function does, how to use the function, and how to interpret the plots...
+
+## redres
+
+## plot_resid
+
+## plot_genres
+
+## plot_raneff
+
+## shiny app function
+
 # Residual Types
 
-## Linear Model Theory
+Section on how to compute the different residual types and when to use them...
 
 The linear mixed effects model can be written as
   $$\textbf{Y}=\textbf{X}\boldsymbol{\beta}+\textbf{Z}\boldsymbol{\gamma}+\boldsymbol{\epsilon}$$
@@ -53,10 +69,20 @@ By assumption, it is the case that...
 
 ## Studentized
 
-### lmer residuals
+- marginal:
+- conditional:
+
+## lmer residuals
 
 - `type = response, scaled = "FALSE``: $Y-X\hat{\beta}$
 - `type = "pearson", scaled = "FALSE`: $(Y-X\hat{\beta}) / w_i$ where $w_i$ is the user specified weights (set to 1 if not specified)
 - `type = "pearson", scaled = "TRUE`: $(Y-X\hat{\beta}) / \sigma$
 
 ## Genearlized
+
+# Example
+
+
+
+
+
