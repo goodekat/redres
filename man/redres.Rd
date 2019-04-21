@@ -7,18 +7,18 @@
 redres(model, type = "raw_cond")
 }
 \arguments{
-\item{model}{Model fit using lmer from lme4 for which residuals will be computed.}
+\item{model}{Model fit using \code{lmer} from lme4 for which residuals will be computed.}
 
-\item{type}{Type of residuals to compute. See details for the options available.}
+\item{type}{String identifying type of residual. Default is "raw_cond". See details for the options available.}
 }
 \value{
 Returns residuals according to type specified.
 }
 \description{
-\code{redres} computes residuals for linear mixed models fit using the lmer
-function from the lme4. It can return seven types of residuals inlcuding options
-that are not available from lme4. These types are conditional raw, Pearson, and
-studentized, marginal raw, Pearson, and studentized, and generalized residuals.
+Computes residuals for linear mixed models fit using \code{lmer} from the lme4.
+It can return seven types of residuals inlcuding options that are not available
+from lme4. These types are conditional raw, Pearson, and studentized, marginal
+raw, Pearson, and studentized, and generalized residuals.
 }
 \details{
 Residual types available
@@ -26,7 +26,7 @@ Residual types available
   \item \code{"genres"}: generalized residuals
   \item \code{"pearson_cond"}: Pearson conditional residuals
   \item \code{"pearson_mar"}: Pearson marginal residuals
-  \item \code{"raw_cond"}: raw conditional residuals
+  \item \code{"raw_cond"}: raw conditional residuals (default)
   \item \code{"raw_mar"}: raw marginal residuals
   \item \code{"std_cond"}: studentized conditional residuals
   \item \code{"std_mar"}: studentized marginal residuals

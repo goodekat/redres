@@ -1,31 +1,32 @@
 #' Normal quantile plots for random effects
+#'
 #' @description
 #' Use to compare the random effects to normal quantiles. How to use for diagnosing...
 #'
 #' @param model Model fit using \code{lmer}.
 #'
-#' @export
-#'
 #' @importFrom ggplot2 aes_string ggplot theme_bw xlab ylab
 #' @importFrom qqplotr stat_qq_band stat_qq_line stat_qq_point
+#' @export plot_raneff
+#'
+#' @return A normal quantile plot for the random effects.
 #'
 #' @details
-#'
 #' Why random effects should be normally distributed and diagnosing qq-plot departures.
 #'
 #' @examples
 #' # Fit a linear mixed effect model with a default (raw conditional) residual type.
 #' library(lme4)
 #' fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
-#' # Plot normal quantile of random effects vector to assess normality
+#'
+#' # Plot normal quantiles of random effects vector to assess normality
 #' plot_raneff(fm1)
 
 plot_raneff <- function(model){
 
   # Return an error if an acceptable model type is not entered in the function
-  if(!(class(model)[1]=="lmerMod")){
-    stop("The input model type is not accepted by plot_genres. Model must be fit using 'lmer'.")
-  }
+  checkmate::expect_class(model, "lmerMod",
+                          info = "The input model is not accepted by plot_raneff. Model must be fit using 'lmer'.")
 
   # building dataframe
   u_df <- data.frame(rand_eff = model@u)
@@ -39,4 +40,5 @@ plot_raneff <- function(model){
     xlab("Normal quantiles") +
     ylab("Estimated random effects") +
     theme_bw()
+
 }

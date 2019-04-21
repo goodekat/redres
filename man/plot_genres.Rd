@@ -7,7 +7,10 @@
 plot_genres(model)
 }
 \arguments{
-\item{model}{Model fit using \code{lmer}.}
+\item{model}{Model fit using \code{lmer} from lme4 package.}
+}
+\value{
+A generalized residual quantile plot.
 }
 \description{
 Use to compare the generalized residuals to the uniform quantiles. Obvious departures indicate
@@ -22,6 +25,7 @@ Second section assumptions of lmer model
 # random intercept for Days and random slope for Subject*Days.
 library(lme4)
 fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
-# Check that all model assumptions are reasonable using generalized residuals:
+
+# Check that all model assumptions are reasonable using generalized residuals
 plot_genres(fm1)
 }

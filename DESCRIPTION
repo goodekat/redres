@@ -5,7 +5,7 @@ Version: 0.1.0.9
 Author: Katherine Goode, Kellie McClernon, Jing Zhao, Yudi Zhang, Yonghui Huo.
 Maintainer: Katherine Goode <kgoode@iastate.edu>
 Description: An R package that computes various types of residuals for linear mixed
-             models fit using the function lmer from the R package lme4. Additional 
+             models fit using the function \code{lmer} from the R package lme4. Additional 
              functions have been included to create diagnostic plots using the 
              residuals.
 License: MIT + file LICENSE
