@@ -105,7 +105,7 @@ plot_raneff(m)
 Learn More
 ----------
 
-To learn more about `redres`, see the package vignette. This document contains information about...
+To learn more about `redres`, see the package [vignette](https://goodekat.github.io/redres/articles/redres-vignette.html). This document contains information about...
 
 -   how the residuals are computed
 -   how the plots are created
