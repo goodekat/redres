@@ -31,12 +31,14 @@
 #' @return Returns residuals according to type specified.
 #'
 #' @examples
-#' # fit the model
+#' # fits a linear mixed effects model
 #' library(lme4)
 #' fm1 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
-#' # compute the default residuals (raw conditional)
+#'
+#' # computes the default residuals (raw conditional)
 #' redres(fm1)
-#' # change the residual type to studentized marginal
+#'
+#' # changes the residual type to studentized marginal
 #' redres(fm1, type = "std_mar")
 
 redres <- function(model, type = "raw_cond"){

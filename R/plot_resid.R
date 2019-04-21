@@ -18,7 +18,7 @@
 #' @return A plot of residuals versus fitted values.
 #'
 #' @examples
-#' # Fit a linear mixed effect model with a default (raw conditional) residual type.
+#' # Fit a linear mixed effects model
 #' library(lme4)
 #' fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
 #'

@@ -161,10 +161,11 @@ raw, Pearson, and studentized, and generalized residuals.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># fit the model</span>
+    <pre class="examples"><div class='input'><span class='co'># fits a linear mixed effects model</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lme4</span>)
 <span class='no'>fm1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Reaction</span> ~ <span class='no'>Days</span> + (<span class='no'>Days</span> <span class='kw'>|</span> <span class='no'>Subject</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleepstudy</span>)
-<span class='co'># compute the default residuals (raw conditional)</span>
+
+<span class='co'># computes the default residuals (raw conditional)</span>
 <span class='fu'>redres</span>(<span class='no'>fm1</span>)</div><div class='output co'>#&gt;   [1]   -4.1026378  -14.6244974  -42.1951571    8.7774832   24.5230236
 #&gt;   [6]   62.6946639   10.5418043 -101.1799554   19.5901849   35.6918253
 #&gt;  [11]   11.7230671   -7.5918028  -11.7265727  -11.8441426  -10.6818125
@@ -200,7 +201,8 @@ raw, Pearson, and studentized, and generalized residuals.</p>
 #&gt; [161]   17.6682360   10.7515230    6.7285100    1.1399971  -10.9581159
 #&gt; [166]  -15.0957289  -49.8210419  -13.9353549   22.7356321   31.9450191
 #&gt; [171]    5.6932460   -1.9959780   10.3752981   11.6585741  -23.5519499
-#&gt; [176]    7.1315261    0.2542021   -2.7592219   11.4110541   -5.3585698</div><div class='input'><span class='co'># change the residual type to studentized marginal</span>
+#&gt; [176]    7.1315261    0.2542021   -2.7592219   11.4110541   -5.3585698</div><div class='input'>
+<span class='co'># changes the residual type to studentized marginal</span>
 <span class='fu'>redres</span>(<span class='no'>fm1</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"std_mar"</span>)</div><div class='output co'>#&gt;   [1] -0.052196884 -0.088251555 -0.576516852  0.974414478  1.491671897
 #&gt;   [6]  2.404013211  1.356669412 -0.634358690  1.617487253  1.892716994
 #&gt;  [11] -1.135411156 -1.598970790 -1.247549019 -0.995784369 -0.837607308

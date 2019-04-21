@@ -15,11 +15,11 @@
 #' Why random effects should be normally distributed and diagnosing qq-plot departures.
 #'
 #' @examples
-#' # Fit a linear mixed effect model with a default (raw conditional) residual type.
+#' # fits a linear mixed effects model
 #' library(lme4)
 #' fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
 #'
-#' # Plot normal quantiles of random effects vector to assess normality
+#' # plots normal quantiles of random effects vector to assess normality
 #' plot_raneff(fm1)
 
 plot_raneff <- function(model){

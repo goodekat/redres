@@ -146,11 +146,11 @@ Second section assumptions of lmer model</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Fit a linear mixed effect model using lme4 where model has a</span>
-<span class='co'># random intercept for Days and random slope for Subject*Days.</span>
+    <pre class="examples"><div class='input'><span class='co'># fits a linear mixed effect model using lme4 where model has a</span>
+<span class='co'># random intercept for Days and random slope for Subject*Days</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lme4</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='input'><span class='no'>fm1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Reaction</span> ~ <span class='no'>Days</span> + (<span class='no'>Days</span> <span class='kw'>|</span> <span class='no'>Subject</span>), <span class='no'>sleepstudy</span>)
 
-<span class='co'># Check that all model assumptions are reasonable using generalized residuals</span>
+<span class='co'># check that all model assumptions are reasonable using generalized residuals</span>
 <span class='fu'>plot_genres</span>(<span class='no'>fm1</span>)</div><div class='img'><img src='plot_genres-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

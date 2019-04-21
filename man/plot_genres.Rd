@@ -21,11 +21,11 @@ First section what is a generalized residual. Reiterate diagnostics.
 Second section assumptions of lmer model
 }
 \examples{
-# Fit a linear mixed effect model using lme4 where model has a
-# random intercept for Days and random slope for Subject*Days.
+# fits a linear mixed effect model using lme4 where model has a
+# random intercept for Days and random slope for Subject*Days
 library(lme4)
 fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
 
-# Check that all model assumptions are reasonable using generalized residuals
+# check that all model assumptions are reasonable using generalized residuals
 plot_genres(fm1)
 }

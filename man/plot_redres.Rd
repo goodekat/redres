@@ -23,7 +23,7 @@ fitted using \code{lmer}. Use plot to assess whether the assumptions of constant
 variance and linear form are adequate.
 }
 \examples{
-# Fit a linear mixed effect model with a default (raw conditional) residual type.
+# Fit a linear mixed effects model
 library(lme4)
 fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
 
