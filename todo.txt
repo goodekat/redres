@@ -21,6 +21,9 @@ Package:
   - section on using the functions (redres, plotting functions, shiny app)
   - example
 
+- other:
+  - make a sticker
+
 Completed:
 - adjust y axis label in plot_redres to change based on residual type
 - add horizontal line through 0 on plot_redres
