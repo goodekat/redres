@@ -1,7 +1,6 @@
 To Do:
 
 Package:
-  - adjust y axis label in plot_redres to change based on residual type
   - keep working on documentation and testing
   - change all documentation examples to use sleepdata
   - update errors and warnings to give more helpful messages

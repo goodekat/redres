@@ -9,7 +9,7 @@ d$Seedling = factor(d$Seedling)
 # fit a mixed model
 model <- lme4::lmer(SeedlingWeight ~ Genotype + (1|Tray), data = d)
 
-test_that("equal to SAS", {
+test_that("equal-to-SAS", {
 
   # Load in residuals that were computed using SAS proc mixed for comparison
   sas_resids = read.csv(system.file("extdata", "residuals.csv", package = "redres"))

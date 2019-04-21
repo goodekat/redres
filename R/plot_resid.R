@@ -40,11 +40,26 @@ plot_redres <- function(model, type = "raw_cond") {
   df <- data.frame(Residual = redres(model = model, type = type),
                    Fitted = broom::augment(model)$.fitted)
 
+  # Specify y-axis label based on residual type
+  if (type == "raw_cond") {
+    ylabel = "Conditional raw residuals"
+  } else if (type == "raw_mar") {
+    ylabel = "Marginal raw residuals"
+  } else if (type == "pearson_cond") {
+    ylabel = "Conditional pearson residuals"
+  } else if (type == "pearson_mar") {
+    ylabel = "Marginal pearson residuals"
+  } else if (type == "std_cond") {
+    ylabel = "Conditional studentized residuals"
+  } else if (type == "std_mar") {
+    ylabel = "Marginal studentized residuals"
+  }
+
   # Create the residual vs fitted plot
   ggplot(df, aes_string(x = "Fitted", y = "Residual")) +
     geom_point() +
-    xlab(label = "fitted") +
-    ylab(paste0(type, " residuals")) +
+    xlab(label = "Fitted values") +
+    ylab(label = ylabel) +
     geom_hline(yintercept = 0) +
     theme_bw()
 
