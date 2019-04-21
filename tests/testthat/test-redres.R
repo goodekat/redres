@@ -1,4 +1,4 @@
-context("test-residual_types")
+context("test-redres")
 
 # read data from stat510 of Iowa State University and adjust factor variables
 d = read.delim("http://dnett.github.io/S510/SeedlingDryWeight2.txt")
@@ -9,6 +9,25 @@ d$Seedling = factor(d$Seedling)
 # fit a mixed model
 model <- lme4::lmer(SeedlingWeight ~ Genotype + (1|Tray), data = d)
 
+# fit a linear model
+model_lm <- lm(SeedlingWeight ~ Genotype, data = d)
+
+# test error messages in redres
+test_that("check-redres", {
+  expect_error(redres(1))
+  expect_error(redres(model_lm))
+  expect_error(redres(model, type = "response"))
+  expect_error(redres(model, type = raw_mar))
+})
+
+# basic checks
+test_that("returns vector of length of data", {
+  expect_equal(length(d$SeedlingWeight), length(redres(model)))
+  expect_type(redres(model), type = 'double')
+  expect_true(is.vector(redres(model)))
+})
+
+# compare to SAS residuals
 test_that("equal-to-SAS", {
 
   # Load in residuals that were computed using SAS proc mixed for comparison

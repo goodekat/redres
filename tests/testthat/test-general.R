@@ -49,7 +49,9 @@ test_that("wrong input triggers warning", {
   expect_that(plot_genres(non_rand_model), throws_error())
 })
 
-#test_that("generalized residual plot has correct output",{
-#  vdiffr::expect_doppelganger("qqgenres", plot_genres(model1))
-#  vdiffr::expect_doppelganger("sp_genres", plot_genres(model2))
-#})
+# check for doppelgangers
+test_that("validate-plot_genres",{
+  vdiffr::expect_doppelganger("qqgenres", plot_genres(model1))
+  vdiffr::expect_doppelganger("sp_genres", plot_genres(model2))
+})
+

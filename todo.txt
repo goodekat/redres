@@ -1,7 +1,7 @@
 To Do:
 
 Package:
-  - finish documentation and testing
+  - finish documentation and testing (what else do we need to do for this?)
 
 Shiny app:
   - create
@@ -36,5 +36,5 @@ Completed:
 - KG: proof read through documentation
 - KG: updated documentation
 - KG: update errors and warnings to give more helpful messages
-
+- KG: updated tests
 
