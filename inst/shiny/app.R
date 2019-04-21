@@ -1,10 +1,23 @@
 #' @importFrom shiny checkboxInput div fileInput h5 helpText mainPanel navbarPage plotOutput radioButtons selectInput shinyApp sidebarLayout sidebarPanel tabPanel tabsetPanel tags p uiOutput verbatimTextOutput
 
+library(lme4)
+library(ggplot2)
+library(dplyr)
+
+source("../R/plot_genres.R")
+source("../R/plot_resid.R")
+source("../R/mainfunction.R")
+source("../R/resid_gen.R")
+source("../R/resid_pearson.R")
+source("../R/resid_student.R")
+source("../R/resid_raw.R")
+
 ui <- navbarPage(
      theme = "yeti",
      tags$title(" "),
-     div(tags$header(p("Diagnostic Plots under Linear Mixed-effects Model", style="font-size:40px"),
-                               p("group 6", style="font-size:30px")),
+     div(tags$header(p("Diagnostic Plots under Linear Mixed-effects Model",
+                       style="font-size:40px"),
+                       p("group 6", style="font-size:30px")),
                    align = "center", style="color:#ffffff; background-color: #4d728d"),
 
     tabPanel("Data Import",
@@ -56,13 +69,16 @@ server <- function(input, output) {
     tableOutput("table")
   })
   output$res_select <- renderUI({
-    selectInput("res_select","Select Response", choices = as.list(names(data())), multiple = FALSE)
+    selectInput("res_select","Select Response",
+                choices = as.list(names(data())), multiple = FALSE)
   })
   output$fixed_select <- renderUI({
-    selectInput("fixed_select","Select Fixed Effect", choices = as.list(names(data())), multiple = FALSE)
+    selectInput("fixed_select","Select Fixed Effect",
+                choices = as.list(names(data())), multiple = FALSE)
   })
   output$random_select <- renderUI({
-    selectInput("random_select","Select Random Effect", choices = as.list(names(data())), multiple = FALSE)
+    selectInput("random_select","Select Random Effect",
+                choices = as.list(names(data())), multiple = FALSE)
   })
 
   output$other_val_show <- renderPrint({
@@ -71,7 +87,6 @@ server <- function(input, output) {
     input$random_select
     f <- data()
 
-    library(lme4)
     form <- sprintf("%s~%s", input$res_select,
                     paste0(
                       input$fixed_select, "+", "(",
@@ -83,15 +98,23 @@ server <- function(input, output) {
     print(summary(model))
   })
 
+  model <- reactive({
+    f <- data()
+    form <- sprintf("%s~%s", input$res_select,
+                    paste0(
+                      input$fixed_select, "+", "(",
+                      input$fixed_select, "|",
+                      input$random_select, ")"))
+    lmer(as.formula(form), data = f)
+  })
+
   output$resid <- renderPlot({
     model <- model()
-    type <- reactive(input$residual_type)
-    plot_redres(model, type)
+    plot_redres(model, input$residual_type)
   })
 
   output$quantile <- renderPlot({
     model <- model()
-    type <- reactive(input$residual_type)
     plot_genres(model)
   })
 }
