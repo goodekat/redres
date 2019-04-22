@@ -3,10 +3,11 @@ To Do
 --------
 
 Package:
-  - finish documentation and testing (what else do we need to do for this?)
+  - add comments about able to format plots using ggplot2
+  - Kellie will finish her documentation
+  - Kellie will work on plot_raneff
 
 Shiny app:
-  - create
   - write a function that activates the app from our package
   - see code here for example function:https://github.com/r-lib/vdiffr/blob/master/R/cases-ui.R)
   - have an option for changing the variable on the y-axis
@@ -22,21 +23,5 @@ Other:
   - make a sticker
 
 Completed:
-- adjust y axis label in plot_redres to change based on residual type
-- add horizontal line through 0 on plot_redres
-- set a default theme in all plots (theme_bw)
-- change plot_resid documentation examples to use sleepdata
-- update errors and warnings in plot_resid
-- change all documentation examples to use sleepdata
-- KG: maybe provide option for theme - I decided not to do this since we are only
-  outputting one figure at a time, so users can actually add their own options
-  just like you would with ggplot2.
-- KG: proof read through documentation
-- KG: updated documentation
-- KG: update errors and warnings to give more helpful messages
-- KG: updated tests
-- KG: updated readme
-- KG: built a website for redres
-- KG: set up sections in vignette
 
 

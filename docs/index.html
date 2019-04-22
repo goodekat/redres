@@ -148,8 +148,8 @@ resids &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocu
 <div id="plot_resid" class="section level4">
 <h4 class="hasAnchor">
 <a href="#plot_resid" class="anchor"></a>plot_resid</h4>
-<p><code>plot_resid</code> creates a plot (using <code>ggplot2</code>) of the residuals versus the fitted values given a model and a specified residual type. All residuals types listed for <code>redres</code> work with <code>plot_resid</code> execpt <code>genres</code> since this type of plot is not meaningful for generalized residuals.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># creates a plot of the residuals versus fitted values</span>
+<p><code>plot_resid</code> creates a plot (using <code>ggplot2</code>) of the residuals versus the fitted values given a model and a specified residual type. All residuals types listed for <code>redres</code> work with <code>plot_resid</code> except <code>genres</code> since this type of plot is not meaningful for generalized residuals.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># creates a plot of the conditional studentized residuals versus the fitted values</span>
 <span class="kw"><a href="reference/plot_redres.html">plot_redres</a></span>(m, <span class="dt">type =</span> <span class="st">"std_cond"</span>)</code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
@@ -157,14 +157,14 @@ resids &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocu
 <h4 class="hasAnchor">
 <a href="#plot_genres" class="anchor"></a>plot_genres</h4>
 <p><code>plot_genres</code> (Kellie - want to fill in this section)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># creates a generalizaed residual quantile plot</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># creates a generalized residual quantile plot</span>
 <span class="kw"><a href="reference/plot_genres.html">plot_genres</a></span>(m)</code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 </div>
 <div id="plot_raneff" class="section level4">
 <h4 class="hasAnchor">
 <a href="#plot_raneff" class="anchor"></a>plot_raneff</h4>
-<p><code>plot_raneff</code>… (Kellie - want to fill in this section asl well)</p>
+<p><code>plot_raneff</code>… (Kellie - want to fill in this section as well)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># creates a normal quantile plot of the random effects</span>
 <span class="kw"><a href="reference/plot_raneff.html">plot_raneff</a></span>(m)</code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
@@ -172,20 +172,20 @@ resids &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocu
 <div id="shiny-app-function" class="section level4">
 <h4 class="hasAnchor">
 <a href="#shiny-app-function" class="anchor"></a>(shiny app function)</h4>
-<p><code>(shiny app function)</code>…to be fillined in once available</p>
+<p><code>(shiny app function)</code>…to be filled in in once available</p>
 </div>
 </div>
 <div id="learn-more" class="section level2">
 <h2 class="hasAnchor">
 <a href="#learn-more" class="anchor"></a>Learn More</h2>
-<p>To learn more about <code>redres</code>, see the package vignette. This document contains information about…</p>
+<p>To learn more about <code>redres</code>, read through the <a href="https://goodekat.github.io/redres/articles/redres-vignette.html">vignette</a> for <code>redres</code> which contains:</p>
 <ul>
-<li>how the residuals are computed</li>
-<li>how the plots are created</li>
-<li>how to appropriately use the different residual types</li>
-<li>how to interpret the plots</li>
+<li>details on how the residuals are computed</li>
+<li>explanations of how to use the different residual types</li>
+<li>interpretations of the plots</li>
+<li>an example using <code>redres</code> to assess the assumptions of a linear mixed model</li>
 </ul>
-<p>Additionally, it contains an example using <code>redres</code> to assess the assumptions of a linear mixed model.</p>
+<p>Additionally, more information is available at the package <a href="https://goodekat.github.io/redres/">website</a>.</p>
 </div>
 </div>
   </div>

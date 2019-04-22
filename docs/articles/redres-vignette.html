@@ -80,7 +80,7 @@
       <h1>redres: Redress Your Mixed Model Assumptions</h1>
                         <h4 class="author">R Package Version 0.1.0.9</h4>
             
-            <h4 class="date">2019-04-21</h4>
+            <h4 class="date">2019-04-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/goodekat/redres.git/blob/master/vignettes/redres-vignette.Rmd"><code>vignettes/redres-vignette.Rmd</code></a></small>
       <div class="hidden name"><code>redres-vignette.Rmd</code></div>
@@ -89,18 +89,40 @@
 
     
     
-<div id="introduction-to-redres" class="section level1">
+<div id="introduction" class="section level1">
 <h1 class="hasAnchor">
-<a href="#introduction-to-redres" class="anchor"></a>Introduction to <code>redres</code>
-</h1>
+<a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>The Merriam-Webster dictionary defines <a href="https://www.merriam-webster.com/dictionary/redress">redress</a> as “to set right”.</p>
+</div>
+<div id="package-functions" class="section level1">
+<h1 class="hasAnchor">
+<a href="#package-functions" class="anchor"></a>Package Functions</h1>
+<p>Section describing what each function does, how to use the function, and how to interpret the plots…</p>
+<div id="redres" class="section level2">
+<h2 class="hasAnchor">
+<a href="#redres" class="anchor"></a>redres</h2>
+</div>
+<div id="plot_resid" class="section level2">
+<h2 class="hasAnchor">
+<a href="#plot_resid" class="anchor"></a>plot_resid</h2>
+</div>
+<div id="plot_genres" class="section level2">
+<h2 class="hasAnchor">
+<a href="#plot_genres" class="anchor"></a>plot_genres</h2>
+</div>
+<div id="plot_raneff" class="section level2">
+<h2 class="hasAnchor">
+<a href="#plot_raneff" class="anchor"></a>plot_raneff</h2>
+</div>
+<div id="shiny-app-function" class="section level2">
+<h2 class="hasAnchor">
+<a href="#shiny-app-function" class="anchor"></a>shiny app function</h2>
+</div>
 </div>
 <div id="residual-types" class="section level1">
 <h1 class="hasAnchor">
 <a href="#residual-types" class="anchor"></a>Residual Types</h1>
-<div id="linear-model-theory" class="section level2">
-<h2 class="hasAnchor">
-<a href="#linear-model-theory" class="anchor"></a>Linear Model Theory</h2>
+<p>Section on how to compute the different residual types and when to use them…</p>
 <p>The linear mixed effects model can be written as <span class="math display">\[\textbf{Y}=\textbf{X}\boldsymbol{\beta}+\textbf{Z}\boldsymbol{\gamma}+\boldsymbol{\epsilon}\]</span> where</p>
 <ul>
 <li>
@@ -117,7 +139,6 @@
 <span class="math inline">\(\boldsymbol{\epsilon}\)</span> is an <span class="math inline">\(n\times1\)</span> vector of random errors.</li>
 </ul>
 <p>By assumption, it is the case that…</p>
-</div>
 <div id="raw" class="section level2">
 <h2 class="hasAnchor">
 <a href="#raw" class="anchor"></a>Raw</h2>
@@ -141,9 +162,14 @@
 <div id="studentized" class="section level2">
 <h2 class="hasAnchor">
 <a href="#studentized" class="anchor"></a>Studentized</h2>
-<div id="lmer-residuals" class="section level3">
-<h3 class="hasAnchor">
-<a href="#lmer-residuals" class="anchor"></a>lmer residuals</h3>
+<ul>
+<li>marginal:</li>
+<li>conditional:</li>
+</ul>
+</div>
+<div id="lmer-residuals" class="section level2">
+<h2 class="hasAnchor">
+<a href="#lmer-residuals" class="anchor"></a>lmer residuals</h2>
 <ul>
 <li>`type = response, scaled = “FALSE``: <span class="math inline">\(Y-X\hat{\beta}\)</span>
 </li>
@@ -154,11 +180,14 @@
 </li>
 </ul>
 </div>
-</div>
 <div id="genearlized" class="section level2">
 <h2 class="hasAnchor">
 <a href="#genearlized" class="anchor"></a>Genearlized</h2>
 </div>
+</div>
+<div id="example" class="section level1">
+<h1 class="hasAnchor">
+<a href="#example" class="anchor"></a>Example</h1>
 </div>
   </div>
 
@@ -167,16 +196,26 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#introduction-to-redres">Introduction to <code>redres</code></a></li>
+<li><a href="#introduction">Introduction</a></li>
+      <li>
+<a href="#package-functions">Package Functions</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#redres">redres</a></li>
+      <li><a href="#plot_resid">plot_resid</a></li>
+      <li><a href="#plot_genres">plot_genres</a></li>
+      <li><a href="#plot_raneff">plot_raneff</a></li>
+      <li><a href="#shiny-app-function">shiny app function</a></li>
+      </ul>
+</li>
       <li>
 <a href="#residual-types">Residual Types</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#linear-model-theory">Linear Model Theory</a></li>
-      <li><a href="#raw">Raw</a></li>
+<li><a href="#raw">Raw</a></li>
       <li><a href="#pearson">Pearson</a></li>
       <li><a href="#studentized">Studentized</a></li>
+      <li><a href="#lmer-residuals">lmer residuals</a></li>
       <li><a href="#genearlized">Genearlized</a></li>
       </ul>
 </li>
+      <li><a href="#example">Example</a></li>
       </ul>
 </div>
       </div>
