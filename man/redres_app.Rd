@@ -6,6 +6,9 @@
 \usage{
 redres_app(model)
 }
+\arguments{
+\item{model}{model input...}
+}
 \description{
 app app
 }
