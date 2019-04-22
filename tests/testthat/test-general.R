@@ -35,14 +35,13 @@ test_that("returns vector of length of data", {
   expect_true(is.vector(genres(model1)))
 })
 
-#test_that("residuals are uniform", {
+test_that("residuals are uniform", {
 
   # Kolmogorov Smirnov Test
-#  ks2 <- ks.test(genres(model2), y = "punif")
+  ks2 <- ks.test(genres(model2), y = "punif")
+  expect_equal(ks2$p.value, 0.516083, tolerance = 0.0001)
 
-#  expect_that(ks2$p.value, equals(0.5160834), tolerance = 0.0001)
-
-#})
+})
 
 test_that("wrong input triggers warning", {
   non_rand_model <- lm(SeedlingWeight ~ Genotype, data = d)
