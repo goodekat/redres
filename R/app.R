@@ -3,11 +3,11 @@
 #' @description
 #' app app
 #'
-#' @param model model input...
+#' @param model Model fit using \code{lmer}.
 #'
 #' @importFrom plotly ggplotly plotlyOutput renderPlotly
 #'
-#' @importFrom shiny checkboxInput div fileInput h5 helpText mainPanel navbarPage plotOutput radioButtons reactive renderPlot selectInput shinyApp sidebarLayout sidebarPanel tabPanel tabsetPanel tags p uiOutput verbatimTextOutput
+#' @import shiny
 #' @export redres_app
 
 

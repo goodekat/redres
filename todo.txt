@@ -6,6 +6,11 @@ Package:
   - add comments about able to format plots using ggplot2
   - Kellie will finish her documentation
   - Kellie will work on plot_raneff
+  - TravisCI and Codecov.io integration
+  - add badges for test coverage
+  - check that there is minimal documentation for all non-exported functions
+  - finish documentation for shiny launch function
+  - add app function example to readme and roxygen comments
 
 Shiny app:
   - write a function that activates the app from our package
@@ -18,6 +23,13 @@ Shiny app:
 
 Vignette:
   - write!
+  - KG: residual types (except generalized) and notational set-up
+  - KG: package functions
+  - KM: introduction
+  - KM: generalized residuals
+  - KM: plot quantile functions
+  - find data set for example section
+  - walk through analysis of data for example section
 
 Other:
   - make a sticker
