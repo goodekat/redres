@@ -24,7 +24,7 @@ Shiny app:
 Vignette:
   - write!
   - KG: residual types (except generalized) and notational set-up
-  - KG: package functions
+  - KG: describe package functions
   - KM: introduction
   - KM: generalized residuals
   - KM: plot quantile functions
