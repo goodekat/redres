@@ -52,6 +52,14 @@ where
 - $\boldsymbol{\epsilon}$ is an $n\times1$ vector of random errors.
 
 By assumption, it is the case that...
+$$ 
+\begin{bmatrix} \boldsymbol{\gamma} \\ \boldsymbol{\epsilon} \end{bmatrix}
+  \sim N 
+    \begin{pmatrix} 
+      \begin{bmatrix} \boldsymbol{0} \\ \boldsymbol{0} \end{bmatrix},
+      \begin{bmatrix} \textbf{G} & \boldsymbol{0} \\ \boldsymbol{0} & \textbf{R} \end{bmatrix}
+    \end{pmatrix}
+$$
 
 ## Raw
 
@@ -78,7 +86,12 @@ By assumption, it is the case that...
 - `type = "pearson", scaled = "FALSE`: $(Y-X\hat{\beta}) / w_i$ where $w_i$ is the user specified weights (set to 1 if not specified)
 - `type = "pearson", scaled = "TRUE`: $(Y-X\hat{\beta}) / \sigma$
 
-## Genearlized
+## Generalized
+For linear mixed models, we assume that for $i = 1, \ldots, n$, that 
+$$ E(Y_i) = \textbf{X}\boldsymbol{\beta} $$
+and $$ Var(Y_i) = \textbf{Z}\textbf{G}\textbf{Z}^{T} + \textbf{R}$$
+
+Seems like we would not have independent observations if we fit an AR(1) model or CS... Is this even an option in lmer?
 
 # Example
 
