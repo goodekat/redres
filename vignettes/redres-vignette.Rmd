@@ -24,17 +24,39 @@ The Merriam-Webster dictionary defines [redress](https://www.merriam-webster.com
 
 # Package Functions 
 
-Section describing what each function does, how to use the function, and how to interpret the plots...
+`redres` contains various functions that provide different ways to assess model assumptions for linear mixed models fit using `lmer`. The function range from returning a vector of residuals to be used by the user as desired to opening a Shiny app that allows the user to interactively assess the model with package provided tools. A brief description of each function is listed below.
 
-## redres
+- [redres](#redres): computes and returns residuals given a model and a specified residual type
+- [plot_resid](#plot_resid): creates a plot of residuals versus fitted values for a given residual type
+- [plot_genres](#plot_genres): creates a uniform quantile plot for generalized residuals
+- [plot_raneff](#plot_raneff): creates a normal quantile plot for the random effects
+- [redres_app](#redres_app): opens an interactive Shiny app with 
 
-## plot_resid
+Each of these functions has a subsection below that describes in further detail what the function does, how to use it, and how to interpret the output.
 
-## plot_genres
+## redres {#redres}
 
-## plot_raneff
+The function `redres` app can be used to compute a handful of residual types for models fit using `lmer` including some not available through `lme4`. The function has two input options. 
 
-## Quantile plots
+- `model`: A model fit using `lmer` for which the residuals will be computed.
+- `type`:	A character string identifying the type of residual that will be computed. By default, the raw conditional residuals are returned. The following are the options available for type.
+      - `"genres"`: generalized residuals
+      - `"pearson_cond"`: Pearson conditional residuals
+      - `"pearson_mar"`: Pearson marginal residuals
+      - `"raw_cond"`: raw conditional residuals (default)
+      - `"raw_mar"`: raw marginal residuals
+      - `"std_cond"`: studentized conditional residuals
+      - `"std_mar"`: studentized marginal residuals  
+      
+See the section on [residual types](#types) for details on how the residuals are computed and their purpose.
+
+## plot_resid {#plot_resid}
+
+## plot_genres {#plot_genres}
+
+## plot_raneff {#plot_raneff}
+
+### Quantile plots
 
 Quantile plots are used to verify visually if data follows are particular distribution. Data points are plotted along the quantiles of the assumed distributed. The data is expected to follow an approximately straight line, at least along the middle quantiles. The points are assessed for any extreme curvation that would indicate a departure from the assumed distribution. Typically curvature at the extreme ends of the quantiles (around 0 and 1) are ignored as data is sparse here and distributions behave more erratically at the boundaries of the parameter space. We have added confidence bands to guide the user.  
 
@@ -42,9 +64,9 @@ The function `plot_ranef` plots each random effect vector along the normal quant
 
 To assess all model assumptions together, the user can view the generalized residual plot called by `plot_genres`. If the specified model is reasonable for the data, then the generalized residuals should follow an independent sample from a continuous $Uniform(0,1)$.  Thus, by plotting the generalized residuals against the quantiles of a uniform distribution, the user can detect obvious departures from the model. The details of how the generalized residuals are calculated is below. (include hyperlink?)
 
-## shiny app function
+## redres_app {#redres_app}
 
-# Residual Types
+# Residual Types {#types}
 
 Section on how to compute the different residual types and when to use them...
 
