@@ -220,7 +220,7 @@ and $$ Var(Y_i) = \textbf{Z}\textbf{G}\textbf{Z}^{T} + \textbf{R}$$
 
 Seems like we would not have independent observations if we fit an AR(1) model or CS... Is this even an option in lmer?
 
-# Example
+# Application
 
 
 

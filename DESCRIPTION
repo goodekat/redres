@@ -24,7 +24,8 @@ Imports:
   plotly,
   qqplotr,
   shiny,
-  stats
+  stats,
+  vdiffr
 Suggests: 
   dplyr,
   rmarkdown,
