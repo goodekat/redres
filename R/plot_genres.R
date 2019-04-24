@@ -1,10 +1,10 @@
 #' Generalized residual quantile plot
 #'
 #' @description
-#' Use to compare the generalized residuals to the uniform quantiles. Obvious departures indicate
-#' a lack of fit.
+#' Use to compare the generalized residuals to the continuous uniform quantiles.
+#' Obvious departures indicate that the assumed model is inadequate to describe the observed data.
 #'
-#' @param model Model fit using \code{lmer} from lme4 package.
+#' @param model Model fit using \code{lmer}.
 #'
 #' @importFrom checkmate expect_class
 #' @importFrom ggplot2 aes_string ggplot theme_bw xlab ylab
@@ -14,8 +14,10 @@
 #' @return A generalized residual quantile plot.
 #'
 #' @details
-#' First section what is a generalized residual. Reiterate diagnostics.
-#' Second section assumptions of lmer model
+#' Generalized residuals should be approximately Uniform(0,1) distributed if the model is
+#' adequate for the data. See the
+#' \href{https://goodekat.github.io/redres/articles/redres-vignette.html#genearlized}{vignette}
+#' for details on how generalized residuals are computed.
 #'
 #' @examples
 #' # fits a linear mixed effect model using lme4 where model has a

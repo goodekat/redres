@@ -7,18 +7,20 @@
 plot_genres(model)
 }
 \arguments{
-\item{model}{Model fit using \code{lmer} from lme4 package.}
+\item{model}{Model fit using \code{lmer}.}
 }
 \value{
 A generalized residual quantile plot.
 }
 \description{
-Use to compare the generalized residuals to the uniform quantiles. Obvious departures indicate
-a lack of fit.
+Use to compare the generalized residuals to the continuous uniform quantiles.
+Obvious departures indicate that the assumed model is inadequate to describe the observed data.
 }
 \details{
-First section what is a generalized residual. Reiterate diagnostics.
-Second section assumptions of lmer model
+Generalized residuals should be approximately Uniform(0,1) distributed if the model is
+adequate for the data. See the
+\href{https://goodekat.github.io/redres/articles/redres-vignette.html#genearlized}{vignette}
+for details on how generalized residuals are computed.
 }
 \examples{
 # fits a linear mixed effect model using lme4 where model has a

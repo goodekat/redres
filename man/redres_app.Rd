@@ -7,7 +7,7 @@
 redres_app(model)
 }
 \arguments{
-\item{model}{model input...}
+\item{model}{Model fit using \code{lmer}.}
 }
 \description{
 app app
