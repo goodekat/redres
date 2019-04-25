@@ -2,13 +2,28 @@
 % Please edit documentation in R/app.R
 \name{redres_app}
 \alias{redres_app}
-\title{App for 'redressing' linear mixed models}
+\title{Shiny App for 'redressing' linear mixed models}
 \usage{
-redres_app(model)
+redres_app(model=name_model)
 }
 \arguments{
-\item{model}{Model fit using \code{lmer}.}
+\item{model}{Model fit using \code{lmer} function from lme4 package.}
 }
 \description{
-app app
+This is a shiny app for model diagnoistic of mixed model using \code{lmer} function from lme4 package.
+This app includes residual plot computed from six types of residuals (conditional raw, Pearson, and
+studentized, marginal raw, Pearson, and studentized, and generalized residuals) and QQ plot using
+generalized residual. This app can also be used to do model selection through pairwise comparison
+two models from different linear mixed models using lmer function.
+}
+\examples{
+# fits a linear mixed effects model
+library(lme4)
+fm1 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
+redres_app(model=fm1)
+# comparing two different linear mixed effects models
+fm1 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
+fm2 <- lmer(Reaction ~ Days + (1|Subject) + (0+Days|Subject), sleepstudy)
+cmbd <- c(fm1,fm2)
+redres_app (model=cmbd )
 }

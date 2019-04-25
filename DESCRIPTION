@@ -25,7 +25,8 @@ Imports:
   qqplotr,
   shiny,
   stats,
-  vdiffr
+  vdiffr,
+  cowplot
 Suggests: 
     dplyr,
     rmarkdown,
