@@ -7,6 +7,10 @@ always_allow_html: yes
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<!-- badges: start -->
+  [![Codecov test coverage](https://codecov.io/gh/goodekat/redres/branch/master/graph/badge.svg)](https://codecov.io/gh/goodekat/redres?branch=master)
+<!-- badges: end -->
+  
 # redres
 
 `redres` is an R package developed to help with diagnosing linear mixed models fit using the function `lmer` from the lme4 package. This package both computes residuals types and creates plots that are not available from lme4.

@@ -1,4 +1,7 @@
 
+<!-- badges: start -->
+[![Codecov test coverage](https://codecov.io/gh/goodekat/redres/branch/master/graph/badge.svg)](https://codecov.io/gh/goodekat/redres?branch=master) <!-- badges: end -->
+
 redres
 ======
 
