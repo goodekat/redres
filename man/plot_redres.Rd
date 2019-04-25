@@ -4,7 +4,7 @@
 \alias{plot_redres}
 \title{Diagnostic residual plot for linear mixed models}
 \usage{
-plot_redres(model, type = "raw_cond")
+plot_redres(model, type = "raw_cond", xvar = NULL)
 }
 \arguments{
 \item{model}{Model fit using \code{lmer}.}
@@ -13,6 +13,8 @@ plot_redres(model, type = "raw_cond")
 See \code{\link{redres}} for details of available types.
 Note that the type of \code{genres} is not available for this plot
 since it is not meaningful for generalized residuals.}
+
+\item{xvar}{String indicates the variable to be plotted at the x axis.}
 }
 \value{
 A plot of residuals versus fitted values.
@@ -29,6 +31,9 @@ fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
 
 # Plot raw conditional residuals by fitted values.
 plot_redres(fm1)
+
+Plot raw conditional residuals by selected variables `Days`.
+plot_redres(fm1, xvar = "Days")
 
 # Plot standardized conditional residuals by fitted values.
 plot_redres(fm1, type = "std_cond")

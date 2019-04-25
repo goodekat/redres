@@ -10,6 +10,7 @@
 #'             See \code{\link{redres}} for details of available types.
 #'             Note that the type of \code{genres} is not available for this plot
 #'             since it is not meaningful for generalized residuals.
+#' @param xvar String indicates the variable to be plotted at the x axis.
 #'
 #' @importFrom broom augment
 #' @importFrom ggplot2 aes_string geom_point ggplot xlab ylab geom_hline theme_bw
@@ -25,10 +26,13 @@
 #' # Plot raw conditional residuals by fitted values.
 #' plot_redres(fm1)
 #'
+#' Plot raw conditional residuals by selected variables `Days`.
+#' plot_redres(fm1, xvar = "Days")
+#'
 #' # Plot standardized conditional residuals by fitted values.
 #' plot_redres(fm1, type = "std_cond")
 
-plot_redres <- function(model, type = "raw_cond") {
+plot_redres <- function(model, type = "raw_cond", xvar = NULL) {
 
   # Error checks
   checkmate::expect_class(model, "lmerMod",
@@ -36,10 +40,16 @@ plot_redres <- function(model, type = "raw_cond") {
   checkmate::expect_string(type, info = "The input residual type for plot_redres must be a string.")
   checkmate::expect_choice(type, choices = c("raw_cond", "raw_mar", "pearson_cond", "pearson_mar", "std_cond", "std_mar"),
                            info = "The residual type specified is not available in plot_redres.")
+  if(!is.null(xvar) == TRUE) {
+    checkmate::expect_string(xvar, info = "The input variable for plot_redres must be a string.")
+  }
 
   # Put residuals and fitted values in a data frame
   df <- data.frame(Residual = redres(model = model, type = type),
                    Fitted = broom::augment(model)$.fitted)
+  if(!is.null(xvar) == TRUE) {
+    df$Xvar <- broom::augment(model)[[xvar]]
+  }
 
   # Specify y-axis label based on residual type
   if (type == "raw_cond") {
@@ -63,5 +73,14 @@ plot_redres <- function(model, type = "raw_cond") {
     ylab(label = ylabel) +
     geom_hline(yintercept = 0) +
     theme_bw()
+
+  if(!is.null(xvar) == TRUE) {
+    ggplot(df, aes_string(x = "Xvar", y = "Residual")) +
+      geom_point() +
+      xlab(label = xvar) +
+      ylab(label = ylabel) +
+      geom_hline(yintercept = 0) +
+      theme_bw()
+  }
 
 }
