@@ -144,9 +144,9 @@ All plots created using the `redres` package are formatted to use `theme_bw` fro
 
 ```{r}
 # Applies ggplot2 formatting functions to the output from plot_resid
-plot_redres(m, type = "pearson_cond") + 
-  theme_classic() + 
-  labs(title = "Residual Plot")
+# plot_redres(m, type = "pearson_cond") + 
+#   theme_classic() + 
+#   labs(title = "Residual Plot")
 ```
 
 ## plot_genres {#plot_genres}
