@@ -1,7 +1,9 @@
 #' Normal quantile plots for random effects
 #'
 #' @description
-#' Use to compare the random effects to normal quantiles. How to use for diagnosing...
+#' Plots the vector of all random effects against the normal quantiles. For linear mixed models
+#' random effects are assumed to be normally distributed. This plot can be used to assess the
+#' validity of that assumption.
 #'
 #' @param model Model fit using \code{lmer}.
 #'
@@ -10,9 +12,6 @@
 #' @export plot_raneff
 #'
 #' @return A normal quantile plot for the random effects.
-#'
-#' @details
-#' Why random effects should be normally distributed and diagnosing qq-plot departures.
 #'
 #' @examples
 #' # fits a linear mixed effects model
