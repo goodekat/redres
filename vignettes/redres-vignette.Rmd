@@ -83,7 +83,7 @@ See the section on [residual types](#types) for details on how the residuals are
 
 **Functionality** 
 
-The code below demonstrates the use of `redres` to compute several types of residuals from the model `m`. These residuals are put into a dataframe and joined with the `sleepstudy` data.
+The code below demonstrates the use of `redres` to compute several types of residuals from the model `m`. These residuals are put into a dataframe and joined with the `sleepstudy` data. The user can then use these residuals as desired.
 
 ```{r}
 # Computes the default residuals (raw conditional)
@@ -98,17 +98,6 @@ scr <- redres(m, type = "std_cond")
 # Joins the residuals to the sleepstudy data
 sleepstudy_plus <- cbind(sleepstudy, rcr, pmr, scr)
 head(sleepstudy_plus)
-```
-
-The user can then use the residuals as desired. For example, the user could create their own residual plots.
-
-```{r}
-# Creates a plot of the studentized conditional residuals versus the reaction times
-library(ggplot2)
-ggplot(sleepstudy_plus, aes(x = Reaction, y = scr)) + 
-  geom_point() + 
-  geom_hline(yintercept = 0) + 
-  labs(y = "Studentized Conditional Residuals")
 ```
 
 ## plot_redres {#plot_redres}

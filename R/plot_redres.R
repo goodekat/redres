@@ -10,7 +10,10 @@
 #'             See \code{\link{redres}} for details of available types.
 #'             Note that the type of \code{genres} is not available for this plot
 #'             since it is not meaningful for generalized residuals.
-#' @param xvar String indicates the variable to be plotted at the x axis.
+#' @param xvar String indicates the variable to be plotted at the x-axis. By default,
+#'             the fitted values are plotted on the x-axis. This option allows the user
+#'             to choose a different variable to plotted. Any variables used in the
+#'             lmer model can be specified.
 #'
 #' @importFrom broom augment
 #' @importFrom ggplot2 aes_string geom_point ggplot xlab ylab geom_hline theme_bw
@@ -26,7 +29,7 @@
 #' # Plot raw conditional residuals by fitted values.
 #' plot_redres(fm1)
 #'
-#' Plot raw conditional residuals by selected variables `Days`.
+#' # Plot raw conditional residuals by selected variables `Days`.
 #' plot_redres(fm1, xvar = "Days")
 #'
 #' # Plot standardized conditional residuals by fitted values.
@@ -67,17 +70,17 @@ plot_redres <- function(model, type = "raw_cond", xvar = NULL) {
   }
 
   # Create the residual vs fitted plot
-  ggplot(df, aes_string(x = "Fitted", y = "Residual")) +
-    geom_point() +
-    xlab(label = "Fitted values") +
-    ylab(label = ylabel) +
-    geom_hline(yintercept = 0) +
-    theme_bw()
-
   if(!is.null(xvar) == TRUE) {
     ggplot(df, aes_string(x = "Xvar", y = "Residual")) +
       geom_point() +
       xlab(label = xvar) +
+      ylab(label = ylabel) +
+      geom_hline(yintercept = 0) +
+      theme_bw()
+  } else {
+    ggplot(df, aes_string(x = "Fitted", y = "Residual")) +
+      geom_point() +
+      xlab(label = "Fitted values") +
       ylab(label = ylabel) +
       geom_hline(yintercept = 0) +
       theme_bw()
