@@ -8,8 +8,7 @@
 #' @param model Model fit using \code{lmer}.
 #'
 #' @importFrom cowplot plot_grid
-#' @importFrom ggplot2 aes_string ggplot ggplotGrob theme_bw xlab ylab
-#' @importFrom gridExtra grid.arrange
+#' @importFrom ggplot2 aes_string ggplot theme_bw xlab ylab
 #' @importFrom lme4 ranef
 #' @importFrom purrr pmap
 #' @importFrom qqplotr stat_qq_band stat_qq_line stat_qq_point

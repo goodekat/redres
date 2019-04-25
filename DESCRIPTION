@@ -23,14 +23,17 @@ Imports:
   lme4,
   MASS,
   plotly,
+  purrr,
   qqplotr,
   shiny,
   stats,
+  tidyr,
   vdiffr
 Suggests: 
+    covr,
     dplyr,
     rmarkdown,
-    testthat (>= 2.1.0),
-    covr
+    shinytest,
+    testthat (>= 2.1.0)
 RoxygenNote: 6.1.1
 VignetteBuilder: knitr
