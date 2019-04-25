@@ -38,9 +38,6 @@
 # Function for running shiny app
 redres_app <- function(model) {
 
-  # Error checks
-  checkmate::expect_class(model, "lmerMod",
-                          info = "The input model is not accepted by redres. Model must be fit using 'lmer'.")
   ui <- ui_fun()
   server <- server_fun(model)
 
