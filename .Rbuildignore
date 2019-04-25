@@ -6,3 +6,4 @@
 ^README_files$
 ^todo.txt$
 ^docs$
+^\.travis\.yml$
