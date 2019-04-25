@@ -4,7 +4,7 @@
 \alias{redres_app}
 \title{Shiny App for 'redressing' linear mixed models}
 \usage{
-redres_app(model=name_model)
+redres_app(model)
 }
 \arguments{
 \item{model}{Model fit using \code{lmer} function from lme4 package.}
@@ -17,6 +17,7 @@ generalized residual. This app can also be used to do model selection through pa
 two models from different linear mixed models using lmer function.
 }
 \examples{
+\dontrun{
 # fits a linear mixed effects model
 library(lme4)
 fm1 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
@@ -26,4 +27,5 @@ fm1 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
 fm2 <- lmer(Reaction ~ Days + (1|Subject) + (0+Days|Subject), sleepstudy)
 cmbd <- c(fm1,fm2)
 redres_app (model=cmbd )
+}
 }

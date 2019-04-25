@@ -17,6 +17,7 @@ Imports:
   assertthat,
   broom,
   checkmate,
+  cowplot,
   ggplot2,
   knitr,
   lme4,
@@ -25,12 +26,11 @@ Imports:
   qqplotr,
   shiny,
   stats,
-  vdiffr,
-  cowplot
+  vdiffr
 Suggests: 
     dplyr,
     rmarkdown,
-    testthat,
+    testthat (>= 2.1.0),
     covr
 RoxygenNote: 6.1.1
 VignetteBuilder: knitr

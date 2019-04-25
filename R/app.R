@@ -10,7 +10,7 @@
 #'
 #' @param model Model fit using \code{lmer} function from lme4 package.
 #'
-#' @usage redres_app(model=name_model)
+#' @usage redres_app(model)
 #'
 #' @importFrom cowplot plot_grid
 #' @import shiny
@@ -19,6 +19,7 @@
 #'
 #'
 #' @examples
+#' \dontrun{
 #' # fits a linear mixed effects model
 #' library(lme4)
 #' fm1 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
@@ -29,13 +30,17 @@
 #' fm2 <- lmer(Reaction ~ Days + (1|Subject) + (0+Days|Subject), sleepstudy)
 #' cmbd <- c(fm1,fm2)
 #' redres_app (model=cmbd )
+#' }
 
 
 
 
 # Function for running shiny app
-redres_app <- function(model= name_model) {
+redres_app <- function(model) {
 
+  # Error checks
+  checkmate::expect_class(model, "lmerMod",
+                          info = "The input model is not accepted by redres. Model must be fit using 'lmer'.")
   ui <- ui_fun()
   server <- server_fun(model)
 

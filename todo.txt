@@ -6,8 +6,6 @@ Package:
   - add comments about able to format plots using ggplot2
   - Kellie will finish her documentation
   - Kellie will work on plot_raneff
-  - TravisCI and Codecov.io integration
-  - add badges for test coverage
   - check that there is minimal documentation for all non-exported functions
   - finish documentation for shiny launch function
   - add app function example to readme and roxygen comments
@@ -63,5 +61,5 @@ Other:
   - make a sticker?
 
 Completed:
-
-
+- TravisCI and Codecov.io integration
+- add badges for test coverage
