@@ -18,6 +18,7 @@ test_that("check-plot_resid", {
   expect_error(plot_resid(model_lm))
   expect_error(plot_resid(model, type = "genres"))
   expect_error(plot_resid(model, type = raw_mar))
+  expect_error(plot_resid(model, xvar = Genotype))
 })
 
 # check for doppelgangers

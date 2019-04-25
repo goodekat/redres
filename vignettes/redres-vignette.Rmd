@@ -14,7 +14,9 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.align = "center",
+  fig.width = 5
 )
 ```
 
@@ -22,19 +24,136 @@ knitr::opts_chunk$set(
 
 The Merriam-Webster dictionary defines [redress](https://www.merriam-webster.com/dictionary/redress) as "to set right".
 
+The package can be installed from GitHub using devtools and then loaded in the normal way.
+
+```{r eval = FALSE}
+# Installs redres from GitHub
+devtools::install_github("goodekat/redres")
+```
+
+```{r}
+# Loads the package
+library(redres)
+```
+
 # Package Functions 
 
-Section describing what each function does, how to use the function, and how to interpret the plots...
+`redres` contains various functions that provide different ways to assess model assumptions for linear mixed models fit using `lmer`. The function range from returning a vector of residuals to be used by the user as desired to opening a Shiny app that allows the user to interactively assess the model with package provided tools. A brief description of each function is listed below.
 
-## redres
+- [redres](#redres): computes and returns residuals given a model and a specified residual type
+- [plot_redres](#plot_redres): creates a plot of residuals versus fitted values for a given residual type
+- [plot_genres](#plot_genres): creates a uniform quantile plot for generalized residuals
+- [plot_raneff](#plot_raneff): creates a normal quantile plot for the random effects
+- [redres_app](#redres_app): opens an interactive Shiny app with 
 
-## plot_resid
+Each of these functions has a subsection below that describes in further detail what the function does, how to use it, and how to interpret the output. The functions will be demenstrated using the data `sleepstudy` from the `lme4` package and the linear mixed effects models fit in the code below called `fm1`.
 
-## plot_genres
+```{r}
+# Loads the lme4 libraries
+library(lme4)
 
-## plot_raneff
+# Prints the first 6 rows of the sleepstudy data
+head(sleepstudy)
 
-## Quantile plots
+# Fits a linear mixed effects model to the sleepstudy data
+(m <- lmer(Reaction ~ Days + (Days|Subject), sleepstudy))
+```
+
+## redres {#redres}
+
+The function `redres` app can be used to compute a handful of residual types for models fit using `lmer` including some not available through `lme4`.
+
+**Inputs**
+
+- `model`: A model fit using `lmer` for which the residuals will be computed.
+- `type`:	A character string identifying the type of residual that will be computed. By default, the raw conditional residuals are returned. The following are the options available for type.
+      - `"genres"`: generalized residuals
+      - `"pearson_cond"`: Pearson conditional residuals
+      - `"pearson_mar"`: Pearson marginal residuals
+      - `"raw_cond"`: raw conditional residuals (default)
+      - `"raw_mar"`: raw marginal residuals
+      - `"std_cond"`: studentized conditional residuals
+      - `"std_mar"`: studentized marginal residuals  
+      
+See the section on [residual types](#types) for details on how the residuals are computed and their purpose.
+
+**Output**
+
+- `redres` returns a vector of residuals according to the type specified in the order that the data observations are input into `lmer`.
+
+**Functionality** 
+
+The code below demonstrates the use of `redres` to compute several types of residuals from the model `m`. These residuals are put into a dataframe and joined with the `sleepstudy` data.
+
+```{r}
+# Computes the default residuals (raw conditional)
+rcr <- redres(m)
+
+# Computes the Pearson marginal residuals
+pmr <- redres(m, type = "pearson_mar")
+
+# Computes the studentized conditional residuals
+scr <- redres(m, type = "std_cond")
+
+# Joins the residuals to the sleepstudy data
+sleepstudy_plus <- cbind(sleepstudy, rcr, pmr, scr)
+head(sleepstudy_plus)
+```
+
+The user can then use the residuals as desired. For example, the user could create their own residual plots.
+
+```{r}
+# Creates a plot of the studentized conditional residuals versus the reaction times
+library(ggplot2)
+ggplot(sleepstudy_plus, aes(x = Reaction, y = scr)) + 
+  geom_point() + 
+  geom_hline(yintercept = 0) + 
+  labs(y = "Studentized Conditional Residuals")
+```
+
+## plot_redres {#plot_redres}
+
+The function `plot_redres` is included in the package to allow for the easy creation of a residual plot using `ggplot2` for a linear mixed model fit using `lmer`. `plot_redres` allows the user to specify any residual type to be plotted on the y-axis including those not provided by `lme4`.
+
+**Inputs**
+
+- `model`: A model fit using `lmer` for which the residuals will be computed.
+- `type`:	A character string identifying the type of residual that will be computed. The same options available with [`redres`](#redres) are available for `plot_redres` except for `genres` (since this type of plot does not make sense for `genres) By default, the conditional raw residuals are plotted.
+
+**Output**
+
+- A `ggplot2` object of a scatterplot of the model residuals of the type specified versus the fitted values is created.
+
+**Functionality**
+
+The code below shows how to create the most basic plot using `plot_redres`. By inputing the model `m`, a plot of the conditional raw residuals versus the fitted values is returned. 
+
+```{r}
+# Creates the default residual plot
+plot_redres(m)
+```
+
+The type of residuals can be changed using the `type` option as shown in the code below.
+
+```{r}
+# Creates the residual plot with studentized marginal residuals
+plot_redres(m, type = "std_mar")
+```
+
+All plots created using the `redres` package are formatted to use `theme_bw` from `ggplot2`. However, since `plot_redres` returns a ggplot object, it is possible to use functions provided by `ggplot2` adjust the formatting of the plot.
+
+```{r}
+# Applies ggplot2 formatting functions to the output from plot_resid
+plot_redres(m, type = "pearson_cond") + 
+  theme_classic() + 
+  labs(title = "Residual Plot")
+```
+
+## plot_genres {#plot_genres}
+
+## plot_raneff {#plot_raneff}
+
+### Quantile plots
 
 Quantile plots are used to verify visually if data follows are particular distribution. Data points are plotted along the quantiles of the assumed distributed. The data is expected to follow an approximately straight line, at least along the middle quantiles. The points are assessed for any extreme curvation that would indicate a departure from the assumed distribution. Typically curvature at the extreme ends of the quantiles (around 0 and 1) are ignored as data is sparse here and distributions behave more erratically at the boundaries of the parameter space. We have added confidence bands to guide the user.  
 
@@ -42,9 +161,9 @@ The function `plot_ranef` plots each random effect vector along the normal quant
 
 To assess all model assumptions together, the user can view the generalized residual plot called by `plot_genres`. If the specified model is reasonable for the data, then the generalized residuals should follow an independent sample from a continuous $Uniform(0,1)$.  Thus, by plotting the generalized residuals against the quantiles of a uniform distribution, the user can detect obvious departures from the model. The details of how the generalized residuals are calculated is below. (include hyperlink?)
 
-## shiny app function
+## redres_app {#redres_app}
 
-# Residual Types
+# Residual Types {#types}
 
 Section on how to compute the different residual types and when to use them...
 
@@ -101,7 +220,7 @@ and $$ Var(Y_i) = \textbf{Z}\textbf{G}\textbf{Z}^{T} + \textbf{R}$$
 
 Seems like we would not have independent observations if we fit an AR(1) model or CS... Is this even an option in lmer?
 
-# Example
+# Application
 
 
 
