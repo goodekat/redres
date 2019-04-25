@@ -69,7 +69,7 @@ ui_fun <- function(){
                mainPanel(
                  tabsetPanel(
                    tabPanel("Residual Plot", plotOutput("resid")),
-                   tabPanel("Generalized Residual Quantile Plot",
+                   tabPanel("Residual Quantile Plot",
                             plotOutput("quantile"))
                  ))
              ))
@@ -94,10 +94,10 @@ server_fun <- function (model) {
     })
     output$quantile <- renderPlot({
       if (length(model) == 1){
-        plot_genres(model)
+        plot_resqq(model)
       } else {
-        m1_qq <- plot_genres(model[[1]]) + xlab("model_1")
-        m2_qq <- plot_genres(model[[2]]) + xlab("model_2")
+        m1_qq <- plot_resqq(model[[1]]) + xlab("model_1")
+        m2_qq <- plot_resqq(model[[2]]) + xlab("model_2")
         plot_grid(m1_qq,m2_qq)
       }
     })

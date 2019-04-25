@@ -8,8 +8,6 @@
 #' @param model Model fit using \code{lmer}.
 #' @param type String identifying type of residual. Default is "raw_cond".
 #'             See \code{\link{redres}} for details of available types.
-#'             Note that the type of \code{genres} is not available for this plot
-#'             since it is not meaningful for generalized residuals.
 #' @param xvar String indicates the variable to be plotted at the x-axis. By default,
 #'             the fitted values are plotted on the x-axis. This option allows the user
 #'             to choose a different variable to plotted. Any variables used in the

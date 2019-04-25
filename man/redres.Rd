@@ -18,12 +18,11 @@ Returns residuals according to type specified.
 Computes residuals for linear mixed models fit using \code{lmer} from the lme4.
 It can return seven types of residuals inlcuding options that are not available
 from lme4. These types are conditional raw, Pearson, and studentized, marginal
-raw, Pearson, and studentized, and generalized residuals.
+raw, Pearson, and studentized.
 }
 \details{
 Residual types available
 \itemize{
-  \item \code{"genres"}: generalized residuals
   \item \code{"pearson_cond"}: Pearson conditional residuals
   \item \code{"pearson_mar"}: Pearson marginal residuals
   \item \code{"raw_cond"}: raw conditional residuals (default)

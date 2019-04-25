@@ -20,6 +20,7 @@
 #'
 #' @references Aldor-Noiman, S. et al. (2013). The Power to See: A New Graphical Test of Normality. The American Statistician. 67:4.
 #'
+#' @export plot_resqq
 #' @examples
 #' # fits a linear mixed effect model using lme4 where model has a
 #' # random intercept for Days and random slope for Subject*Days

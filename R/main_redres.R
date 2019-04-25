@@ -4,7 +4,7 @@
 #' Computes residuals for linear mixed models fit using \code{lmer} from the lme4.
 #' It can return seven types of residuals inlcuding options that are not available
 #' from lme4. These types are conditional raw, Pearson, and studentized, marginal
-#' raw, Pearson, and studentized, and generalized residuals.
+#' raw, Pearson, and studentized.
 #'
 #' @usage redres(model, type = "raw_cond")
 #'
@@ -14,7 +14,6 @@
 #' @details
 #' Residual types available
 #' \itemize{
-#'   \item \code{"genres"}: generalized residuals
 #'   \item \code{"pearson_cond"}: Pearson conditional residuals
 #'   \item \code{"pearson_mar"}: Pearson marginal residuals
 #'   \item \code{"raw_cond"}: raw conditional residuals (default)
@@ -47,7 +46,7 @@ redres <- function(model, type = "raw_cond"){
   checkmate::expect_class(model, "lmerMod",
                           info = "The input model is not accepted by redres. Model must be fit using 'lmer'.")
   checkmate::expect_string(type, info = "The input residual type for redres must be a string.")
-  checkmate::expect_choice(type, choices = c("raw_cond", "raw_mar", "pearson_cond", "pearson_mar", "std_cond", "std_mar", "genres"),
+  checkmate::expect_choice(type, choices = c("raw_cond", "raw_mar", "pearson_cond", "pearson_mar", "std_cond", "std_mar"),
                            info = "The residual type specified is not available in redres.")
 
 
@@ -69,9 +68,6 @@ redres <- function(model, type = "raw_cond"){
   }
   else if(type == "std_mar"){
     result <- stdres(model, cond = FALSE)
-  }
-  else if(type == "genres"){
-    result <- genres(model)
   }
 
   # Return the residuals
