@@ -8,8 +8,7 @@
 #' @param model Model fit using \code{lmer}.
 #'
 #' @importFrom cowplot plot_grid
-#' @importFrom ggplot2 aes_string ggplot ggplotGrob theme_bw xlab ylab
-#' @importFrom gridExtra grid.arrange
+#' @importFrom ggplot2 aes_string ggplot theme_bw xlab ylab
 #' @importFrom lme4 ranef
 #' @importFrom purrr pmap
 #' @importFrom qqplotr stat_qq_band stat_qq_line stat_qq_point
@@ -36,7 +35,7 @@ plot_ranef <- function(model){
   bmat <- as.data.frame(lme4::ranef(model))
 
   # converting each random effect vector into one line with nest
-  renest <- tidyr::nest(bmat, -grpvar, -term)
+  renest <- tidyr::nest(bmat, c("grp", "condval", "condsd"))
 
   # generating list of ggplot objects for each random effect vector
   plots <- purrr::pmap(list(renest$data, renest$grpvar, renest$term),
@@ -52,10 +51,6 @@ plot_ranef <- function(model){
                           }
   )
 
-  # Turn the list of plots into a grob
-  #my_grobs <- lapply(plots, ggplot2::ggplotGrob)
-
-  # Create grid of individual plots specified
-  #gridExtra::grid.arrange(grobs = my_grobs, ncol = nrow(renest))
+  # Create grid of all random effect plots
   cowplot::plot_grid(plotlist = plots)
 }

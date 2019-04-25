@@ -25,4 +25,5 @@ test_that("check-plot_raneff", {
 # check for doppelgangers
 test_that("validate-plot_ranef", {
   vdiffr::expect_doppelganger("one_effect", plot_ranef(model))
+  vdiffr::expect_doppelganger("two_effects", plot_ranef(model_2))
 })
