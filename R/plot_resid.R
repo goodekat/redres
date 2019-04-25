@@ -41,7 +41,7 @@ plot_redres <- function(model, type = "raw_cond", xvar = NULL) {
   checkmate::expect_choice(type, choices = c("raw_cond", "raw_mar", "pearson_cond", "pearson_mar", "std_cond", "std_mar"),
                            info = "The residual type specified is not available in plot_redres.")
   if(!is.null(xvar) == TRUE) {
-    checkmate::expect_string(xvar, info = "The input variable for plot_redres must be a string.")
+    checkmate::expect_string(xvar, info = "The input variablecovr::report() for plot_redres must be a string.")
   }
 
   # Put residuals and fitted values in a data frame
