@@ -7,3 +7,4 @@
 ^todo.txt$
 ^docs$
 ^\.travis\.yml$
+^codecov\.yml$

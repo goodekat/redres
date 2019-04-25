@@ -27,8 +27,9 @@ Imports:
   stats,
   vdiffr
 Suggests: 
-  dplyr,
-  rmarkdown,
-  testthat
+    dplyr,
+    rmarkdown,
+    testthat,
+    covr
 RoxygenNote: 6.1.1
 VignetteBuilder: knitr
