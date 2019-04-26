@@ -14,7 +14,6 @@
 #'
 #' @importFrom cowplot plot_grid
 #' @import shiny
-#'
 #' @export redres_app
 #'
 #'

@@ -9,7 +9,7 @@ plot_resqq(model, band = "pointwise")
 \arguments{
 \item{model}{Model fit using \code{lmer}.}
 
-\item{bandType}{String identifying confidence band type. The options are "pointwise" (default) and "ts".}
+\item{band}{String identifying confidence band type. The options are "pointwise" (default) and "ts".}
 }
 \value{
 A generalized residual quantile plot.

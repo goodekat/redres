@@ -61,5 +61,3 @@ Other:
   - make a sticker?
 
 Completed:
-- TravisCI and Codecov.io integration
-- add badges for test coverage

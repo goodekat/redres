@@ -5,12 +5,12 @@
 #' Obvious departures indicate that the assumed model is inadequate to describe the observed data.
 #'
 #' @param model Model fit using \code{lmer}.
-#' @param bandType String identifying confidence band type. The options are "pointwise" (default) and "ts".
+#' @param band String identifying confidence band type. The options are "pointwise" (default) and "ts".
 #'
 #' @importFrom checkmate expect_class
 #' @importFrom ggplot2 aes_string ggplot theme_bw xlab ylab
 #' @importFrom qqplotr stat_qq_band stat_qq_line stat_qq_point
-#' @export plot_genres
+#' @export plot_resqq
 #'
 #' @return A generalized residual quantile plot.
 #'
@@ -20,7 +20,6 @@
 #'
 #' @references Aldor-Noiman, S. et al. (2013). The Power to See: A New Graphical Test of Normality. The American Statistician. 67:4.
 #'
-#' @export plot_resqq
 #' @examples
 #' # fits a linear mixed effect model using lme4 where model has a
 #' # random intercept for Days and random slope for Subject*Days
