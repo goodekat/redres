@@ -3,7 +3,6 @@ To Do
 --------
 
 Package:
-  * KG: add app function example to readme
   * KG: document dataset
 
 Shiny app:
