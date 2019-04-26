@@ -37,8 +37,8 @@
 # Function for running shiny app
 redres_app <- function(model) {
 
-  # make sure model is a list
-  model = list(model)
+  # # make sure model is a list
+  # model = list(model)
 
   if (length(model) == 1){
     checkmate::expect_class(model, "lmerMod",
@@ -72,7 +72,7 @@ ui_fun <- function(){
                     p("group 6", style="font-size:30px")),
         align = "center", style="color:#ffffff; background-color: #4d728d"),
 
-    tabPanel("About"),
+    tabPanel("REDRES_APP"),
 
 
     tabPanel("Plots",

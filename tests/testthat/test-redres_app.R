@@ -13,7 +13,7 @@ model <- lme4::lmer(SeedlingWeight ~ Genotype + (1|Tray), data = d)
 model_lm <- lm(SeedlingWeight ~ Genotype, data = d)
 
 # test error messages
-test_that("check-plot_resid", {
+test_that("check-redres_app", {
   expect_error(redres_app(1))
   expect_error(redres_app(model_lm))
   expect_error(redres_app(c(model, model, model)))
