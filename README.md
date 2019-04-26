@@ -33,7 +33,6 @@ The package contains the following functions.
 
 `redres` computes residuals given an `lmer` model and a specified residual type. The available residuals types are listed below.
 
--   `"genres"`: generalized residuals
 -   `"pearson_cond"`: Pearson conditional residuals
 -   `"pearson_mar"`: Pearson marginal residuals
 -   `"raw_cond"`: raw conditional residuals (default)
@@ -70,7 +69,7 @@ head(resids)
 
 #### plot\_resid
 
-`plot_resid` creates a plot (using `ggplot2`) of the residuals versus the fitted values given a model and a specified residual type. All residuals types listed for `redres` work with `plot_resid` except `genres` since this type of plot is not meaningful for generalized residuals.
+`plot_resid` creates a plot (using `ggplot2`) of the residuals versus the fitted values given a model and a specified residual type. All residuals types listed for `redres` work with `plot_resid`.
 
 ``` r
 # creates a plot of the conditional studentized residuals versus the fitted values
@@ -81,29 +80,36 @@ plot_redres(m, type = "std_cond")
 
 #### plot\_resqq
 
-`plot_resqq` (Kellie - want to fill in this section)
+`plot_resqq` creates a normal quantile plot (using `ggplot2` and `qqplotr`) of the raw conditional residuals, `raw_cond`. By the assumptions of a model fit using `lmer` these residuals are expected to be normally distributed. Obvious departures indicate an invalid assumption. See [vignette](https://goodekat.github.io/redres/articles/redres-vignette.html) for more details about interpreting quantile plots.
 
 ``` r
-# creates a generalized residual quantile plot
+# creates a residual quantile plot for the error term
 plot_resqq(m)
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-5-1.png)
 
-#### plot\_raneff
+#### plot\_ranef
 
-`plot_raneff`... (Kellie - want to fill in this section as well)
+`plot_ranef` creates normal quantile plots for all random effects in the model. Under the assumptions of a `lmer` model, each random effect term is normally distributed. This function will return a grid of plots fit using `ggplot2` and `qqplotr`.
 
 ``` r
-# creates a normal quantile plot of the random effects
+# creates normal quantile plots for each random effect
 plot_ranef(m)
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-6-1.png)
 
-#### (shiny app function)
+#### redres\_app
 
-`(shiny app function)`...to be filled in in once available
+`redres_app` opens a Shiny app that includes interactive panels to view the diagnostic plots from a model. The function can be used by inputting one or two models into the app in the form of a vector. If two models are input, the residual plots will be shown side by side in the app. Screen shots of the app are shown below.
+
+``` r
+# opens the app
+redres_app(m)
+```
+
+![](./inst/figures/app1.png) ![](./inst/figures/app2.png)
 
 Learn More
 ----------

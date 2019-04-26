@@ -124,7 +124,7 @@ Obvious departures indicate that the assumed model is inadequate to describe the
     
     </div>
 
-    <pre class="usage"><span class='fu'>plot_resqq</span>(<span class='no'>model</span>, <span class='kw'>band</span> <span class='kw'>=</span> <span class='st'>"pointwise"</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_resqq</span>(<span class='no'>model</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -132,10 +132,6 @@ Obvious departures indicate that the assumed model is inadequate to describe the
     <tr>
       <th>model</th>
       <td><p>Model fit using <code>lmer</code>.</p></td>
-    </tr>
-    <tr>
-      <th>band</th>
-      <td><p>String identifying confidence band type. The options are "pointwise" (default) and "ts".</p></td>
     </tr>
     </table>
     
@@ -145,12 +141,7 @@ Obvious departures indicate that the assumed model is inadequate to describe the
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Use "pointwise" for bands based on normal confidence intervals. For tail-sensitive confidence
-bands, use "ts". Tail-sensitive bands are constructed as described by Aldor-Noiman et al. (2013)</p>
-    
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Aldor-Noiman, S. et al. (2013). The Power to See: A New Graphical Test of Normality. The American Statistician. 67:4.</p>
+    <p>Confidence bands are constructed from pointwise normal confidence intervals.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -160,8 +151,7 @@ bands, use "ts". Tail-sensitive bands are constructed as described by Aldor-Noim
 <span class='no'>fm1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Reaction</span> ~ <span class='no'>Days</span> + (<span class='no'>Days</span> <span class='kw'>|</span> <span class='no'>Subject</span>), <span class='no'>sleepstudy</span>)
 
 <span class='co'># check that error term is normally distributed</span>
-<span class='fu'>plot_resqq</span>(<span class='no'>fm1</span>)</div><div class='img'><img src='plot_resqq-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># quantile plot with tail sensitity confidence bands</span>
-<span class='fu'>plot_resqq</span>(<span class='no'>fm1</span>, <span class='kw'>band</span> <span class='kw'>=</span> <span class='st'>"ts"</span>)</div><div class='img'><img src='plot_resqq-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>plot_resqq</span>(<span class='no'>fm1</span>)</div><div class='img'><img src='plot_resqq-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -171,8 +161,6 @@ bands, use "ts". Tail-sensitive bands are constructed as described by Aldor-Noim
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-
-      <li><a href="#references">References</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

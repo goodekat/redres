@@ -67,7 +67,6 @@ The function `redres` app can be used to compute a handful of residual types for
 
 - `model`: A model fit using `lmer` for which the residuals will be computed.
 - `type`:	A character string identifying the type of residual that will be computed. By default, the raw conditional residuals are returned. The following are the options available for type.
-      - `"genres"`: generalized residuals
       - `"pearson_cond"`: Pearson conditional residuals
       - `"pearson_mar"`: Pearson marginal residuals
       - `"raw_cond"`: raw conditional residuals (default)
@@ -107,7 +106,7 @@ The function `plot_redres` is included in the package to allow for the easy crea
 **Inputs**
 
 - `model`: A model fit using `lmer` for which the residuals will be computed.
-- `type`:	A character string identifying the type of residual that will be computed. The same options available with [`redres`](#redres) are available for `plot_redres` except for `genres` (since this type of plot does not make sense for `genres) By default, the conditional raw residuals are plotted.
+- `type`:	A character string identifying the type of residual that will be computed. The same options available with [`redres`](#redres) are available for `plot_redres`. By default, the conditional raw residuals are plotted.
 
 **Output**
 

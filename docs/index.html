@@ -109,8 +109,6 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <p><code>redres</code> computes residuals given an <code>lmer</code> model and a specified residual type. The available residuals types are listed below.</p>
 <ul>
 <li>
-<code>"genres"</code>: generalized residuals</li>
-<li>
 <code>"pearson_cond"</code>: Pearson conditional residuals</li>
 <li>
 <code>"pearson_mar"</code>: Pearson marginal residuals</li>
@@ -150,7 +148,7 @@ resids &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocu
 <div id="plot_resid" class="section level4">
 <h4 class="hasAnchor">
 <a href="#plot_resid" class="anchor"></a>plot_resid</h4>
-<p><code>plot_resid</code> creates a plot (using <code>ggplot2</code>) of the residuals versus the fitted values given a model and a specified residual type. All residuals types listed for <code>redres</code> work with <code>plot_resid</code> except <code>genres</code> since this type of plot is not meaningful for generalized residuals.</p>
+<p><code>plot_resid</code> creates a plot (using <code>ggplot2</code>) of the residuals versus the fitted values given a model and a specified residual type. All residuals types listed for <code>redres</code> work with <code>plot_resid</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># creates a plot of the conditional studentized residuals versus the fitted values</span>
 <span class="kw"><a href="reference/plot_redres.html">plot_redres</a></span>(m, <span class="dt">type =</span> <span class="st">"std_cond"</span>)</code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
@@ -158,23 +156,25 @@ resids &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocu
 <div id="plot_resqq" class="section level4">
 <h4 class="hasAnchor">
 <a href="#plot_resqq" class="anchor"></a>plot_resqq</h4>
-<p><code>plot_resqq</code> (Kellie - want to fill in this section)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># creates a generalized residual quantile plot</span>
+<p><code>plot_resqq</code> creates a normal quantile plot (using <code>ggplot2</code> and <code>qqplotr</code>) of the raw conditional residuals, <code>raw_cond</code>. By the assumptions of a model fit using <code>lmer</code> these residuals are expected to be normally distributed. Obvious departures indicate an invalid assumption. See <a href="https://goodekat.github.io/redres/articles/redres-vignette.html">vignette</a> for more details about interpreting quantile plots.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># creates a residual quantile plot for the error term</span>
 <span class="kw"><a href="reference/plot_resqq.html">plot_resqq</a></span>(m)</code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 </div>
-<div id="plot_raneff" class="section level4">
+<div id="plot_ranef" class="section level4">
 <h4 class="hasAnchor">
-<a href="#plot_raneff" class="anchor"></a>plot_raneff</h4>
-<p><code>plot_raneff</code>… (Kellie - want to fill in this section as well)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># creates a normal quantile plot of the random effects</span>
+<a href="#plot_ranef" class="anchor"></a>plot_ranef</h4>
+<p><code>plot_ranef</code> creates normal quantile plots for all random effects in the model. Under the assumptions of a <code>lmer</code> model, each random effect term is normally distributed. This function will return a grid of plots fit using <code>ggplot2</code> and <code>qqplotr</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># creates normal quantile plots for each random effect</span>
 <span class="kw"><a href="reference/plot_ranef.html">plot_ranef</a></span>(m)</code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
-<div id="shiny-app-function" class="section level4">
+<div id="redres_app" class="section level4">
 <h4 class="hasAnchor">
-<a href="#shiny-app-function" class="anchor"></a>(shiny app function)</h4>
-<p><code>(shiny app function)</code>…to be filled in in once available</p>
+<a href="#redres_app" class="anchor"></a>redres_app</h4>
+<p><code>redres_app</code> opens a Shiny app that includes interactive panels to view the diagnostic plots from a model. The function can be used by inputing one or two models into the app in the form of a vector. If two models are input, the residual plots will be shown side by side in the app. Screen shots of the app are shown below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># opens the app</span>
+<span class="kw"><a href="reference/redres_app.html">redres_app</a></span>(m)</code></pre></div>
 </div>
 </div>
 <div id="learn-more" class="section level2">
