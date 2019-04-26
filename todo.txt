@@ -3,19 +3,17 @@ To Do
 --------
 
 Package:
-  * KG: document dataset
 
 Shiny app:
   * YZ: add tab for plot_ranef
   * H: add xvar option to shiny app
   - J+YZ+H: figure out how to test the app (maybe could have an error check)
 
-Vignette:
-  - KG: residual types (except generalized) and notational set-up
-  - KG: describe package functions
+Vignette (use paprika data for whole vignette):
   - KM: introduction
-  - KM: plot quantile functions
-  - walk through analysis of data for example section
+  - KG: residual type section
+  - KM: plot section
+  - KG: shiny app
 
 Presentation:
 
