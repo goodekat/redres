@@ -37,6 +37,22 @@
 # Function for running shiny app
 redres_app <- function(model) {
 
+  # make sure model is a list
+  model = list(model)
+
+  if (length(model) == 1){
+    checkmate::expect_class(model, "lmerMod",
+                            info = "The input model is not accepted by redres. Model must be fit using 'lmer'.")
+  } else if (length(model) == 2){
+    checkmate::expect_class(model[[1]], "lmerMod",
+                            info = "The first input model is not accepted by redres. Model must be fit using 'lmer'.")
+    checkmate::expect_class(model[[2]], "lmerMod",
+                            info = "The second input model is not accepted by redres. Model must be fit using 'lmer'.")
+  } else {
+    stop("redres_app currently only accepts 1 or 2 models.")
+  }
+
+
   ui <- ui_fun()
   server <- server_fun(model)
 

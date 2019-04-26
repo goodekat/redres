@@ -25,7 +25,12 @@ test_that("check-plot_resid", {
 # check for doppelgangers
 test_that("validate-plot_resid", {
   vdiffr::expect_doppelganger("basic", plot_redres(model))
+  vdiffr::expect_doppelganger("raw_mar", plot_redres(model, type = "raw_mar"))
+  vdiffr::expect_doppelganger("pearson_cond", plot_redres(model, type = "pearson_cond"))
   vdiffr::expect_doppelganger("pearson_mar", plot_redres(model, type = "pearson_mar"))
+  vdiffr::expect_doppelganger("std_cond", plot_redres(model, type = "std_cond"))
+  vdiffr::expect_doppelganger("std_mar", plot_redres(model, type = "std_mar"))
   vdiffr::expect_doppelganger("xvar", plot_redres(model, xvar = "Genotype"))
   vdiffr::expect_doppelganger("xvar_person_mar", plot_redres(model, xvar = "Genotype", type = "pearson_mar"))
+
 })

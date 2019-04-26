@@ -1,3 +1,5 @@
+# stdres: This is a function that is used to identify conditional or marginal studentized
+# residules from the model.
 
 #' @importFrom lme4 VarCorr
 #' @importFrom MASS ginv

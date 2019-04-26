@@ -3,30 +3,19 @@ To Do
 --------
 
 Package:
-  - add comments about able to format plots using ggplot2
-  - Kellie will finish her documentation
-  - Kellie will work on plot_raneff
-  - check that there is minimal documentation for all non-exported functions
-  - finish documentation for shiny launch function
-  - add app function example to readme and roxygen comments
+  * KG: add app function example to readme
+  * KG: document dataset
 
 Shiny app:
-  - write a function that activates the app from our package
-  - see code here for example function:https://github.com/r-lib/vdiffr/blob/master/R/cases-ui.R)
-  - have an option for changing the variable on the y-axis
-  - have an option for plots to show (could be as tabs)
-  - make plots interactive using plotly
-  - have an option for residual type
-  - could print out observation in a table when point is clicked on the plot
+  * YZ: add tab for plot_ranef
+  * H: add xvar option to shiny app
+  - J+YZ+H: figure out how to test the app (maybe could have an error check)
 
 Vignette:
-  - write!
   - KG: residual types (except generalized) and notational set-up
   - KG: describe package functions
   - KM: introduction
-  - KM: generalized residuals
   - KM: plot quantile functions
-  - find data set for example section
   - walk through analysis of data for example section
 
 Presentation:
@@ -59,5 +48,3 @@ Jing
 
 Other:
   - make a sticker?
-
-Completed:

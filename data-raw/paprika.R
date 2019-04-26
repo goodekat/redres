@@ -19,13 +19,8 @@ paprika <- paprika_raw %>%
 #usethis::use_data(paprika, overwrite = TRUE)
 
 # example models
-# mix <- lmer(Height ~ Rep + Treatmnt*Variety + (1|Rep:Treatmnt), data = paprika_sub)
-# plot_redres(mix)
+#mix <- lmer(height ~ rep + treatment*variety + (1|rep:treatment), data = paprika)
+#plot_redres(mix)
 #
-# mixl <- lmer(log(Height) ~ Rep + Treatmnt*Variety + (1|Rep:Treatmnt), data = paprika_sub)
-# plot_redres(mixl)
-#
-# mixs <- lmer(sqrt(Height) ~ Rep + Treatmnt*Variety + (1|Rep:Treatmnt), data = paprika_sub)
-# plot_redres(mixs)
-#
-# plot_raneff(mix)
+#mixl <- lmer(log(height) ~ rep + treatment*variety + (1|rep:treatment), data = paprika)
+#plot_redres(mixl)
