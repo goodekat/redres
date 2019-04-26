@@ -76,7 +76,9 @@ ui_fun <- function(){
                            choices = c("raw_cond", "raw_mar",
                                        "pearson_cond", "pearson_mar",
                                        "std_cond", "std_mar"), selected = "raw_cond")),
+                           checkboxInput("xvar", label = "Choice xvar", value = TRUE),
                mainPanel(
+                 verbatimTextOutput("value"),
                  tabsetPanel(
                    tabPanel("Residual Plot", plotOutput("resid"))
                  ))
@@ -100,17 +102,36 @@ server_fun <- function (model) {
 
   shiny::shinyServer( function(input, output) {
 
+    input$xvar <- broom::augment(model)[[xvar]]
+    output$value <- renderPrint({ input$xvar })
+    
     output$resid <- renderPlot({
+
       if (length(model) == 1){
-        plot_redres(model, input$residual_type)
-      } else {
-        m1_resid <- plot_redres(model[[1]], input$residual_type) + xlab("model_1")
-        m2_resid <- plot_redres(model[[2]], input$residual_type) + xlab("model_2")
-        plot_grid(m1_resid, m2_resid)
+        if(!is.null(xvar) == TRUE){
+        plot_redres(model, input$residual_type, input$xvar)
+        }
+        else{
+          plot_redres(model, input$residual_type)
+        }
+      }
+      else{
+        if(!is.null(xvar) == TRUE){
+          m1_resid <- plot_redres(model[[1]], input$residual_type, input$xvar) + xlab("model_1")
+          m2_resid <- plot_redres(model[[2]], input$residual_type, input$xvar) + xlab("model_2")
+          plot_grid(m1_resid,m2_resid)
+        }
+        else{
+          m1_resid <- plot_redres(model[[1]], input$residual_type) + xlab("model_1")
+          m2_resid <- plot_redres(model[[2]], input$residual_type) + xlab("model_2")
+          plot_grid(m1_resid,m2_resid)
+
+        }
+
       }
     })
 
-    output$rand_eff_quantile <- renderPlot({
+    output$rand_eff_quantile <- renderPlot({   
       if (length(model) == 1){
         plot_ranef(model)
       } else {
