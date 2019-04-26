@@ -38,6 +38,9 @@ plot_resqq <- function(model, band = "pointwise"){
   checkmate::expect_class(model, "lmerMod",
                           info = "The input model is not accepted by plot_resqq. Model must be fit using 'lmer'.")
 
+
+  checkmate::expect_string(band, info = "The input confidence band type for plot_resqq must be a string.")
+
   # Return an error if non-supported band type is entered
   if(!(band %in% list("pointwise", "ts"))){
     warning("The confidence band option for quantile plot was not specified correctly.
