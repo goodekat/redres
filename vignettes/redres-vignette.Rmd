@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 
 # Introducing redres
 
-## Redressing your Mixed Model
+## Overview
 
 (motivation for the package on having tools for diagnosting mixed models) The Merriam-Webster dictionary defines [redress](https://www.merriam-webster.com/dictionary/redress) as "to set right".
 
