@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_resqq.R
 \name{plot_resqq}
 \alias{plot_resqq}
-\title{Generalized residual quantile plot}
+\title{Normal quantile plot for residuals.}
 \usage{
 plot_resqq(model)
 }
@@ -13,8 +13,8 @@ plot_resqq(model)
 A generalized residual quantile plot.
 }
 \description{
-Use to compare the generalized residuals to the continuous uniform quantiles.
-Obvious departures indicate that the assumed model is inadequate to describe the observed data.
+Creates a normal quantile plot of the raw conditional residuals. By the assumptions
+of a model fit using \code{lmer} these residuals are expected to be normally distributed.
 }
 \details{
 Confidence bands are constructed from pointwise normal confidence intervals.

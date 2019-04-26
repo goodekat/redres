@@ -21,11 +21,11 @@ two models from different linear mixed models using lmer function.
 # fits a linear mixed effects model
 library(lme4)
 fm1 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
-redres_app(model=fm1)
+redres_app(model = fm1)
 # comparing two different linear mixed effects models
 fm1 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
 fm2 <- lmer(Reaction ~ Days + (1|Subject) + (0+Days|Subject), sleepstudy)
 cmbd <- c(fm1,fm2)
-redres_app (model=cmbd )
+redres_app(model = cmbd)
 }
 }

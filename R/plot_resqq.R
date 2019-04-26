@@ -1,8 +1,8 @@
-#' Generalized residual quantile plot
+#' Normal quantile plot for residuals.
 #'
 #' @description
-#' Use to compare the generalized residuals to the continuous uniform quantiles.
-#' Obvious departures indicate that the assumed model is inadequate to describe the observed data.
+#' Creates a normal quantile plot of the raw conditional residuals. By the assumptions
+#' of a model fit using \code{lmer} these residuals are expected to be normally distributed.
 #'
 #' @param model Model fit using \code{lmer}.
 #'

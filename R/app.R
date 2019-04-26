@@ -22,16 +22,14 @@
 #' # fits a linear mixed effects model
 #' library(lme4)
 #' fm1 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
-#' redres_app(model=fm1)
+#' redres_app(model = fm1)
 
 #' # comparing two different linear mixed effects models
 #' fm1 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
 #' fm2 <- lmer(Reaction ~ Days + (1|Subject) + (0+Days|Subject), sleepstudy)
 #' cmbd <- c(fm1,fm2)
-#' redres_app (model=cmbd )
+#' redres_app(model = cmbd)
 #' }
-
-
 
 
 # Function for running shiny app
@@ -66,16 +64,13 @@ ui_fun <- function(){
 
   navbarPage(
     theme = "yeti",
-    tags$title(" "),
+    tags$title(""),
     div(tags$header(p("Diagnostic Plots under Linear Mixed-effects Model",
                       style="font-size:40px"),
                     p("group 6", style="font-size:30px")),
         align = "center", style="color:#ffffff; background-color: #4d728d"),
 
-    tabPanel("REDRES_APP"),
-
-
-    tabPanel("Plots",
+    tabPanel("Residual Plot",
              sidebarLayout(sidebarPanel(
                selectInput("residual_type", "Residual type",
                            choices = c("raw_cond", "raw_mar",
@@ -83,11 +78,19 @@ ui_fun <- function(){
                                        "std_cond", "std_mar"), selected = "raw_cond")),
                mainPanel(
                  tabsetPanel(
-                   tabPanel("Residual Plot", plotOutput("resid")),
+                   tabPanel("Residual Plot", plotOutput("resid"))
+                 ))
+             )),
+
+    tabPanel("Quantile Plot",
+               mainPanel(
+                 tabsetPanel(
+                   tabPanel("Random Effects Quantile Plot",
+                            plotOutput("rand_eff_quantile")),
                    tabPanel("Residual Quantile Plot",
                             plotOutput("quantile"))
                  ))
-             ))
+             )
   )
 
 }
@@ -98,22 +101,32 @@ server_fun <- function (model) {
   shiny::shinyServer( function(input, output) {
 
     output$resid <- renderPlot({
-
       if (length(model) == 1){
         plot_redres(model, input$residual_type)
       } else {
         m1_resid <- plot_redres(model[[1]], input$residual_type) + xlab("model_1")
         m2_resid <- plot_redres(model[[2]], input$residual_type) + xlab("model_2")
-        plot_grid(m1_resid,m2_resid)
+        plot_grid(m1_resid, m2_resid)
       }
     })
+
+    output$rand_eff_quantile <- renderPlot({
+      if (length(model) == 1){
+        plot_ranef(model)
+      } else {
+        m1_rand_quant <- plot_ranef(model[[1]]) + labs(tag = "model_1")
+        m2_rand_quant <- plot_ranef(model[[2]]) + labs(tag = "model_2")
+        plot_grid(m1_rand_quant, m2_rand_quant, nrow = 2)
+      }
+    })
+
     output$quantile <- renderPlot({
       if (length(model) == 1){
         plot_resqq(model)
       } else {
         m1_qq <- plot_resqq(model[[1]]) + xlab("model_1")
         m2_qq <- plot_resqq(model[[2]]) + xlab("model_2")
-        plot_grid(m1_qq,m2_qq)
+        plot_grid(m1_qq, m2_qq)
       }
     })
   })
