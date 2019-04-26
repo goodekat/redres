@@ -44,7 +44,7 @@ Kellie
 - why would you want to use the different residuals?
 
 Yudi
-- introduce and demonstrate plotting functions (plot_redres, plot_raneff, plot_genres)
+- introduce and demonstrate plotting functions (plot_redres, plot_raneff, plot_resqq)
 - explain how to read the plots
 - show how it can be used with ggplot2 formatting functions
 

@@ -76,13 +76,13 @@ head(resids)
 plot_redres(m, type = "std_cond")
 ```
 
-#### plot_genres
+#### plot_resqq
 
-`plot_genres` (Kellie - want to fill in this section)
+`plot_resqq` (Kellie - want to fill in this section)
 
 ```{r}
 # creates a generalized residual quantile plot
-plot_genres(m)
+plot_resqq(m)
 ```
 
 
@@ -92,7 +92,7 @@ plot_genres(m)
 
 ```{r}
 # creates a normal quantile plot of the random effects
-plot_raneff(m)
+plot_ranef(m)
 ```
 
 #### (shiny app function)

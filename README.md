@@ -1,11 +1,11 @@
 
-<!-- badges: start -->
-[![Build Status](https://travis-ci.org/goodekat/redres.svg?branch=master)](https://travis-ci.org/goodekat/redres) [![Codecov test coverage](https://codecov.io/gh/goodekat/redres/branch/master/graph/badge.svg)](https://codecov.io/gh/goodekat/redres?branch=master) <!-- badges: end -->
-
 redres
 ======
 
 `redres` is an R package developed to help with diagnosing linear mixed models fit using the function `lmer` from the lme4 package. This package both computes residuals types and creates plots that are not available from lme4.
+
+<!-- badges: start -->
+[![Build Status](https://travis-ci.org/goodekat/redres.svg?branch=master)](https://travis-ci.org/goodekat/redres) [![Codecov test coverage](https://codecov.io/gh/goodekat/redres/branch/master/graph/badge.svg)](https://codecov.io/gh/goodekat/redres?branch=master) <!-- badges: end -->
 
 Installation
 ------------
@@ -79,13 +79,13 @@ plot_redres(m, type = "std_cond")
 
 ![](README_files/figure-markdown_github/unnamed-chunk-4-1.png)
 
-#### plot\_genres
+#### plot\_resqq
 
-`plot_genres` (Kellie - want to fill in this section)
+`plot_resqq` (Kellie - want to fill in this section)
 
 ``` r
 # creates a generalized residual quantile plot
-plot_genres(m)
+plot_resqq(m)
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-5-1.png)
@@ -96,7 +96,7 @@ plot_genres(m)
 
 ``` r
 # creates a normal quantile plot of the random effects
-plot_raneff(m)
+plot_ranef(m)
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-6-1.png)
