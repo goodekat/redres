@@ -20,14 +20,8 @@ test_that("check-errors", {
   # not a model fit using lmer
   expect_error(plot_resqq(model_lm))
 
-  # band input not a string
-  expect_error(plot_resqq(model, band = ts))
-
-  # incorrect band type
-  expect_that(plot_resqq(model, band = "boot"), gives_warning())
 })
 
 test_that("validate-plot_bands", {
   vdiffr::expect_doppelganger("pointwise_b", plot_resqq(model))
-  #vdiffr::expect_doppelganger("ts_b", plot_resqq(model, band = "ts"))
 })

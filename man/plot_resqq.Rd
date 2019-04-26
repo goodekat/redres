@@ -4,12 +4,10 @@
 \alias{plot_resqq}
 \title{Generalized residual quantile plot}
 \usage{
-plot_resqq(model, band = "pointwise")
+plot_resqq(model)
 }
 \arguments{
 \item{model}{Model fit using \code{lmer}.}
-
-\item{band}{String identifying confidence band type. The options are "pointwise" (default) and "ts".}
 }
 \value{
 A generalized residual quantile plot.
@@ -19,8 +17,7 @@ Use to compare the generalized residuals to the continuous uniform quantiles.
 Obvious departures indicate that the assumed model is inadequate to describe the observed data.
 }
 \details{
-Use "pointwise" for bands based on normal confidence intervals. For tail-sensitive confidence
-bands, use "ts". Tail-sensitive bands are constructed as described by Aldor-Noiman et al. (2013)
+Confidence bands are constructed from pointwise normal confidence intervals.
 }
 \examples{
 # fits a linear mixed effect model using lme4 where model has a
@@ -30,9 +27,4 @@ fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
 
 # check that error term is normally distributed
 plot_resqq(fm1)
-# quantile plot with tail sensitity confidence bands
-plot_resqq(fm1, band = "ts")
-}
-\references{
-Aldor-Noiman, S. et al. (2013). The Power to See: A New Graphical Test of Normality. The American Statistician. 67:4.
 }
