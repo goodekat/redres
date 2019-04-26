@@ -5,6 +5,7 @@ date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
     toc: true
+    toc_depth: 2
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
@@ -20,9 +21,25 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Introduction
+# Introducing redres
 
-The Merriam-Webster dictionary defines [redress](https://www.merriam-webster.com/dictionary/redress) as "to set right".
+## Redressing your Mixed Model
+
+(motivation for the package on having tools for diagnosting mixed models) The Merriam-Webster dictionary defines [redress](https://www.merriam-webster.com/dictionary/redress) as "to set right".
+
+## Package Structure
+
+(describe the three ways to use the package)
+
+`redres` contains various functions that provide different ways to assess model assumptions for linear mixed models fit using `lmer`. The function range from returning a vector of residuals to be used by the user as desired to opening a Shiny app that allows the user to interactively assess the model with package provided tools. A brief description of each function is listed below.
+
+- [redres](#redres): computes and returns residuals given a model and a specified residual type
+- [plot_redres](#plot_redres): creates a plot of residuals versus fitted values for a given residual type
+- [plot_resqq](#plot_resqq): creates a normal quantile plot for conditional residuals
+- [plot_raneff](#plot_raneff): creates a normal quantile plot for the random effects
+- [redres_app](#redres_app): opens an interactive Shiny app with 
+
+## Installation
 
 The package can be installed from GitHub using devtools and then loaded in the normal way.
 
@@ -36,17 +53,7 @@ devtools::install_github("goodekat/redres")
 library(redres)
 ```
 
-# Package Functions 
-
-`redres` contains various functions that provide different ways to assess model assumptions for linear mixed models fit using `lmer`. The function range from returning a vector of residuals to be used by the user as desired to opening a Shiny app that allows the user to interactively assess the model with package provided tools. A brief description of each function is listed below.
-
-- [redres](#redres): computes and returns residuals given a model and a specified residual type
-- [plot_redres](#plot_redres): creates a plot of residuals versus fitted values for a given residual type
-- [plot_resqq](#plot_resqq): creates a normal quantile plot for conditional residuals
-- [plot_raneff](#plot_raneff): creates a normal quantile plot for the random effects
-- [redres_app](#redres_app): opens an interactive Shiny app with 
-
-Each of these functions has a subsection below that describes in further detail what the function does, how to use it, and how to interpret the output. The functions will be demenstrated using the data `sleepstudy` from the `lme4` package and the linear mixed effects models fit in the code below called `fm1`.
+# Extracting Residuals
 
 ```{r}
 # Loads the lme4 libraries
@@ -59,9 +66,53 @@ head(sleepstudy)
 (m <- lmer(Reaction ~ Days + (Days|Subject), sleepstudy))
 ```
 
-## redres {#redres}
+## Residual Types {#types}
+
+Section on how to compute the different residual types and when to use them...
+
+The linear mixed effects model can be written as
+  $$\textbf{Y}=\textbf{X}\boldsymbol{\beta}+\textbf{Z}\boldsymbol{\gamma}+\boldsymbol{\epsilon}$$
+where
+
+- $\textbf{Y}$ is an $n\times 1$ vector of $n$ response variable observations,
+- $\textbf{X}$ is an $n\times p$ matrix of $p$ explanatory variables with $n$ observations each,
+- $\boldsymbol{\beta}$ is a $p\times1$ vector of unknown fixed effects parameters,
+- $\textbf{Z}$ is an $n\times q$ matrix of $q$ random effect variables with $n$ observations each,
+- $\boldsymbol{\gamma}$ is a $q\times1$ vector of unknown random effects, and
+- $\boldsymbol{\epsilon}$ is an $n\times1$ vector of random errors.
+
+By assumption, it is the case that...
+$$ 
+\begin{bmatrix} \boldsymbol{\gamma} \\ \boldsymbol{\epsilon} \end{bmatrix}
+  \sim N 
+    \begin{pmatrix} 
+      \begin{bmatrix} \boldsymbol{0} \\ \boldsymbol{0} \end{bmatrix},
+      \begin{bmatrix} \textbf{G} & \boldsymbol{0} \\ \boldsymbol{0} & \textbf{R} \end{bmatrix}
+    \end{pmatrix}
+$$
+
+### Raw
+
+- marginal: 
+  $$\textbf{r}^m_i = Y_i-\textbf{x}'_i\hat{\boldsymbol{\beta}}$$
+- conditional:
+  $$\textbf{r}^c_i = Y_i-\textbf{x}'_i\hat{\boldsymbol{\beta}}-\textbf{z}'_i\hat{\boldsymbol{\gamma}}$$
+
+### Pearson
+
+- marginal: 
+  $$\textbf{r}^{m,pearson}_{i} = \frac{r^m_i}{\sqrt{\hat{Var[Y_i]}}}$$
+- conditional: 
+  $$\textbf{r}^{c,pearson}_{i} = \frac{r^m_i}{\sqrt{\hat{Var[Y_i|\boldsymbol{\gamma}]}}}$$
+
+### Studentized
+
+- marginal:
+- conditional:
 
 The function `redres` app can be used to compute a handful of residual types for models fit using `lmer` including some not available through `lme4`.
+
+## Usage
 
 **Inputs**
 
@@ -99,7 +150,19 @@ sleepstudy_plus <- cbind(sleepstudy, rcr, pmr, scr)
 head(sleepstudy_plus)
 ```
 
-## plot_redres {#plot_redres}
+# Plotting Residuals
+
+## Residual Plots 
+
+## Quantile plots
+
+Quantile plots are used to verify visually if data follows are particular distribution. Data points are plotted along the quantiles of the assumed distributed. The data is expected to follow an approximately straight line, at least along the middle quantiles. The points are assessed for any extreme curvation that would indicate a departure from the assumed distribution. Typically curvature at the extreme ends of the quantiles (around 0 and 1) are ignored as data is sparse here and distributions behave more erratically at the boundaries of the parameter space. We have added confidence bands to guide the user.  
+
+The function `plot_ranef` plots each random effect vector along the normal quantiles. From the assumptions of the linear mixed model, each random effect specified - along with the error term - is assumed to follow a normal distribution. Therefore, these plots can be used to assess if this assumption is met. Note that the number of plots generated by this function will vary for each model, with the number of plots being the number of random effects.
+
+## Usage
+
+### plot_redres {#plot_redres}
 
 The function `plot_redres` is included in the package to allow for the easy creation of a residual plot using `ggplot2` for a linear mixed model fit using `lmer`. `plot_redres` allows the user to specify any residual type to be plotted on the y-axis including those not provided by `lme4`.
 
@@ -138,63 +201,15 @@ plot_redres(m, type = "pearson_cond") +
   labs(title = "Residual Plot")
 ```
 
-## plot_resqq {#plot_resqq}
+### plot_resqq {#plot_resqq}
 
-## plot_ranef {#plot_ranef}
+### plot_ranef {#plot_ranef}
 
-### Quantile plots
+# Interacting with Residuals
 
-Quantile plots are used to verify visually if data follows are particular distribution. Data points are plotted along the quantiles of the assumed distributed. The data is expected to follow an approximately straight line, at least along the middle quantiles. The points are assessed for any extreme curvation that would indicate a departure from the assumed distribution. Typically curvature at the extreme ends of the quantiles (around 0 and 1) are ignored as data is sparse here and distributions behave more erratically at the boundaries of the parameter space. We have added confidence bands to guide the user.  
+## Shiny App {#redres_app}
 
-The function `plot_ranef` plots each random effect vector along the normal quantiles. From the assumptions of the linear mixed model, each random effect specified - along with the error term - is assumed to follow a normal distribution. Therefore, these plots can be used to assess if this assumption is met. Note that the number of plots generated by this function will vary for each model, with the number of plots being the number of random effects.  
-
-## redres_app {#redres_app}
-
-# Residual Types {#types}
-
-Section on how to compute the different residual types and when to use them...
-
-The linear mixed effects model can be written as
-  $$\textbf{Y}=\textbf{X}\boldsymbol{\beta}+\textbf{Z}\boldsymbol{\gamma}+\boldsymbol{\epsilon}$$
-where
-
-- $\textbf{Y}$ is an $n\times 1$ vector of $n$ response variable observations,
-- $\textbf{X}$ is an $n\times p$ matrix of $p$ explanatory variables with $n$ observations each,
-- $\boldsymbol{\beta}$ is a $p\times1$ vector of unknown fixed effects parameters,
-- $\textbf{Z}$ is an $n\times q$ matrix of $q$ random effect variables with $n$ observations each,
-- $\boldsymbol{\gamma}$ is a $q\times1$ vector of unknown random effects, and
-- $\boldsymbol{\epsilon}$ is an $n\times1$ vector of random errors.
-
-By assumption, it is the case that...
-$$ 
-\begin{bmatrix} \boldsymbol{\gamma} \\ \boldsymbol{\epsilon} \end{bmatrix}
-  \sim N 
-    \begin{pmatrix} 
-      \begin{bmatrix} \boldsymbol{0} \\ \boldsymbol{0} \end{bmatrix},
-      \begin{bmatrix} \textbf{G} & \boldsymbol{0} \\ \boldsymbol{0} & \textbf{R} \end{bmatrix}
-    \end{pmatrix}
-$$
-
-## Raw
-
-- marginal: 
-  $$\textbf{r}^m_i = Y_i-\textbf{x}'_i\hat{\boldsymbol{\beta}}$$
-- conditional:
-  $$\textbf{r}^c_i = Y_i-\textbf{x}'_i\hat{\boldsymbol{\beta}}-\textbf{z}'_i\hat{\boldsymbol{\gamma}}$$
-
-## Pearson
-
-- marginal: 
-  $$\textbf{r}^{m,pearson}_{i} = \frac{r^m_i}{\sqrt{\hat{Var[Y_i]}}}$$
-- conditional: 
-  $$\textbf{r}^{c,pearson}_{i} = \frac{r^m_i}{\sqrt{\hat{Var[Y_i|\boldsymbol{\gamma}]}}}$$
-
-## Studentized
-
-- marginal:
-- conditional:
-
-# Application
+## Usage
 
 
 
