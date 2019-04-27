@@ -5,7 +5,6 @@ To Do
 Package:
 
 Shiny app:
-  * H: add xvar option to shiny app
   - J+YZ+H: figure out how to test the app (maybe could have an error check)
 
 Vignette (use paprika data for whole vignette):
