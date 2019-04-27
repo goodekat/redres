@@ -36,9 +36,7 @@
 # Function for running shiny app
 redres_app <- function(model) {
 
-  # # make sure model is a list
-  # model = list(model)
-
+  # error checks for input model(s)
   if (length(model) == 1){
     checkmate::expect_class(model, "lmerMod",
                             info = "The input model is not accepted by redres. Model must be fit using 'lmer'.")
@@ -51,22 +49,26 @@ redres_app <- function(model) {
     stop("redres_app currently only accepts 1 or 2 models.")
   }
 
-
+  # create ui and server with the input model
   ui <- ui_fun(model)
   server <- server_fun(model)
 
+  # create the app
   redresApp <- shinyApp(ui, server)
+
+  # run the app
   shiny::runApp(redresApp, display.mode = "normal")
 
 }
 
-# Shiny app
+# function to create the app ui given the model
 ui_fun <- function(model){
 
   navbarPage(
+    title = "redres app",
+    windowTitle = "redres app",
     theme = "yeti",
-    tags$title(""),
-    div(tags$header(p("Diagnostic Plots under Linear Mixed-effects Model",
+    div(tags$header(p("Diagnostic Plots for Linear Mixed-effects Model",
                       style="font-size:40px"),
                     p("group 6", style="font-size:30px")),
         align = "center", style="color:#ffffff; background-color: #4d728d"),
@@ -110,7 +112,7 @@ ui_fun <- function(model){
 
 }
 
-
+# function to create the app server given the model
 server_fun <- function (model) {
 
   shiny::shinyServer( function(input, output) {
