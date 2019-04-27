@@ -51,7 +51,7 @@ redres_app <- function(model) {
   }
 
 
-  ui <- ui_fun()
+  ui <- ui_fun(model)
   server <- server_fun(model)
 
   redresApp <- shinyApp(ui, server)
@@ -60,7 +60,7 @@ redres_app <- function(model) {
 }
 
 # Shiny app
-ui_fun <- function(){
+ui_fun <- function(model){
 
   navbarPage(
     theme = "yeti",
@@ -71,18 +71,18 @@ ui_fun <- function(){
         align = "center", style="color:#ffffff; background-color: #4d728d"),
 
     tabPanel("Residual Plot",
-             sidebarLayout(sidebarPanel(
-               selectInput("residual_type", "Residual type",
-                           choices = c("raw_cond", "raw_mar",
-                                       "pearson_cond", "pearson_mar",
-                                       "std_cond", "std_mar"), selected = "raw_cond")),
-                           checkboxInput("xvar", label = "Choice xvar", value = TRUE),
-               mainPanel(
-                 verbatimTextOutput("value"),
-                 tabsetPanel(
-                   tabPanel("Residual Plot", plotOutput("resid"))
-                 ))
-             )),
+               sidebarPanel(
+                 selectInput(inputId = "residual_type",
+                             label = "Residual type",
+                             choices = c("raw_cond", "raw_mar",
+                                         "pearson_cond", "pearson_mar",
+                                         "std_cond", "std_mar"),
+                             selected = "raw_cond"),
+                 selectInput(inputId = "xvar",
+                             label = "X-axis variable",
+                             choices = c("Fitted values", names(model@frame)))),
+               mainPanel(plotOutput("resid"))
+             ),
 
     tabPanel("Quantile Plot",
                mainPanel(
@@ -102,21 +102,18 @@ server_fun <- function (model) {
 
   shiny::shinyServer( function(input, output) {
 
-    input$xvar <- broom::augment(model)[[xvar]]
-    output$value <- renderPrint({ input$xvar })
-    
     output$resid <- renderPlot({
 
       if (length(model) == 1){
-        if(!is.null(xvar) == TRUE){
-        plot_redres(model, input$residual_type, input$xvar)
+        if(input$xvar != "Fitted values"){
+          plot_redres(model, input$residual_type, xvar = input$xvar)
         }
         else{
           plot_redres(model, input$residual_type)
         }
       }
       else{
-        if(!is.null(xvar) == TRUE){
+        if(input$xvar != "Fitted values"){
           m1_resid <- plot_redres(model[[1]], input$residual_type, input$xvar) + xlab("model_1")
           m2_resid <- plot_redres(model[[2]], input$residual_type, input$xvar) + xlab("model_2")
           plot_grid(m1_resid,m2_resid)
@@ -125,13 +122,11 @@ server_fun <- function (model) {
           m1_resid <- plot_redres(model[[1]], input$residual_type) + xlab("model_1")
           m2_resid <- plot_redres(model[[2]], input$residual_type) + xlab("model_2")
           plot_grid(m1_resid,m2_resid)
-
         }
-
       }
     })
 
-    output$rand_eff_quantile <- renderPlot({   
+    output$rand_eff_quantile <- renderPlot({
       if (length(model) == 1){
         plot_ranef(model)
       } else {
