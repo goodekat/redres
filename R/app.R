@@ -78,9 +78,16 @@ ui_fun <- function(model){
                                          "pearson_cond", "pearson_mar",
                                          "std_cond", "std_mar"),
                              selected = "raw_cond"),
-                 selectInput(inputId = "xvar",
-                             label = "X-axis variable",
-                             choices = c("Fitted values", names(model@frame)))),
+                 if (length(model) == 1){
+                   selectInput(inputId = "xvar",
+                               label = "X-axis variable",
+                               choices = c("Fitted values", names(model@frame)))
+                 } else {
+                   selectInput(inputId = "xvar",
+                               label = "X-axis variable",
+                               choices = c("Fitted values", names(model[[1]]@frame)))
+                 }
+                 ),
                mainPanel(plotOutput("resid"))
              ),
 
