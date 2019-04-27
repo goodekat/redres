@@ -13,6 +13,7 @@
 #' @usage redres_app(model)
 #'
 #' @importFrom cowplot plot_grid
+#' @importFrom ggplot2 ggtitle labs
 #' @import shiny
 #' @export redres_app
 #'
@@ -83,15 +84,20 @@ ui_fun <- function(model){
                                label = "X-axis variable",
                                choices = c("Fitted values", names(model@frame)))
                  } else {
-                   selectInput(inputId = "xvar",
-                               label = "X-axis variable",
+                   selectInput(inputId = "xvar1",
+                               label = "Model 1 x-axis variable",
                                choices = c("Fitted values", names(model[[1]]@frame)))
+                 },
+                 if (length(model) != 1){
+                   selectInput(inputId = "xvar2",
+                               label = "Model 2 x-axis variable",
+                               choices = c("Fitted values", names(model[[2]]@frame)))
                  }
                  ),
                mainPanel(plotOutput("resid"))
              ),
 
-    tabPanel("Quantile Plot",
+    tabPanel("Quantile Plots",
                mainPanel(
                  tabsetPanel(
                    tabPanel("Random Effects Quantile Plot",
@@ -113,23 +119,37 @@ server_fun <- function (model) {
 
       if (length(model) == 1){
         if(input$xvar != "Fitted values"){
-          plot_redres(model, input$residual_type, xvar = input$xvar)
+          plot_redres(model, input$residual_type, xvar = input$xvar) +
+            xlab(input$xvar)
         }
         else{
-          plot_redres(model, input$residual_type)
+          plot_redres(model, input$residual_type) +
+            xlab("Fitted values")
         }
       }
       else{
-        if(input$xvar != "Fitted values"){
-          m1_resid <- plot_redres(model[[1]], input$residual_type, input$xvar) + xlab("model_1")
-          m2_resid <- plot_redres(model[[2]], input$residual_type, input$xvar) + xlab("model_2")
-          plot_grid(m1_resid,m2_resid)
+        if(input$xvar1 != "Fitted values"){
+          m1_resid <- plot_redres(model[[1]], input$residual_type, input$xvar1) +
+            xlab(input$xvar1) +
+            ggtitle("Model 1")
         }
         else{
-          m1_resid <- plot_redres(model[[1]], input$residual_type) + xlab("model_1")
-          m2_resid <- plot_redres(model[[2]], input$residual_type) + xlab("model_2")
-          plot_grid(m1_resid,m2_resid)
+          m1_resid <- plot_redres(model[[1]], input$residual_type) +
+            xlab("Fitted values") +
+            ggtitle("Model 1")
         }
+
+        if (input$xvar2 != "Fitted values"){
+          m2_resid <- plot_redres(model[[2]], input$residual_type, input$xvar2) +
+            xlab(input$xvar2) +
+            ggtitle("Model 2")
+        }
+        else{
+          m2_resid <- plot_redres(model[[2]], input$residual_type) +
+            xlab(input$xvar2) +
+            ggtitle("Model 2")
+        }
+        plot_grid(m1_resid, m2_resid)
       }
     })
 
@@ -137,8 +157,8 @@ server_fun <- function (model) {
       if (length(model) == 1){
         plot_ranef(model)
       } else {
-        m1_rand_quant <- plot_ranef(model[[1]]) + labs(tag = "model_1")
-        m2_rand_quant <- plot_ranef(model[[2]]) + labs(tag = "model_2")
+        m1_rand_quant <- plot_ranef(model[[1]]) + labs(tag = "Model 1")
+        m2_rand_quant <- plot_ranef(model[[2]]) + labs(tag = "Model 2")
         plot_grid(m1_rand_quant, m2_rand_quant, nrow = 2)
       }
     })
@@ -147,8 +167,8 @@ server_fun <- function (model) {
       if (length(model) == 1){
         plot_resqq(model)
       } else {
-        m1_qq <- plot_resqq(model[[1]]) + xlab("model_1")
-        m2_qq <- plot_resqq(model[[2]]) + xlab("model_2")
+        m1_qq <- plot_resqq(model[[1]]) + xlab("Model 1")
+        m2_qq <- plot_resqq(model[[2]]) + xlab("Model 2")
         plot_grid(m1_qq, m2_qq)
       }
     })
