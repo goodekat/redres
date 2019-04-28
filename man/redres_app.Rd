@@ -12,8 +12,8 @@ redres_app(model)
 \description{
 This is a shiny app for model diagnoistic of mixed model using \code{lmer} function from lme4 package.
 This app includes residual plot computed from six types of residuals (conditional raw, Pearson, and
-studentized, marginal raw, Pearson, and studentized, and generalized residuals) and QQ plot using
-generalized residual. This app can also be used to do model selection through pairwise comparison
+studentized, marginal raw, Pearson, and studentized) and normal quantile plot using of random effect
+and error term. This app can also be used to do model selection through pairwise comparison
 two models from different linear mixed models using lmer function.
 }
 \examples{
