@@ -53,18 +53,24 @@ devtools::install_github("goodekat/redres")
 library(redres)
 ```
 
-# Extracting Residuals
+## Example Data
 
 ```{r}
 # Loads the lme4 libraries
 library(lme4)
 
-# Prints the first 6 rows of the sleepstudy data
-head(sleepstudy)
+# Prints the first 6 rows of the paprika data
+head(paprika)
 
-# Fits a linear mixed effects model to the sleepstudy data
-(m <- lmer(Reaction ~ Days + (Days|Subject), sleepstudy))
+m <- lmer(height ~ 
+            rep + 
+            treatment*variety + 
+            (1|rep:treatment) + 
+            (1|rep:treatment:variety), 
+          data = paprika)
 ```
+
+# Extracting Residuals
 
 ## Residual Types {#types}
 
@@ -145,9 +151,9 @@ pmr <- redres(m, type = "pearson_mar")
 # Computes the studentized conditional residuals
 scr <- redres(m, type = "std_cond")
 
-# Joins the residuals to the sleepstudy data
-sleepstudy_plus <- cbind(sleepstudy, rcr, pmr, scr)
-head(sleepstudy_plus)
+# Joins the residuals to the paprika data
+paprika_plus <- cbind(paprika, rcr, pmr, scr)
+head(paprika_plus)
 ```
 
 # Plotting Residuals
