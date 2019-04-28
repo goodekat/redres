@@ -9,7 +9,6 @@ Shiny app:
 
 Vignette (use paprika data for whole vignette):
   - KM: introduction
-  - KG: residual type section
   - KM: plot section
   - YZ: shiny app
 
