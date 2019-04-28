@@ -223,12 +223,6 @@ The function `redres_app` includes a shiny app that helps demonstrate how the pl
 
 The code below shows how to create a `shiny` app. By inputting the model `m` (could be a list of two models), a `shiny` app which has two main tabs, one includes the residual plot with a choice of all [residual types](#types) and a choice of different x-axis variables and another one includes the normal quantile plots is returned.
 
-```{r}
-# Creates a shiny app with only one model
-redres_app(model = m)
-```
-
-
 ## Usage
 
 
