@@ -80,7 +80,7 @@
       <h1>redres: Redress Your Mixed Model Assumptions</h1>
                         <h4 class="author">R Package Version 0.1.0.9</h4>
             
-            <h4 class="date">2019-04-26</h4>
+            <h4 class="date">2019-04-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/goodekat/redres.git/blob/master/vignettes/redres-vignette.Rmd"><code>vignettes/redres-vignette.Rmd</code></a></small>
       <div class="hidden name"><code>redres-vignette.Rmd</code></div>
@@ -89,19 +89,18 @@
 
     
     
-<div id="introduction" class="section level1">
+<div id="introducing-redres" class="section level1">
 <h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>The Merriam-Webster dictionary defines <a href="https://www.merriam-webster.com/dictionary/redress">redress</a> as “to set right”.</p>
-<p>The package can be installed from GitHub using devtools and then loaded in the normal way.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Installs redres from GitHub</span>
-devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"goodekat/redres"</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Loads the package</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(redres)</code></pre></div>
+<a href="#introducing-redres" class="anchor"></a>Introducing redres</h1>
+<div id="overview" class="section level2">
+<h2 class="hasAnchor">
+<a href="#overview" class="anchor"></a>Overview</h2>
+<p>(motivation for the package on having tools for diagnosing mixed models) The Merriam-Webster dictionary defines <a href="https://www.merriam-webster.com/dictionary/redress">redress</a> as “to set right”.</p>
 </div>
-<div id="package-functions" class="section level1">
-<h1 class="hasAnchor">
-<a href="#package-functions" class="anchor"></a>Package Functions</h1>
+<div id="package-structure" class="section level2">
+<h2 class="hasAnchor">
+<a href="#package-structure" class="anchor"></a>Package Structure</h2>
+<p>(describe the three ways to use the package)</p>
 <p><code>redres</code> contains various functions that provide different ways to assess model assumptions for linear mixed models fit using <code>lmer</code>. The function range from returning a vector of residuals to be used by the user as desired to opening a Shiny app that allows the user to interactively assess the model with package provided tools. A brief description of each function is listed below.</p>
 <ul>
 <li>
@@ -115,40 +114,110 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <li>
 <a href="#redres_app">redres_app</a>: opens an interactive Shiny app with</li>
 </ul>
-<p>Each of these functions has a subsection below that describes in further detail what the function does, how to use it, and how to interpret the output. The functions will be demenstrated using the data <code>sleepstudy</code> from the <code>lme4</code> package and the linear mixed effects models fit in the code below called <code>fm1</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Loads the lme4 libraries</span>
+</div>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>The package can be installed from GitHub using devtools and then loaded in the normal way.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Installs redres from GitHub</span>
+devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"goodekat/redres"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Loads the package</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(redres)</code></pre></div>
+</div>
+<div id="example-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example-data" class="anchor"></a>Example Data</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Prints the first 6 rows of the paprika data</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(paprika)
+<span class="co">#&gt; # A tibble: 6 x 5</span>
+<span class="co">#&gt;   rep   treatment variety plant height</span>
+<span class="co">#&gt;   &lt;fct&gt; &lt;fct&gt;     &lt;fct&gt;   &lt;fct&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 1     T1        C1      1       23.5</span>
+<span class="co">#&gt; 2 1     T1        C1      2       21.5</span>
+<span class="co">#&gt; 3 1     T1        C1      3       31.2</span>
+<span class="co">#&gt; 4 1     T1        C1      4       22.1</span>
+<span class="co">#&gt; 5 1     T1        C1      5       31.5</span>
+<span class="co">#&gt; 6 1     T1        C1      6       26</span>
+
+<span class="co"># Loads the lme4 libraries</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lme4)
 <span class="co">#&gt; Loading required package: Matrix</span>
-
-<span class="co"># Prints the first 6 rows of the sleepstudy data</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(sleepstudy)
-<span class="co">#&gt;   Reaction Days Subject</span>
-<span class="co">#&gt; 1 249.5600    0     308</span>
-<span class="co">#&gt; 2 258.7047    1     308</span>
-<span class="co">#&gt; 3 250.8006    2     308</span>
-<span class="co">#&gt; 4 321.4398    3     308</span>
-<span class="co">#&gt; 5 356.8519    4     308</span>
-<span class="co">#&gt; 6 414.6901    5     308</span>
-
-<span class="co"># Fits a linear mixed effects model to the sleepstudy data</span>
-(m &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/lme4/topics/lmer">lmer</a></span>(Reaction <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(Days<span class="op">|</span>Subject), sleepstudy))
-<span class="co">#&gt; Linear mixed model fit by REML ['lmerMod']</span>
-<span class="co">#&gt; Formula: Reaction ~ Days + (Days | Subject)</span>
-<span class="co">#&gt;    Data: sleepstudy</span>
-<span class="co">#&gt; REML criterion at convergence: 1743.628</span>
-<span class="co">#&gt; Random effects:</span>
-<span class="co">#&gt;  Groups   Name        Std.Dev. Corr</span>
-<span class="co">#&gt;  Subject  (Intercept) 24.737       </span>
-<span class="co">#&gt;           Days         5.923   0.07</span>
-<span class="co">#&gt;  Residual             25.592       </span>
-<span class="co">#&gt; Number of obs: 180, groups:  Subject, 18</span>
-<span class="co">#&gt; Fixed Effects:</span>
-<span class="co">#&gt; (Intercept)         Days  </span>
-<span class="co">#&gt;      251.41        10.47</span></code></pre></div>
-<div id="redres" class="section level2">
+m &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/lme4/topics/lmer">lmer</a></span>(height <span class="op">~</span><span class="st"> </span>rep <span class="op">+</span><span class="st"> </span>treatment<span class="op">*</span>variety <span class="op">+</span><span class="st"> </span>
+<span class="st">            </span>(<span class="dv">1</span><span class="op">|</span>rep<span class="op">:</span>treatment) <span class="op">+</span><span class="st"> </span>
+<span class="st">            </span>(<span class="dv">1</span><span class="op">|</span>rep<span class="op">:</span>treatment<span class="op">:</span>variety), 
+          <span class="dt">data =</span> paprika)</code></pre></div>
+</div>
+</div>
+<div id="extracting-residuals" class="section level1">
+<h1 class="hasAnchor">
+<a href="#extracting-residuals" class="anchor"></a>Extracting Residuals</h1>
+<p>One of the ways to utilize <code>redres</code> is to extract residuals from a model fit using <code>lmer</code>. This can be done using the main function in the package named <code>redres</code> to compute residuals based on a specified type.</p>
+<div id="types" class="section level2">
 <h2 class="hasAnchor">
-<a href="#redres" class="anchor"></a>redres</h2>
-<p>The function <code>redres</code> app can be used to compute a handful of residual types for models fit using <code>lmer</code> including some not available through <code>lme4</code>.</p>
+<a href="#types" class="anchor"></a>Residual Types</h2>
+<p>The linear mixed effects model can be written as <span class="math display">\[\textbf{Y}=\textbf{X}\boldsymbol{\beta}+\textbf{Z}\boldsymbol{\gamma}+\boldsymbol{\epsilon}\]</span> where</p>
+<ul>
+<li>
+<span class="math inline">\(\textbf{Y}\)</span> is an <span class="math inline">\(n\times 1\)</span> vector of <span class="math inline">\(n\)</span> response variable observations,</li>
+<li>
+<span class="math inline">\(\textbf{X}\)</span> is an <span class="math inline">\(n\times p\)</span> matrix of <span class="math inline">\(p\)</span> explanatory variables with <span class="math inline">\(n\)</span> observations each,</li>
+<li>
+<span class="math inline">\(\boldsymbol{\beta}\)</span> is a <span class="math inline">\(p\times1\)</span> vector of unknown fixed effects parameters,</li>
+<li>
+<span class="math inline">\(\textbf{Z}\)</span> is an <span class="math inline">\(n\times q\)</span> matrix of <span class="math inline">\(q\)</span> random effect variables with <span class="math inline">\(n\)</span> observations each,</li>
+<li>
+<span class="math inline">\(\boldsymbol{\gamma}\)</span> is a <span class="math inline">\(q\times1\)</span> vector of unknown random effects, and</li>
+<li>
+<span class="math inline">\(\boldsymbol{\epsilon}\)</span> is an <span class="math inline">\(n\times1\)</span> vector of random errors.</li>
+</ul>
+<p>Under this set up, <span class="math display">\[E[\textbf{Y}]=\textbf{X}\boldsymbol{\beta} \ \ \ \mbox{ and } \ \ \ 
+  Var[\textbf{Y}]=\textbf{ZGZ}'+\textbf{R}=\textbf{V}.\]</span></p>
+<p>It is assumed that <span class="math display">\[ 
+\begin{bmatrix} \boldsymbol{\gamma} \\ \boldsymbol{\epsilon} \end{bmatrix}
+\sim N 
+\begin{pmatrix} 
+\begin{bmatrix} \boldsymbol{0} \\ \boldsymbol{0} \end{bmatrix},
+\begin{bmatrix} \textbf{G} &amp; \boldsymbol{0} \\ \boldsymbol{0} &amp; \textbf{R}
+\end{bmatrix}
+\end{pmatrix}.
+\]</span></p>
+<p><code>redres</code> can compute six types of residuals. These include some types not available in <code>lme4</code>, and some of the types are computed differently in <code>redres</code> than <code>lme4</code>. These changes were made to make the choices of type names more intuitive with the computations used. The formulas for how these are computed in <code>redres</code> are listed below.</p>
+<div id="raw-residuals" class="section level3">
+<h3 class="hasAnchor">
+<a href="#raw-residuals" class="anchor"></a>Raw Residuals</h3>
+<p>The raw residuals are computed as the observed response values minus the predicted response values where the marginal version does not account for the random effects while the conditional version does. These are computed as follows.</p>
+
+<ul>
+<li><p><strong>marginal</strong> raw residuals <span class="math display">\[r^m_i = Y_i-\textbf{x}'_i\widehat{\boldsymbol{\beta}}\]</span></p></li>
+<li><p><strong>conditional</strong> raw residuals <span class="math display">\[r^c_i = Y_i-\textbf{x}'_i\boldsymbol{\widehat{\beta}}-\textbf{z}'_i\widehat{\boldsymbol{\gamma}}\]</span></p></li>
+</ul>
+</div>
+<div id="pearson-residuals" class="section level3">
+<h3 class="hasAnchor">
+<a href="#pearson-residuals" class="anchor"></a>Pearson Residuals</h3>
+<p>The Pearson residuals are computed as the raw residuals divided by the square root of the estimated variance of the response values. Both marginal and conditional versions are available as follows.</p>
+
+<ul>
+<li><p><strong>marginal</strong> Pearson residuals <span class="math display">\[r^{m,Pearson}_{i} = \frac{r^m_i}{\sqrt{\widehat{Var}[Y_i]}}\]</span></p></li>
+<li><p><strong>conditional</strong> Pearson residuals <span class="math display">\[r^{c,Pearson}_{i} = \frac{r^c_i}{\sqrt{\widehat{Var}[Y_i|\boldsymbol{\gamma}]}}\]</span></p></li>
+</ul>
+</div>
+<div id="studentized" class="section level3">
+<h3 class="hasAnchor">
+<a href="#studentized" class="anchor"></a>Studentized</h3>
+<p>The studentized residuals are computed as the raw residuals divided by the square root of the estimated variance of the raw residuals. Again, both marginal and conditional versions are available.</p>
+<ul>
+<li><p><strong>marginal</strong> Pearson residuals <span class="math display">\[r_i^{m,std}=\frac{r_i^m}{\sqrt{\widehat{Var}[r_i^m]}}\]</span></p></li>
+<li><p><strong>conditional</strong> studentized residuals <span class="math display">\[r_i^{c,std}=\frac{r_i^c}{\sqrt{\widehat{Var}[r_i^c]}}\]</span></p></li>
+</ul>
+<p>Note that <span class="math display">\[\widehat{Var}[\textbf{r}^m]=\widehat{\textbf{V}}-\textbf{Q} \ \ \ \mbox{ and } \ \ \ \widehat{Var}[\textbf{r}^c]=\textbf{K}\left(\widehat{\textbf{V}}-\textbf{Q}\right)\textbf{K}'.\]</span> The values of <span class="math inline">\(\textbf{Q}\)</span> and <span class="math inline">\(\textbf{K}\)</span> are defined as follows by by Gregoire, Schabenberger, and Barrett (1995).</p>
+<p><span class="math display">\[\textbf{Q}=\textbf{X}(\textbf{X}'\widehat{\textbf{V}}^{-1}\textbf{X})^{-}\textbf{X}' \ \ \ \mbox{ and } \ \ \ \textbf{K}=\textbf{I}-\textbf{Z}\widehat{\textbf{G}}\textbf{Z}'\widehat{\textbf{V}}^{-1}\]</span></p>
+</div>
+</div>
+<div id="usage" class="section level2">
+<h2 class="hasAnchor">
+<a href="#usage" class="anchor"></a>Usage</h2>
+<p>The function <code>redres</code> can compute the residuals types defined in the previous section for models fit using <code>lmer</code>.</p>
 <p><strong>Inputs</strong></p>
 <ul>
 <li>
@@ -178,30 +247,63 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <code>redres</code> returns a vector of residuals according to the type specified in the order that the data observations are input into <code>lmer</code>.</li>
 </ul>
 <p><strong>Functionality</strong></p>
-<p>The code below demonstrates the use of <code>redres</code> to compute several types of residuals from the model <code>m</code>. These residuals are put into a dataframe and joined with the <code>sleepstudy</code> data. The user can then use these residuals as desired.</p>
+<p>The code below demonstrates the use of <code>redres</code> to compute several types of residuals from the model <code>m</code>. These residuals are put into a dataframe and joined with the <code>sleepstudy</code> data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Computes the default residuals (raw conditional)</span>
-rcr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/redres.html">redres</a></span>(m)
+raw_cond &lt;-<span class="st"> </span><span class="kw"><a href="../reference/redres.html">redres</a></span>(m)
 
 <span class="co"># Computes the Pearson marginal residuals</span>
-pmr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/redres.html">redres</a></span>(m, <span class="dt">type =</span> <span class="st">"pearson_mar"</span>)
+pearson_mar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/redres.html">redres</a></span>(m, <span class="dt">type =</span> <span class="st">"pearson_mar"</span>)
 
 <span class="co"># Computes the studentized conditional residuals</span>
-scr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/redres.html">redres</a></span>(m, <span class="dt">type =</span> <span class="st">"std_cond"</span>)
+std_cond &lt;-<span class="st"> </span><span class="kw"><a href="../reference/redres.html">redres</a></span>(m, <span class="dt">type =</span> <span class="st">"std_cond"</span>)
 
-<span class="co"># Joins the residuals to the sleepstudy data</span>
-sleepstudy_plus &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(sleepstudy, rcr, pmr, scr)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(sleepstudy_plus)
-<span class="co">#&gt;   Reaction Days Subject        rcr         pmr        scr</span>
-<span class="co">#&gt; 1 249.5600    0     308  -4.102638 -0.05183946 -0.1827204</span>
-<span class="co">#&gt; 2 258.7047    1     308 -14.624497 -0.08779115 -0.6273252</span>
-<span class="co">#&gt; 3 250.8006    2     308 -42.195157 -0.57418908 -1.7645439</span>
-<span class="co">#&gt; 4 321.4398    3     308   8.777483  0.97112562  0.3616111</span>
-<span class="co">#&gt; 5 356.8519    4     308  24.523024  1.48696343  1.0048545</span>
-<span class="co">#&gt; 6 414.6901    5     308  62.694664  2.39619943  2.5789296</span></code></pre></div>
+<span class="co"># Joins the residuals to the paprika data</span>
+paprika_plus &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(paprika, raw_cond, pearson_mar, std_cond)
+
+<span class="co"># Prints the head of the dataframe</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(paprika_plus)
+<span class="co">#&gt;   rep treatment variety plant height   raw_cond pearson_mar   std_cond</span>
+<span class="co">#&gt; 1   1        T1      C1     1   23.5 -0.8171447  0.28484517 -0.1476290</span>
+<span class="co">#&gt; 2   1        T1      C1     2   21.5 -2.8171447  0.04144796 -0.5089579</span>
+<span class="co">#&gt; 3   1        T1      C1     3   31.2  6.8828553  1.22192446  1.2434874</span>
+<span class="co">#&gt; 4   1        T1      C1     4   22.1 -2.2171447  0.11446712 -0.4005593</span>
+<span class="co">#&gt; 5   1        T1      C1     5   31.5  7.1828553  1.25843404  1.2976867</span>
+<span class="co">#&gt; 6   1        T1      C1     6   26.0  1.6828553  0.58909169  0.3040322</span></code></pre></div>
+<p>The user can then use these residuals as desired. For example, the user could make their own plots or perform tests on the residuals. The code below creates histograms of the three residual types.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Loads helpful libraries </span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyr)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)
+
+<span class="co"># Creates histograms of the residual types</span>
+paprika_plus <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span>(<span class="dt">key =</span> <span class="st">"type"</span>, <span class="dt">value =</span> <span class="st">"residual"</span>, <span class="dv">6</span><span class="op">:</span><span class="dv">8</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> residual)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_histogram">geom_histogram</a></span>(<span class="dt">bins =</span> <span class="dv">30</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/facet_grid">facet_grid</a></span>(. <span class="op">~</span><span class="st"> </span>type, <span class="dt">scales =</span> <span class="st">"free"</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_bw</a></span>()</code></pre></div>
+<p><img src="redres-vignette_files/figure-html/unnamed-chunk-5-1.png" width="480" style="display: block; margin: auto;"></p>
 </div>
-<div id="plot_redres" class="section level2">
+</div>
+<div id="plotting-residuals" class="section level1">
+<h1 class="hasAnchor">
+<a href="#plotting-residuals" class="anchor"></a>Plotting Residuals</h1>
+<div id="residual-plots" class="section level2">
 <h2 class="hasAnchor">
-<a href="#plot_redres" class="anchor"></a>plot_redres</h2>
+<a href="#residual-plots" class="anchor"></a>Residual Plots</h2>
+</div>
+<div id="quantile-plots" class="section level2">
+<h2 class="hasAnchor">
+<a href="#quantile-plots" class="anchor"></a>Quantile plots</h2>
+<p>Quantile plots are used to verify visually if data follows are particular distribution. Data points are plotted along the quantiles of the assumed distributed. The data is expected to follow an approximately straight line, at least along the middle quantiles. The points are assessed for any extreme curvation that would indicate a departure from the assumed distribution. Typically curvature at the extreme ends of the quantiles (around 0 and 1) are ignored as data is sparse here and distributions behave more erratically at the boundaries of the parameter space. We have added confidence bands to guide the user.</p>
+<p>The function <code>plot_ranef</code> plots each random effect vector along the normal quantiles. From the assumptions of the linear mixed model, each random effect specified - along with the error term - is assumed to follow a normal distribution. Therefore, these plots can be used to assess if this assumption is met. Note that the number of plots generated by this function will vary for each model, with the number of plots being the number of random effects.</p>
+</div>
+<div id="usage-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#usage-1" class="anchor"></a>Usage</h2>
+<div id="plot_redres" class="section level3">
+<h3 class="hasAnchor">
+<a href="#plot_redres" class="anchor"></a>plot_redres</h3>
 <p>The function <code>plot_redres</code> is included in the package to allow for the easy creation of a residual plot using <code>ggplot2</code> for a linear mixed model fit using <code>lmer</code>. <code>plot_redres</code> allows the user to specify any residual type to be plotted on the y-axis including those not provided by <code>lme4</code>.</p>
 <p><strong>Inputs</strong></p>
 <ul>
@@ -215,100 +317,55 @@ sleepstudy_plus &lt;-<span class="st"> </span><span class="kw"><a href="https://
 <li>A <code>ggplot2</code> object of a scatterplot of the model residuals of the type specified versus the fitted values is created.</li>
 </ul>
 <p><strong>Functionality</strong></p>
-<p>The code below shows how to create the most basic plot using <code>plot_redres</code>. By inputing the model <code>m</code>, a plot of the conditional raw residuals versus the fitted values is returned.</p>
+<p>The code below shows how to create the most basic plot using <code>plot_redres</code>. By inputting the model <code>m</code>, a plot of the conditional raw residuals versus the fitted values is returned.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creates the default residual plot</span>
 <span class="kw"><a href="../reference/plot_redres.html">plot_redres</a></span>(m)</code></pre></div>
-<p><img src="redres-vignette_files/figure-html/unnamed-chunk-5-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="redres-vignette_files/figure-html/unnamed-chunk-6-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>The type of residuals can be changed using the <code>type</code> option as shown in the code below.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creates the residual plot with studentized marginal residuals</span>
 <span class="kw"><a href="../reference/plot_redres.html">plot_redres</a></span>(m, <span class="dt">type =</span> <span class="st">"std_mar"</span>)</code></pre></div>
-<p><img src="redres-vignette_files/figure-html/unnamed-chunk-6-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="redres-vignette_files/figure-html/unnamed-chunk-7-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>All plots created using the <code>redres</code> package are formatted to use <code>theme_bw</code> from <code>ggplot2</code>. However, since <code>plot_redres</code> returns a ggplot object, it is possible to use functions provided by <code>ggplot2</code> adjust the formatting of the plot.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Applies ggplot2 formatting functions to the output from plot_resid</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)
 <span class="kw"><a href="../reference/plot_redres.html">plot_redres</a></span>(m, <span class="dt">type =</span> <span class="st">"pearson_cond"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_classic</a></span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">title =</span> <span class="st">"Residual Plot"</span>)</code></pre></div>
-<p><img src="redres-vignette_files/figure-html/unnamed-chunk-7-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="redres-vignette_files/figure-html/unnamed-chunk-8-1.png" width="480" style="display: block; margin: auto;"></p>
 </div>
-<div id="plot_resqq" class="section level2">
-<h2 class="hasAnchor">
-<a href="#plot_resqq" class="anchor"></a>plot_resqq</h2>
-</div>
-<div id="plot_ranef" class="section level2">
-<h2 class="hasAnchor">
-<a href="#plot_ranef" class="anchor"></a>plot_ranef</h2>
-<div id="quantile-plots" class="section level3">
+<div id="plot_resqq" class="section level3">
 <h3 class="hasAnchor">
-<a href="#quantile-plots" class="anchor"></a>Quantile plots</h3>
-<p>Quantile plots are used to verify visually if data follows are particular distribution. Data points are plotted along the quantiles of the assumed distributed. The data is expected to follow an approximately straight line, at least along the middle quantiles. The points are assessed for any extreme curvation that would indicate a departure from the assumed distribution. Typically curvature at the extreme ends of the quantiles (around 0 and 1) are ignored as data is sparse here and distributions behave more erratically at the boundaries of the parameter space. We have added confidence bands to guide the user.</p>
-<p>The function <code>plot_ranef</code> plots each random effect vector along the normal quantiles. From the assumptions of the linear mixed model, each random effect specified - along with the error term - is assumed to follow a normal distribution. Therefore, these plots can be used to assess if this assumption is met. Note that the number of plots generated by this function will vary for each model, with the number of plots being the number of random effects.</p>
+<a href="#plot_resqq" class="anchor"></a>plot_resqq</h3>
+</div>
+<div id="plot_ranef" class="section level3">
+<h3 class="hasAnchor">
+<a href="#plot_ranef" class="anchor"></a>plot_ranef</h3>
 </div>
 </div>
+</div>
+<div id="interacting-with-residuals" class="section level1">
+<h1 class="hasAnchor">
+<a href="#interacting-with-residuals" class="anchor"></a>Interacting with Residuals</h1>
 <div id="redres_app" class="section level2">
 <h2 class="hasAnchor">
-<a href="#redres_app" class="anchor"></a>redres_app</h2>
-</div>
-</div>
-<div id="types" class="section level1">
-<h1 class="hasAnchor">
-<a href="#types" class="anchor"></a>Residual Types</h1>
-<p>Section on how to compute the different residual types and when to use them…</p>
-<p>The linear mixed effects model can be written as <span class="math display">\[\textbf{Y}=\textbf{X}\boldsymbol{\beta}+\textbf{Z}\boldsymbol{\gamma}+\boldsymbol{\epsilon}\]</span> where</p>
+<a href="#redres_app" class="anchor"></a>Shiny App</h2>
+<p>The function <code>redres_app</code> includes a shiny app that helps demonstrate how the plotting functions <code>plot_redres</code>, <code>plot_resqq</code> and <code>plot_ranef</code> can be used. It can also be used to visually comparing two linear mixed models and conducting model selection through pairwise comparison.</p>
+<p><strong>Inputs</strong></p>
 <ul>
 <li>
-<span class="math inline">\(\textbf{Y}\)</span> is an <span class="math inline">\(n\times 1\)</span> vector of <span class="math inline">\(n\)</span> response variable observations,</li>
-<li>
-<span class="math inline">\(\textbf{X}\)</span> is an <span class="math inline">\(n\times p\)</span> matrix of <span class="math inline">\(p\)</span> explanatory variables with <span class="math inline">\(n\)</span> observations each,</li>
-<li>
-<span class="math inline">\(\boldsymbol{\beta}\)</span> is a <span class="math inline">\(p\times1\)</span> vector of unknown fixed effects parameters,</li>
-<li>
-<span class="math inline">\(\textbf{Z}\)</span> is an <span class="math inline">\(n\times q\)</span> matrix of <span class="math inline">\(q\)</span> random effect variables with <span class="math inline">\(n\)</span> observations each,</li>
-<li>
-<span class="math inline">\(\boldsymbol{\gamma}\)</span> is a <span class="math inline">\(q\times1\)</span> vector of unknown random effects, and</li>
-<li>
-<span class="math inline">\(\boldsymbol{\epsilon}\)</span> is an <span class="math inline">\(n\times1\)</span> vector of random errors.</li>
+<code>model</code>: A model (or two models wrapped in a list) fit using <code>lmer</code>.</li>
 </ul>
-<p>By assumption, it is the case that… <span class="math display">\[ 
-\begin{bmatrix} \boldsymbol{\gamma} \\ \boldsymbol{\epsilon} \end{bmatrix}
-  \sim N 
-    \begin{pmatrix} 
-      \begin{bmatrix} \boldsymbol{0} \\ \boldsymbol{0} \end{bmatrix},
-      \begin{bmatrix} \textbf{G} &amp; \boldsymbol{0} \\ \boldsymbol{0} &amp; \textbf{R} \end{bmatrix}
-    \end{pmatrix}
-\]</span></p>
-<div id="raw" class="section level2">
+<p><strong>Output</strong></p>
+<ul>
+<li>A <code>shiny</code> app.</li>
+</ul>
+<p><strong>Functionality</strong></p>
+<p>The code below shows how to create a <code>shiny</code> app. By inputting the model <code>m</code> (could be a list of two models), a <code>shiny</code> app which has two main tabs, one includes the residual plot with a choice of all <a href="#types">residual types</a> and a choice of different x-axis variables and another one includes the normal quantile plots is returned.</p>
+</div>
+<div id="usage-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#raw" class="anchor"></a>Raw</h2>
-<ul>
-<li>marginal: <span class="math display">\[\textbf{r}^m_i = Y_i-\textbf{x}'_i\hat{\boldsymbol{\beta}}\]</span>
-</li>
-<li>conditional: <span class="math display">\[\textbf{r}^c_i = Y_i-\textbf{x}'_i\hat{\boldsymbol{\beta}}-\textbf{z}'_i\hat{\boldsymbol{\gamma}}\]</span>
-</li>
-</ul>
+<a href="#usage-2" class="anchor"></a>Usage</h2>
 </div>
-<div id="pearson" class="section level2">
-<h2 class="hasAnchor">
-<a href="#pearson" class="anchor"></a>Pearson</h2>
-<ul>
-<li>marginal: <span class="math display">\[\textbf{r}^{m,pearson}_{i} = \frac{r^m_i}{\sqrt{\hat{Var[Y_i]}}}\]</span>
-</li>
-<li>conditional: <span class="math display">\[\textbf{r}^{c,pearson}_{i} = \frac{r^m_i}{\sqrt{\hat{Var[Y_i|\boldsymbol{\gamma}]}}}\]</span>
-</li>
-</ul>
-</div>
-<div id="studentized" class="section level2">
-<h2 class="hasAnchor">
-<a href="#studentized" class="anchor"></a>Studentized</h2>
-<ul>
-<li>marginal:</li>
-<li>conditional:</li>
-</ul>
-</div>
-</div>
-<div id="application" class="section level1">
-<h1 class="hasAnchor">
-<a href="#application" class="anchor"></a>Application</h1>
 </div>
   </div>
 
@@ -317,24 +374,33 @@ sleepstudy_plus &lt;-<span class="st"> </span><span class="kw"><a href="https://
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#introduction">Introduction</a></li>
-      <li>
-<a href="#package-functions">Package Functions</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#redres">redres</a></li>
-      <li><a href="#plot_redres">plot_redres</a></li>
-      <li><a href="#plot_resqq">plot_resqq</a></li>
-      <li><a href="#plot_ranef">plot_ranef</a></li>
-      <li><a href="#redres_app">redres_app</a></li>
+<li>
+<a href="#introducing-redres">Introducing redres</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#overview">Overview</a></li>
+      <li><a href="#package-structure">Package Structure</a></li>
+      <li><a href="#installation">Installation</a></li>
+      <li><a href="#example-data">Example Data</a></li>
       </ul>
 </li>
       <li>
-<a href="#types">Residual Types</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#raw">Raw</a></li>
-      <li><a href="#pearson">Pearson</a></li>
-      <li><a href="#studentized">Studentized</a></li>
+<a href="#extracting-residuals">Extracting Residuals</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#types">Residual Types</a></li>
+      <li><a href="#usage">Usage</a></li>
       </ul>
 </li>
-      <li><a href="#application">Application</a></li>
+      <li>
+<a href="#plotting-residuals">Plotting Residuals</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#residual-plots">Residual Plots</a></li>
+      <li><a href="#quantile-plots">Quantile plots</a></li>
+      <li><a href="#usage-1">Usage</a></li>
+      </ul>
+</li>
+      <li>
+<a href="#interacting-with-residuals">Interacting with Residuals</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#redres_app">Shiny App</a></li>
+      <li><a href="#usage-2">Usage</a></li>
+      </ul>
+</li>
       </ul>
 </div>
       </div>

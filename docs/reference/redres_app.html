@@ -34,8 +34,8 @@
 
 <meta property="og:description" content="This is a shiny app for model diagnoistic of mixed model using lmer function from lme4 package.
 This app includes residual plot computed from six types of residuals (conditional raw, Pearson, and
-studentized, marginal raw, Pearson, and studentized, and generalized residuals) and QQ plot using
-generalized residual. This app can also be used to do model selection through pairwise comparison
+studentized, marginal raw, Pearson, and studentized) and normal quantile plot using of random effect
+and error term. This app can also be used to do model selection through pairwise comparison
 two models from different linear mixed models using lmer function." />
 <meta name="twitter:card" content="summary" />
 
@@ -124,8 +124,8 @@ two models from different linear mixed models using lmer function." />
     
     <p>This is a shiny app for model diagnoistic of mixed model using <code>lmer</code> function from lme4 package.
 This app includes residual plot computed from six types of residuals (conditional raw, Pearson, and
-studentized, marginal raw, Pearson, and studentized, and generalized residuals) and QQ plot using
-generalized residual. This app can also be used to do model selection through pairwise comparison
+studentized, marginal raw, Pearson, and studentized) and normal quantile plot using of random effect
+and error term. This app can also be used to do model selection through pairwise comparison
 two models from different linear mixed models using lmer function.</p>
     
     </div>
@@ -147,12 +147,12 @@ two models from different linear mixed models using lmer function.</p>
 <span class='co'># fits a linear mixed effects model</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lme4</span>)
 <span class='no'>fm1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Reaction</span> ~ <span class='no'>Days</span> + (<span class='no'>Days</span> <span class='kw'>|</span> <span class='no'>Subject</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleepstudy</span>)
-<span class='fu'>redres_app</span>(<span class='kw'>model</span><span class='kw'>=</span><span class='no'>fm1</span>)
+<span class='fu'>redres_app</span>(<span class='kw'>model</span> <span class='kw'>=</span> <span class='no'>fm1</span>)
 <span class='co'># comparing two different linear mixed effects models</span>
 <span class='no'>fm1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Reaction</span> ~ <span class='no'>Days</span> + (<span class='no'>Days</span> <span class='kw'>|</span> <span class='no'>Subject</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleepstudy</span>)
 <span class='no'>fm2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Reaction</span> ~ <span class='no'>Days</span> + (<span class='fl'>1</span><span class='kw'>|</span><span class='no'>Subject</span>) + (<span class='fl'>0</span>+<span class='no'>Days</span><span class='kw'>|</span><span class='no'>Subject</span>), <span class='no'>sleepstudy</span>)
 <span class='no'>cmbd</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>fm1</span>,<span class='no'>fm2</span>)
-<span class='fu'>redres_app</span> (<span class='kw'>model</span><span class='kw'>=</span><span class='no'>cmbd</span> )
+<span class='fu'>redres_app</span>(<span class='kw'>model</span> <span class='kw'>=</span> <span class='no'>cmbd</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

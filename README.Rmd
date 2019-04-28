@@ -103,6 +103,8 @@ plot_ranef(m)
 redres_app(m)
 ```
 
+
+
 ![](./inst/figures/app1.png)
 ![](./inst/figures/app2.png)
 
