@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 
 ## Overview
 
-(motivation for the package on having tools for diagnosting mixed models) The Merriam-Webster dictionary defines [redress](https://www.merriam-webster.com/dictionary/redress) as "to set right".
+(motivation for the package on having tools for diagnosing mixed models) The Merriam-Webster dictionary defines [redress](https://www.merriam-webster.com/dictionary/redress) as "to set right".
 
 ## Package Structure
 
@@ -56,15 +56,12 @@ library(redres)
 ## Example Data
 
 ```{r}
-# Loads the lme4 libraries
-library(lme4)
-
 # Prints the first 6 rows of the paprika data
 head(paprika)
 
-m <- lmer(height ~ 
-            rep + 
-            treatment*variety + 
+# Loads the lme4 libraries
+library(lme4)
+m <- lmer(height ~ rep + treatment*variety + 
             (1|rep:treatment) + 
             (1|rep:treatment:variety), 
           data = paprika)
@@ -72,9 +69,9 @@ m <- lmer(height ~
 
 # Extracting Residuals
 
-## Residual Types {#types}
+One of the ways to utilize `redres` is to extract residuals from a model fit using `lmer`. This can be done using the main function in the package named `redres` to compute residuals based on a specified type.
 
-Section on how to compute the different residual types and when to use them...
+## Residual Types {#types}
 
 The linear mixed effects model can be written as
   $$\textbf{Y}=\textbf{X}\boldsymbol{\beta}+\textbf{Z}\boldsymbol{\gamma}+\boldsymbol{\epsilon}$$
@@ -87,38 +84,66 @@ where
 - $\boldsymbol{\gamma}$ is a $q\times1$ vector of unknown random effects, and
 - $\boldsymbol{\epsilon}$ is an $n\times1$ vector of random errors.
 
-By assumption, it is the case that...
+Under this set up,
+  $$E[\textbf{Y}]=\textbf{X}\boldsymbol{\beta} \ \ \ \mbox{ and } \ \ \ 
+  Var[\textbf{Y}]=\textbf{ZGZ}'+\textbf{R}=\textbf{V}.$$
+  
+It is assumed that
 $$ 
 \begin{bmatrix} \boldsymbol{\gamma} \\ \boldsymbol{\epsilon} \end{bmatrix}
-  \sim N 
-    \begin{pmatrix} 
-      \begin{bmatrix} \boldsymbol{0} \\ \boldsymbol{0} \end{bmatrix},
-      \begin{bmatrix} \textbf{G} & \boldsymbol{0} \\ \boldsymbol{0} & \textbf{R} \end{bmatrix}
-    \end{pmatrix}
+\sim N 
+\begin{pmatrix} 
+\begin{bmatrix} \boldsymbol{0} \\ \boldsymbol{0} \end{bmatrix},
+\begin{bmatrix} \textbf{G} & \boldsymbol{0} \\ \boldsymbol{0} & \textbf{R}
+\end{bmatrix}
+\end{pmatrix}.
 $$
 
-### Raw
+`redres` can compute six types of residuals. These include some types not available in `lme4`, and some of the types are computed differently in `redres` than `lme4`. These changes were made to make the choices of type names more intuitive with the computations used. The formulas for how these are computed in `redres` are listed below.
 
-- marginal: 
-  $$\textbf{r}^m_i = Y_i-\textbf{x}'_i\hat{\boldsymbol{\beta}}$$
-- conditional:
-  $$\textbf{r}^c_i = Y_i-\textbf{x}'_i\hat{\boldsymbol{\beta}}-\textbf{z}'_i\hat{\boldsymbol{\gamma}}$$
+### Raw Residuals
 
-### Pearson
+The raw residuals are computed as the observed response values minus the predicted response values where the marginal version does not account for the random effects while the conditional version does. These are computed as follows.
 
-- marginal: 
-  $$\textbf{r}^{m,pearson}_{i} = \frac{r^m_i}{\sqrt{\hat{Var[Y_i]}}}$$
-- conditional: 
-  $$\textbf{r}^{c,pearson}_{i} = \frac{r^m_i}{\sqrt{\hat{Var[Y_i|\boldsymbol{\gamma}]}}}$$
+\vspace{0.25cm}
+
+- **marginal** raw residuals
+  $$r^m_i = Y_i-\textbf{x}'_i\widehat{\boldsymbol{\beta}}$$
+  
+- **conditional** raw residuals
+  $$r^c_i = Y_i-\textbf{x}'_i\boldsymbol{\widehat{\beta}}-\textbf{z}'_i\widehat{\boldsymbol{\gamma}}$$
+
+### Pearson Residuals
+
+The Pearson residuals are computed as the raw residuals divided by the square root of the estimated variance of the response values. Both marginal and conditional versions are available as follows.
+
+\vspace{0.25cm}
+
+- **marginal** Pearson residuals
+  $$r^{m,Pearson}_{i} = \frac{r^m_i}{\sqrt{\widehat{Var}[Y_i]}}$$
+  
+- **conditional** Pearson residuals
+  $$r^{c,Pearson}_{i} = \frac{r^c_i}{\sqrt{\widehat{Var}[Y_i|\boldsymbol{\gamma}]}}$$
 
 ### Studentized
 
-- marginal:
-- conditional:
+The studentized residuals are computed as the raw residuals divided by the square root of the estimated variance of the raw residuals. Again, both marginal and conditional versions are available.
 
-The function `redres` app can be used to compute a handful of residual types for models fit using `lmer` including some not available through `lme4`.
+- **marginal** Pearson residuals
+  $$r_i^{m,std}=\frac{r_i^m}{\sqrt{\widehat{Var}[r_i^m]}}$$
+  
+- **conditional** studentized residuals
+  $$r_i^{c,std}=\frac{r_i^c}{\sqrt{\widehat{Var}[r_i^c]}}$$
+
+Note that
+  $$\widehat{Var}[\textbf{r}^m]=\widehat{\textbf{V}}-\textbf{Q} \ \ \ \mbox{ and } \ \ \ \widehat{Var}[\textbf{r}^c]=\textbf{K}\left(\widehat{\textbf{V}}-\textbf{Q}\right)\textbf{K}'.$$
+The values of $\textbf{Q}$ and $\textbf{K}$ are defined as follows by by Gregoire, Schabenberger, and Barrett (1995).
+
+$$\textbf{Q}=\textbf{X}(\textbf{X}'\widehat{\textbf{V}}^{-1}\textbf{X})^{-}\textbf{X}' \ \ \ \mbox{ and } \ \ \ \textbf{K}=\textbf{I}-\textbf{Z}\widehat{\textbf{G}}\textbf{Z}'\widehat{\textbf{V}}^{-1}$$
 
 ## Usage
+
+The function `redres` can compute the residuals types defined in the previous section for models fit using `lmer`.
 
 **Inputs**
 
@@ -139,21 +164,40 @@ See the section on [residual types](#types) for details on how the residuals are
 
 **Functionality** 
 
-The code below demonstrates the use of `redres` to compute several types of residuals from the model `m`. These residuals are put into a dataframe and joined with the `sleepstudy` data. The user can then use these residuals as desired.
+The code below demonstrates the use of `redres` to compute several types of residuals from the model `m`. These residuals are put into a dataframe and joined with the `sleepstudy` data.
 
 ```{r}
 # Computes the default residuals (raw conditional)
-rcr <- redres(m)
+raw_cond <- redres(m)
 
 # Computes the Pearson marginal residuals
-pmr <- redres(m, type = "pearson_mar")
+pearson_mar <- redres(m, type = "pearson_mar")
 
 # Computes the studentized conditional residuals
-scr <- redres(m, type = "std_cond")
+std_cond <- redres(m, type = "std_cond")
 
 # Joins the residuals to the paprika data
-paprika_plus <- cbind(paprika, rcr, pmr, scr)
+paprika_plus <- cbind(paprika, raw_cond, pearson_mar, std_cond)
+
+# Prints the head of the dataframe
 head(paprika_plus)
+```
+
+The user can then use these residuals as desired. For example, the user could make their own plots or perform tests on the residuals. The code below creates histograms of the three residual types.
+
+```{r message = FALSE}
+# Loads helpful libraries 
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+# Creates histograms of the residual types
+paprika_plus %>%
+  gather(key = "type", value = "residual", 6:8) %>%
+  ggplot(aes(x = residual)) + 
+  geom_histogram(bins = 30) + 
+  facet_grid(. ~ type, scales = "free") + 
+  theme_bw()
 ```
 
 # Plotting Residuals
@@ -183,7 +227,7 @@ The function `plot_redres` is included in the package to allow for the easy crea
 
 **Functionality**
 
-The code below shows how to create the most basic plot using `plot_redres`. By inputing the model `m`, a plot of the conditional raw residuals versus the fitted values is returned. 
+The code below shows how to create the most basic plot using `plot_redres`. By inputting the model `m`, a plot of the conditional raw residuals versus the fitted values is returned. 
 
 ```{r}
 # Creates the default residual plot
