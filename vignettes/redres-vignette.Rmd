@@ -202,7 +202,11 @@ paprika_plus %>%
 
 # Plotting Residuals
 
+Additionally, the package includes plotting functions that allow the user to visually assess the general assumptions of a linear mixed model.
+
 ## Residual Plots 
+
+Plots of the residuals by either the fitted values or explanatory variables are used to verify linearity and constant variance. If no curvature or additional linear trends are identified in the residual plot, we say that the linear form is a reasonable assumption. To assess our variance assumptions, we are looking for constant variance. Here using a scaled residual, either the studentized or Pearson, is necessary to account for additional variance structures modeled outside of the error term. We want to see the vertical spread of the residuals to be approximately the same for all x-axis values.
 
 ## Quantile plots
 
