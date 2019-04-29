@@ -80,7 +80,7 @@
       <h1>redres: Redress Your Mixed Model Assumptions</h1>
                         <h4 class="author">R Package Version 0.1.0.9</h4>
             
-            <h4 class="date">2019-04-28</h4>
+            <h4 class="date">2019-04-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/goodekat/redres.git/blob/master/vignettes/redres-vignette.Rmd"><code>vignettes/redres-vignette.Rmd</code></a></small>
       <div class="hidden name"><code>redres-vignette.Rmd</code></div>
@@ -247,7 +247,7 @@ m &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumenta
 <code>redres</code> returns a vector of residuals according to the type specified in the order that the data observations are input into <code>lmer</code>.</li>
 </ul>
 <p><strong>Functionality</strong></p>
-<p>The code below demonstrates the use of <code>redres</code> to compute several types of residuals from the model <code>m</code>. These residuals are put into a dataframe and joined with the <code>sleepstudy</code> data.</p>
+<p>The code below demonstrates the use of <code>redres</code> to compute several types of residuals from the model <code>m</code>. These residuals are put into a dataframe and joined with the <code>paprika</code> data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Computes the default residuals (raw conditional)</span>
 raw_cond &lt;-<span class="st"> </span><span class="kw"><a href="../reference/redres.html">redres</a></span>(m)
 
@@ -349,7 +349,14 @@ paprika_plus <span class="op">%&gt;%</span>
 <div id="redres_app" class="section level2">
 <h2 class="hasAnchor">
 <a href="#redres_app" class="anchor"></a>Shiny App</h2>
-<p>The function <code>redres_app</code> includes a shiny app that helps demonstrate how the plotting functions <code>plot_redres</code>, <code>plot_resqq</code> and <code>plot_ranef</code> can be used. It can also be used to visually comparing two linear mixed models and conducting model selection through pairwise comparison.</p>
+<p>The function <code>redres_app</code> includes a shiny app that helps demonstrate how the plotting functions <code>plot_redres</code>, <code>plot_resqq</code> and <code>plot_ranef</code> can be used. It can also be used to visually comparing two linear mixed models and conducting model selection through pairwise comparison. There two main tabs in this <code>shiny</code> app, one includes the residual plot with a choice of all <a href="#types">residual types</a> and a choice of different x-axis variables (all the x-axis variables are extracted from the input model) and another one includes the normal quantile plots.</p>
+</div>
+<div id="usage-2" class="section level2">
+<h2 class="hasAnchor">
+<a href="#usage-2" class="anchor"></a>Usage</h2>
+<div id="plot_app" class="section level3">
+<h3 class="hasAnchor">
+<a href="#plot_app" class="anchor"></a>redres_app</h3>
 <p><strong>Inputs</strong></p>
 <ul>
 <li>
@@ -360,11 +367,44 @@ paprika_plus <span class="op">%&gt;%</span>
 <li>A <code>shiny</code> app.</li>
 </ul>
 <p><strong>Functionality</strong></p>
-<p>The code below shows how to create a <code>shiny</code> app. By inputting the model <code>m</code> (could be a list of two models), a <code>shiny</code> app which has two main tabs, one includes the residual plot with a choice of all <a href="#types">residual types</a> and a choice of different x-axis variables and another one includes the normal quantile plots is returned.</p>
+<ul>
+<li>One fitted model:</li>
+</ul>
+<p>The code below shows how to create a <code>shiny</code> app. By inputting the model argument as <code>m</code>, a <code>shiny</code> app which has two main tabs mentioned above is returned.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creates a shiny app with only model</span>
+<span class="kw"><a href="../reference/redres_app.html">redres_app</a></span>(m)</code></pre></div>
+<p>Two seletction widgets shown in the <code>Residual Plot</code> tab are for choosing <a href="#types">residual types</a></p>
+<p><img src="figs/resid_type.png" width="70%" style="display: block; margin: auto;"></p>
+<p>and x-axis variables.</p>
+<p><img src="figs/xvar.png" width="70%" style="display: block; margin: auto;"></p>
+<p>The <code>Quantile Plots</code> tab shown below contains random effects normal quantile plot</p>
+<p><img src="figs/rand_eff_qq.png" width="70%" style="display: block; margin: auto;"></p>
+<p>and error term normal quantile plot.</p>
+<p><img src="figs/error_qq.png" width="70%" style="display: block; margin: auto;"></p>
+<ul>
+<li>Two fitted models:</li>
+</ul>
+<p>Input the model argument as <code>cmbd</code> which contains a list of two models to do model conparison using <code>shiny</code> app.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Fit a different linear mixed model with paprika data</span>
+m &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/lme4/topics/lmer">lmer</a></span>(height <span class="op">~</span><span class="st"> </span>rep <span class="op">+</span><span class="st"> </span>treatment<span class="op">*</span>variety <span class="op">+</span><span class="st"> </span>
+<span class="st">            </span>(<span class="dv">1</span><span class="op">|</span>rep<span class="op">:</span>treatment<span class="op">:</span>variety), 
+          <span class="dt">data =</span> paprika)
+
+<span class="co"># Fit a linear mixed model after log transform the response</span>
+m_log &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/lme4/topics/lmer">lmer</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log</a></span>(height) <span class="op">~</span><span class="st"> </span>rep <span class="op">+</span><span class="st"> </span>treatment<span class="op">*</span>variety <span class="op">+</span><span class="st"> </span>
+<span class="st">               </span>(<span class="dv">1</span><span class="op">|</span>rep<span class="op">:</span>treatment<span class="op">:</span>variety), 
+             <span class="dt">data =</span> paprika)
+
+<span class="co"># Combine the two models</span>
+cmbd &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(m, m_log)
+
+<span class="co"># Creates a shiny app with two models</span>
+<span class="kw"><a href="../reference/redres_app.html">redres_app</a></span>(cmbd)</code></pre></div>
+<p>The plots are shown side by side if there are two inputted model. For variables on the x-axis, different model can use different selected variables.</p>
+<p><img src="figs/resid_two_model.png" width="70%" style="display: block; margin: auto;"></p>
+<p>And the following show one of the quantile plots:</p>
+<p><img src="figs/error_qq_two_mod.png" width="70%" style="display: block; margin: auto;"></p>
 </div>
-<div id="usage-2" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usage-2" class="anchor"></a>Usage</h2>
 </div>
 </div>
   </div>
