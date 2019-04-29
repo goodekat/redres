@@ -164,7 +164,7 @@ See the section on [residual types](#types) for details on how the residuals are
 
 **Functionality** 
 
-The code below demonstrates the use of `redres` to compute several types of residuals from the model `m`. These residuals are put into a dataframe and joined with the `sleepstudy` data.
+The code below demonstrates the use of `redres` to compute several types of residuals from the model `m`. These residuals are put into a dataframe and joined with the `paprika` data.
 
 ```{r}
 # Computes the default residuals (raw conditional)
@@ -259,7 +259,11 @@ plot_redres(m, type = "pearson_cond") +
 
 ## Shiny App {#redres_app}
 
-The function `redres_app` includes a shiny app that helps demonstrate how the plotting functions `plot_redres`, `plot_resqq` and `plot_ranef` can be used. It can also be used to visually comparing two linear mixed models and conducting model selection through pairwise comparison.
+The function `redres_app` includes a shiny app that helps demonstrate how the plotting functions `plot_redres`, `plot_resqq` and `plot_ranef` can be used. It can also be used to visually comparing two linear mixed models and conducting model selection through pairwise comparison. There two main tabs in this `shiny` app, one includes the residual plot with a choice of all [residual types](#types) and a choice of different x-axis variables (all the x-axis variables are extracted from the input model) and another one includes the normal quantile plots.
+
+## Usage
+
+### redres_app {#plot_app}
 
 **Inputs**
 
@@ -271,11 +275,69 @@ The function `redres_app` includes a shiny app that helps demonstrate how the pl
 
 **Functionality** 
 
-The code below shows how to create a `shiny` app. By inputting the model `m` (could be a list of two models), a `shiny` app which has two main tabs, one includes the residual plot with a choice of all [residual types](#types) and a choice of different x-axis variables and another one includes the normal quantile plots is returned.
+- One fitted model:
 
-## Usage
+The code below shows how to create a `shiny` app. By inputting the model argument as `m`, a `shiny` app which has two main tabs mentioned above is returned.
 
+```{r, eval = FALSE}
+# Creates a shiny app with only model
+redres_app(m)
+```
 
+Two seletction widgets shown in the `Residual Plot` tab are for choosing [residual types](#types)
 
+```{r, out.width = '70%', fig.align = 'center', echo = FALSE}
+knitr::include_graphics('figs/resid_type.png')
+```
 
+and x-axis variables.
 
+```{r, out.width = '70%', fig.align = 'center', echo = FALSE}
+knitr::include_graphics('figs/xvar.png')
+```
+
+The `Quantile Plots` tab shown below contains random effects normal quantile plot
+
+```{r, out.width = '70%', fig.align = 'center', echo = FALSE}
+knitr::include_graphics('figs/rand_eff_qq.png')
+```
+
+and error term normal quantile plot.
+
+```{r, out.width = '70%', fig.align = 'center', echo = FALSE}
+knitr::include_graphics('figs/error_qq.png')
+```
+
+- Two fitted models:
+
+Input the model argument as `cmbd` which contains a list of two models to do model conparison using `shiny` app.
+
+```{r, eval = FALSE}
+# Fit a different linear mixed model with paprika data
+m <- lmer(height ~ rep + treatment*variety + 
+            (1|rep:treatment:variety), 
+          data = paprika)
+
+# Fit a linear mixed model after log transform the response
+m_log <- lmer(log(height) ~ rep + treatment*variety + 
+               (1|rep:treatment:variety), 
+             data = paprika)
+
+# Combine the two models
+cmbd <- c(m, m_log)
+
+# Creates a shiny app with two models
+redres_app(cmbd)
+```
+
+The plots are shown side by side if there are two inputted model. For variables on the x-axis, different model can use different selected variables.
+
+```{r, out.width = '70%', fig.align = 'center', echo = FALSE}
+knitr::include_graphics('figs/resid_two_model.png')
+```
+
+And the following show one of the quantile plots:
+
+```{r, out.width = '70%', fig.align = 'center', echo = FALSE}
+knitr::include_graphics('figs/error_qq_two_mod.png')
+```
