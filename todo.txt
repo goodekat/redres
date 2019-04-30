@@ -13,32 +13,8 @@ Vignette (use paprika data for whole vignette):
   - YZ: shiny app
 
 Presentation:
+  - done!
 
-Katherine
-- introduction/motivation
-- why it is useful?
-- what you can do with it?
-- show github page/how to downlaod
-- lmer and exisiting methods
-
-Kellie
-- introduce and show how to use the redres function
-- computation of residual / differences
-- why would you want to use the different residuals?
-
-Yudi
-- introduce and demonstrate plotting functions (plot_redres, plot_raneff, plot_resqq)
-- explain how to read the plots
-- show how it can be used with ggplot2 formatting functions
-
-Huo
-- introduce the redres_app function
-- demonstrate Shiny app
-- using the app with one model (this person will explain how to use the app in detail)
-
-Jing
-- using the app with two (or more) models (this person spends more time demonstrating how to use the app to compare models)
-- future work?
 
 Other:
   - make a sticker?
