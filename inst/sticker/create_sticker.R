@@ -5,7 +5,7 @@ library(hexSticker)
 library(magick)
 
 # Read in image
-dress_raw <- image_read("./inst/sticker/re-dress.png")
+dress_raw <- image_read("./inst/sticker/re-dress-trans.png")
 
 # Print the image
 print(dress_raw)
@@ -25,10 +25,10 @@ sticker1 <- sticker(
   p_y = 1.63,
   p_size = 5,
   p_family = "sans",
-  p_color = "green3",
+  p_color = "black",
 
   # background format
-  h_fill = "white",
+  h_fill = "aliceblue",
   h_color = "black",
   h_size = 2,
 
@@ -36,11 +36,11 @@ sticker1 <- sticker(
   url = "https://goodekat.github.io/redres/",
   u_size = 1.1,
   u_family = "sans",
-  u_color = "green3",
+  u_color = "black",
   u_y = 0.075,
 
   # save sticker
-  filename = "./inst/sticker/sticker-green.png"
+  filename = "./inst/sticker/sticker1.png"
 
 )
 
@@ -61,10 +61,10 @@ sticker2 <- sticker(
   p_y = 1.63,
   p_size = 5,
   p_family = "sans",
-  p_color = "red3",
+  p_color = "black",
 
   # background format
-  h_fill = "white",
+  h_fill = "bisque1",
   h_color = "black",
   h_size = 2,
 
@@ -72,11 +72,11 @@ sticker2 <- sticker(
   url = "https://goodekat.github.io/redres/",
   u_size = 1.1,
   u_family = "sans",
-  u_color = "red3",
+  u_color = "black",
   u_y = 0.075,
 
   # save sticker
-  filename = "./inst/sticker/sticker-red.png"
+  filename = "./inst/sticker/sticker2.png"
 
 )
 
@@ -100,7 +100,7 @@ sticker3 <- sticker(
   p_color = "black",
 
   # background format
-  h_fill = "white",
+  h_fill = "lavender",
   h_color = "black",
   h_size = 2,
 
@@ -112,8 +112,80 @@ sticker3 <- sticker(
   u_y = 0.075,
 
   # save sticker
-  filename = "./inst/sticker/sticker-black.png"
+  filename = "./inst/sticker/sticker3.png"
 
 )
 
 print(sticker3)
+
+# Sticker with black text
+sticker4 <- sticker(
+
+  # dress image
+  subplot = dress_raw,
+  s_x = 1,
+  s_y = .9,
+  s_width = 1.2,
+  s_height = 1.3,
+
+  # package name
+  package = "redres",
+  p_y = 1.63,
+  p_size = 5,
+  p_family = "sans",
+  p_color = "black",
+
+  # background format
+  h_fill = "azure1",
+  h_color = "black",
+  h_size = 2,
+
+  # url
+  url = "https://goodekat.github.io/redres/",
+  u_size = 1.1,
+  u_family = "sans",
+  u_color = "black",
+  u_y = 0.075,
+
+  # save sticker
+  filename = "./inst/sticker/sticker4.png"
+
+)
+
+print(sticker4)
+
+# Sticker with black text
+sticker5 <- sticker(
+
+  # dress image
+  subplot = dress_raw,
+  s_x = 1,
+  s_y = .9,
+  s_width = 1.2,
+  s_height = 1.3,
+
+  # package name
+  package = "redres",
+  p_y = 1.63,
+  p_size = 5,
+  p_family = "sans",
+  p_color = "black",
+
+  # background format
+  h_fill = "mintcream",
+  h_color = "black",
+  h_size = 2,
+
+  # url
+  url = "https://goodekat.github.io/redres/",
+  u_size = 1.1,
+  u_family = "sans",
+  u_color = "black",
+  u_y = 0.075,
+
+  # save sticker
+  filename = "./inst/sticker/sticker5.png"
+
+)
+
+print(sticker5)
