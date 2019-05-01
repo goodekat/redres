@@ -79,10 +79,11 @@ create_ui <- function(model){
     title = "redres app",
     windowTitle = "redres app",
     theme = "yeti",
-    div(tags$header(p("Diagnostic Plots for Linear Mixed-effects Model",
-                      style="font-size:40px"),
-                    p("group 6", style="font-size:30px")),
-        align = "center", style="color:#ffffff; background-color: #4d728d"),
+
+    tabPanel("Overview",
+             div(tags$header(p("Diagnostic Plots for Linear Mixed-effects Model",
+                               style="font-size:40px")),
+                 align = "center", style="color:#ffffff; background-color: #4d728d")),
 
     tabPanel("Residual Plot",
                sidebarPanel(
