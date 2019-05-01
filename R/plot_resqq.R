@@ -1,20 +1,21 @@
-#' Normal quantile plot for residuals.
+#' Normal quantile plot for residuals
 #'
 #' @description
-#' Creates a normal quantile plot of the raw conditional residuals. By the assumptions
-#' of a model fit using \code{lmer} these residuals are expected to be normally distributed.
+#' Creates a normal quantile plot of the raw conditional residuals. For linear mixed models,
+#' these residuals are expected to be normally distributed. This plot can be used to assess
+#' this assumption.
 #'
-#' @param model Model fit using \code{lmer}.
+#' @param model Model fit using \code{lmer} from \code{lme4}.
 #'
 #' @importFrom checkmate expect_class
 #' @importFrom ggplot2 aes_string ggplot theme_bw xlab ylab
 #' @importFrom qqplotr stat_qq_band stat_qq_line stat_qq_point
 #' @export plot_resqq
 #'
-#' @return A generalized residual quantile plot.
+#' @return A normal quantile plot in the form of a \code{ggplot2} object.
 #'
 #' @details
-#' Confidence bands are constructed from pointwise normal confidence intervals.
+#' Confidence bands are constructed pointwise 95\% normal confidence intervals.
 #'
 #' @examples
 #' # fits a linear mixed effect model using lme4 where model has a
@@ -22,8 +23,12 @@
 #' library(lme4)
 #' fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
 #'
-#' # check that error term is normally distributed
+#' # checks that error term is normally distributed
 #' plot_resqq(fm1)
+#'
+#' # edits theme of ggplot2 object
+#' library(ggplot2)
+#' plot_resqq(fm1) + theme_grey()
 
 plot_resqq <- function(model){
 

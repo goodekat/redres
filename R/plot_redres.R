@@ -34,7 +34,7 @@
 #'
 #' # edits theme of ggplot2 object
 #' library(ggplot2)
-#' plot_redres(fm1, type = "pearson_mar") + theme_grey()
+#' plot_redres(fm1, type = "pearson_mar") + ggtitle("Pearson Marginal Residuals by Fitted Values")
 
 plot_redres <- function(model, type = "raw_cond", xvar = NULL) {
 

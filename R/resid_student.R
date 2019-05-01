@@ -1,5 +1,5 @@
-# stdres: This is a function that is used to identify conditional or marginal studentized
-# residules from the model.
+# stdres: This is a function that is used to compute the conditional or marginal studentized
+# residuals from the model. Default is the conditional residuals.
 
 #' @importFrom lme4 VarCorr
 #' @importFrom MASS ginv

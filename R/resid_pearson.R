@@ -1,5 +1,5 @@
 # pearsonres: This is a function that is used to compute the conditional
-# or marginal Pearson residules from the model.
+# or marginal Pearson residuals from the model. Default is the conditional residuals.
 
 #' @importFrom lme4 VarCorr
 
