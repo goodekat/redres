@@ -31,7 +31,14 @@ This package is meant to be a supplemental package to `lme4`.
 
 ## Overview
 
+<<<<<<< HEAD
 The Merriam-Webster dictionary defines [redress](https://www.merriam-webster.com/dictionary/redress) as "to set right". When we assign a linear mixed model to data, we assume (1) independence of our observations, (2) a linear relationship between the response and the explanatory variables, (3) constant variance and (4) normality of the error term. By inspecting our residuals we can diagnose erronous assumptions and missing structure, allowing us to set right the more egregious misspecifications. No model is perfect, but our residuals are a first line of defense against an inaccurate model and consequently poor inference.
+=======
+Linear mixed effects models are a commonly used tool in data analyses. Like many models, they come with a handful of assumptions that need to be assessed in order to perform inference. Residuals are a key tool for checking these assumptions. 
+
+The Merriam-Webster dictionary defines [redress](https://www.merriam-webster.com/dictionary/redress) as "to set right". We have developed the package `redres` to help users set right any violations of model assumptions with their mixed models. 
+
+>>>>>>> 91b188e8926e29f5808cd3a2586f6ff377b146c4
 
 ## Package Structure
 
@@ -60,6 +67,34 @@ devtools::install_github("goodekat/redres")
 # Loads the package
 library(redres)
 ```
+
+## Linear Mixed Model Theory and Assumptions
+
+The linear mixed effects model can be written as
+  $$\textbf{Y}=\textbf{X}\boldsymbol{\beta}+\textbf{Z}\boldsymbol{\gamma}+\boldsymbol{\epsilon}$$
+where
+
+- $\textbf{Y}$ is an $n\times 1$ vector of $n$ response variable observations,
+- $\textbf{X}$ is an $n\times p$ matrix of $p$ explanatory variables with $n$ observations each,
+- $\boldsymbol{\beta}$ is a $p\times1$ vector of unknown fixed effects parameters,
+- $\textbf{Z}$ is an $n\times q$ matrix of $q$ random effect variables with $n$ observations each,
+- $\boldsymbol{\gamma}$ is a $q\times1$ vector of unknown random effects, and
+- $\boldsymbol{\epsilon}$ is an $n\times1$ vector of random errors.
+
+Under this set up,
+  $$E[\textbf{Y}]=\textbf{X}\boldsymbol{\beta} \ \ \ \mbox{ and } \ \ \ 
+  Var[\textbf{Y}]=\textbf{ZGZ}'+\textbf{R}=\textbf{V}.$$
+  
+It is assumed that
+$$ 
+\begin{bmatrix} \boldsymbol{\gamma} \\ \boldsymbol{\epsilon} \end{bmatrix}
+\sim N 
+\begin{pmatrix} 
+\begin{bmatrix} \boldsymbol{0} \\ \boldsymbol{0} \end{bmatrix},
+\begin{bmatrix} \textbf{G} & \boldsymbol{0} \\ \boldsymbol{0} & \textbf{R}
+\end{bmatrix}
+\end{pmatrix}.
+$$
 
 ## Example Data
 
@@ -113,37 +148,19 @@ m <- lmer(height ~ rep + treatment*variety + (1|rep:treatment) + (1|rep:treatmen
 
 # Extracting Residuals
 
-One of the ways to utilize `redres` is to extract residuals from a model fit using `lmer`. This can be done using the main function in the package named `redres` to compute residuals based on a specified type.
+One of the ways to utilize `redres` is to extract residuals from a model fit using `lmer`. This can be done using the function in the package named `redres` to compute residuals based on a specified type.
 
 ## Residual Types {#types}
 
-The linear mixed effects model can be written as
-  $$\textbf{Y}=\textbf{X}\boldsymbol{\beta}+\textbf{Z}\boldsymbol{\gamma}+\boldsymbol{\epsilon}$$
-where
+`redres` can compute both marginal and conditional residuals for the following types:
 
-- $\textbf{Y}$ is an $n\times 1$ vector of $n$ response variable observations,
-- $\textbf{X}$ is an $n\times p$ matrix of $p$ explanatory variables with $n$ observations each,
-- $\boldsymbol{\beta}$ is a $p\times1$ vector of unknown fixed effects parameters,
-- $\textbf{Z}$ is an $n\times q$ matrix of $q$ random effect variables with $n$ observations each,
-- $\boldsymbol{\gamma}$ is a $q\times1$ vector of unknown random effects, and
-- $\boldsymbol{\epsilon}$ is an $n\times1$ vector of random errors.
+- raw
+- Pearson
+- studentized
 
-Under this set up,
-  $$E[\textbf{Y}]=\textbf{X}\boldsymbol{\beta} \ \ \ \mbox{ and } \ \ \ 
-  Var[\textbf{Y}]=\textbf{ZGZ}'+\textbf{R}=\textbf{V}.$$
-  
-It is assumed that
-$$ 
-\begin{bmatrix} \boldsymbol{\gamma} \\ \boldsymbol{\epsilon} \end{bmatrix}
-\sim N 
-\begin{pmatrix} 
-\begin{bmatrix} \boldsymbol{0} \\ \boldsymbol{0} \end{bmatrix},
-\begin{bmatrix} \textbf{G} & \boldsymbol{0} \\ \boldsymbol{0} & \textbf{R}
-\end{bmatrix}
-\end{pmatrix}.
-$$
+It is not necessary to consider all residual types when diagnosing a mixed model. Certain types are beneficial in different situations. For example, conditional residuals are useful for checking the effect of the random terms in the model as opposed to marginal residuals that do not account for the random effects, and studentized residuals are useful for checking constant variance with more complex variance structures. However, we have chosen to include all of these types so that the user may select which type (or types) is (are) useful for their situation. By default, `redres` returns raw conditional residuals since these are the most appropriate for a wide range of cases.
 
-`redres` can compute six types of residuals. These include some types not available in `lme4`, and some of the types are computed differently in `redres` than `lme4`. These changes were made to make the choices of type names more intuitive with the computations used. The formulas for how these are computed in `redres` are listed below.
+The formulas for how the residual types are computed in `redres` are listed below. Note that the manner in which some of the residual types are computed differ from the `resid` function in `lme4`. These changes were made so the names of the residual types more intuitive with the computations used. 
 
 ### Raw Residuals
 
@@ -248,15 +265,23 @@ paprika_plus %>%
 
 # Plotting Residuals {#plots}
 
-Additionally, the package includes plotting functions that allow the user to visually assess the general assumptions of a linear mixed model.
+The package includes three `plot` functions that allow the user to visually assess the general assumptions of a linear mixed model (using `ggplot2` graphics).
 
-## Residual Plots 
+- [`plot_redres`](#plot_redres): creates a plot of the residuals versus the fitted values or model variables
+- [`plot_resqq`](#plot_resqq):  creates a normal quantile plot of the residuals
+- [`plot_ranef`](#plot_ranef):  creates a normal quantile plot of the random effects
+
+## Plot Types
+
+`redres` makes use of two types of plots (residual and quantile plots) to assess the model assumptions. How these plots are created and used are described below.
+
+### Residual Plots 
 
 Plots of the residuals by either the fitted values or explanatory variables (covariates) are used to verify linearity and constant variance. If no curvature or additional linear trends are identified in the residual plot, we say that the linear form is a reasonable assumption. To assess our variance assumptions, we are looking for constant variance. Here using a scaled residual, either the studentized or Pearson, is necessary to account for additional variance structures modeled outside of the error term. We want the vertical spread of the residuals to be approximately the same for all x-axis values.
 
 Residual plots can be called using the `plot_redres` function. The user has the ability to specify either fitted values or a explanatory variable from the model. Additionally any of the six [types of residuals](#types) can be used in the plot.
 
-## Quantile plots
+### Quantile plots
 
 Quantile plots are used to verify visually if data follows are particular distribution. Data points are plotted along the quantiles of the assumed distributed. The data is expected to follow an approximately straight line, at least along the middle quantiles. The points are assessed for any extreme curvation that would indicate a departure from the assumed distribution. Typically curvature at the extreme ends of the quantiles (around 0 and 1) are ignored as data is sparse here and distributions behave more erratically at the boundaries of the parameter space. We have added confidence bands to guide the user.  
 
