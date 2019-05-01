@@ -3,18 +3,22 @@ To Do
 --------
 
 Package:
+  - proof read documentation
+  - add code coverage discussion to README
+  - fix static image issue with README
+  - proof read README
+  - make sure webpage is working as it should
 
 Shiny app:
   - J+YZ+H: figure out how to test the app (maybe could have an error check)
+  - add a description to the first page of the readme
 
 Vignette (use paprika data for whole vignette):
   - KM: introduction
-  - KM: plot section
-  - YZ: shiny app
+  - edit
 
 Presentation:
   - done!
 
-
 Other:
-  - make a sticker?
+ - final check of project against rubric and project expectations

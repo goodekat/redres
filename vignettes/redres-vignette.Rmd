@@ -31,14 +31,7 @@ This package is meant to be a supplemental package to `lme4`.
 
 ## Overview
 
-<<<<<<< HEAD
 The Merriam-Webster dictionary defines [redress](https://www.merriam-webster.com/dictionary/redress) as "to set right". When we assign a linear mixed model to data, we assume (1) independence of our observations, (2) a linear relationship between the response and the explanatory variables, (3) constant variance and (4) normality of the error term. By inspecting our residuals we can diagnose erronous assumptions and missing structure, allowing us to set right the more egregious misspecifications. No model is perfect, but our residuals are a first line of defense against an inaccurate model and consequently poor inference.
-=======
-Linear mixed effects models are a commonly used tool in data analyses. Like many models, they come with a handful of assumptions that need to be assessed in order to perform inference. Residuals are a key tool for checking these assumptions. 
-
-The Merriam-Webster dictionary defines [redress](https://www.merriam-webster.com/dictionary/redress) as "to set right". We have developed the package `redres` to help users set right any violations of model assumptions with their mixed models. 
-
->>>>>>> 91b188e8926e29f5808cd3a2586f6ff377b146c4
 
 ## Package Structure
 
