@@ -221,9 +221,12 @@ paprika_plus <- cbind(paprika, raw_cond, pearson_mar, std_cond)
 head(paprika_plus)
 ```
 
-The user can then use these residuals as desired. For example, the user could make their own plots or perform tests on the residuals. The code below creates histograms of the three residual types.
+The user can then use these residuals as desired. For example, the user could make their own plots or perform tests on the residuals. The code below performs a Shapiro-Wilk test for normality on the raw conditional residuals and creates histograms of the three residual types.
 
-```{r message = FALSE}
+```{r message = FALSE, fig.width = 8}
+# Performs a test for normality on the raw conditional residuals
+shapiro.test(paprika_plus$raw_cond)
+
 # Loads helpful libraries 
 library(dplyr)
 library(tidyr)
