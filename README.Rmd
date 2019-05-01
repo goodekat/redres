@@ -121,6 +121,6 @@ Additionally, more information is available at the package [website](https://goo
 
 ```{r echo = FALSE, results = FALSE}
 # copy static figures to docs folder
-file.copy("./README_files", "./docs", overwrite = TRUE)
+file.copy("./README_files", "./docs", overwrite = TRUE, recursive = TRUE)
 ```
 
