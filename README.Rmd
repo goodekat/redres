@@ -119,7 +119,7 @@ To learn more about `redres`, read through the [vignette](https://goodekat.githu
 
 Additionally, more information is available at the package [website](https://goodekat.github.io/redres/).
 
-```{r echo = FALSE}
+```{r echo = FALSE, results = FALSE}
 # copy static figures to docs folder
 file.copy("./README_files", "./docs", recursive = TRUE)
 ```

@@ -122,5 +122,3 @@ To learn more about `redres`, read through the [vignette](https://goodekat.githu
 -   an example using `redres` to assess the assumptions of a linear mixed model
 
 Additionally, more information is available at the package [website](https://goodekat.github.io/redres/).
-
-    ## [1] TRUE
