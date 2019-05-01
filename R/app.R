@@ -130,7 +130,7 @@ create_server <- function(model){
 
 }
 
-server_fun <- function(input, output) {
+function(input, output) {
 
   output$resid <- renderPlot({
 
