@@ -1,5 +1,5 @@
 
-redres <img align="right" width="135" height="150" src="README_files/static-figures/sticker.png">
+redres <img align="right" width="150" height="175" src="README_files/static-figures/sticker.png">
 =================================================================================================
 
 `redres` is an R package developed to help with diagnosing linear mixed models fit using the function `lmer` from the lme4 package. This package both computes residuals types and creates plots that are not available from lme4.
@@ -109,7 +109,7 @@ plot_ranef(m)
 redres_app(m)
 ```
 
-![](./inst/figures/app1.png) ![](./inst/figures/app2.png)
+![](./README_files/static-figures/app1.png) ![](./README_files/static-figures/app2.png)
 
 Learn More
 ----------
@@ -122,3 +122,5 @@ To learn more about `redres`, read through the [vignette](https://goodekat.githu
 -   an example using `redres` to assess the assumptions of a linear mixed model
 
 Additionally, more information is available at the package [website](https://goodekat.github.io/redres/).
+
+    ## [1] TRUE
