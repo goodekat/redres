@@ -25,15 +25,21 @@ knitr::opts_chunk$set(
 
 <img align="right" width="135" height="150" src="figs/sticker.png">
 
+**redres** stands for **r**andom **e**ffect **d**iagnostic **res**iduals
+
+This package is meant to be a supplemental package to `lme4`.
+
 ## Overview
 
-(motivation for the package on having tools for diagnosing mixed models) The Merriam-Webster dictionary defines [redress](https://www.merriam-webster.com/dictionary/redress) as "to set right".
+The Merriam-Webster dictionary defines [redress](https://www.merriam-webster.com/dictionary/redress) as "to set right". When we assign a linear mixed model to data, we assume (1) independence of our observations, (2) a linear relationship between the response and the explanatory variables, (3) constant variance and (4) normality of the error term. By inspecting our residuals we can diagnose erronous assumptions and missing structure, allowing us to set right the more egregious misspecifications. No model is perfect, but our residuals are a first line of defense against an inaccurate model and consequently poor inference.
 
 ## Package Structure
 
-(describe the three ways to use the package)
+`redres` contains various functions that provide different ways to assess model assumptions for linear mixed models fit using `lmer`. For a user who wants to obtain the residual value for each observation in their data set, the function `redres` allows the user to input a model and specify one of six available residual types. The [available types](#types) are described in detail below. Additionally the package provides several default plots to visually assess the fit of a given mixed model. Calling the plot functions and reading the output are described in the section on [plotting](#plots). Both, the residual functions and the plotting functions, generate static output within the user's R session.  
 
-`redres` contains various functions that provide different ways to assess model assumptions for linear mixed models fit using `lmer`. The function range from returning a vector of residuals to be used by the user as desired to opening a Shiny app that allows the user to interactively assess the model with package provided tools. A brief description of each function is listed below.
+Alternatively, user can use the function `redres_app` that opens a Shiny app to interactively assess their model with package provided tools. Within the Shiny window, the user can view all the plots available in the `redres` package but with additional interactivity. Or the user can input two models into the app function for model selection.
+
+A brief description of each function is listed below.
 
 - [redres](#redres): computes and returns residuals given a model and a specified residual type
 - [plot_redres](#plot_redres): creates a plot of residuals versus fitted values for a given residual type
@@ -240,7 +246,7 @@ paprika_plus %>%
   theme_bw()
 ```
 
-# Plotting Residuals
+# Plotting Residuals {#plots}
 
 Additionally, the package includes plotting functions that allow the user to visually assess the general assumptions of a linear mixed model.
 
