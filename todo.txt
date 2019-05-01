@@ -3,11 +3,11 @@ To Do
 --------
 
 Package:
-  - proof read documentation
-  - add code coverage discussion to README
-  - fix static image issue with README
-  - proof read README
-  - make sure webpage is working as it should
+  - KM: proof read documentation
+  - KG: add code coverage discussion to README
+  - KG: fix static image issue with README
+  - KM: proof read README
+  - KG & KM: make sure webpage is working as it should
 
 Shiny app:
   - J+YZ+H: figure out how to test the app (maybe could have an error check)
@@ -21,4 +21,4 @@ Presentation:
   - done!
 
 Other:
- - final check of project against rubric and project expectations
+ - KG & KM: final check of project against rubric and project expectations

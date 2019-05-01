@@ -13,8 +13,19 @@ model <- lme4::lmer(SeedlingWeight ~ Genotype + (1|Tray), data = d)
 model_lm <- lm(SeedlingWeight ~ Genotype, data = d)
 
 # test error messages
-test_that("check-redres_app", {
+test_that("check-app-errors", {
   expect_error(redres_app(1))
   expect_error(redres_app(model_lm))
   expect_error(redres_app(c(model, model, model)))
+  expect_error(redres_app(c(model, 1)))
+  expect_error(redres_app(c(model_lm, model)))
+  expect_error(create_ui(1))
 })
+
+test_that("functions-return-correct-classes", {
+  expect_is(create_ui(model), "shiny.tag.list")
+  expect_is(create_ui(c(model, model)), "shiny.tag.list")
+  expect_is(create_server(model), "function")
+  expect_is(create_app(model), "shiny.appobj")
+})
+

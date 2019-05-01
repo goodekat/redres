@@ -103,10 +103,10 @@ plot_ranef(m)
 redres_app(m)
 ```
 
-
-
-![](./README_files/static-figures/app1.png)
-![](./README_files/static-figures/app2.png)
+```{r echo = FALSE, fig.pos = "center"}
+knitr::include_graphics("./README_files/static-figures/app1.png")
+knitr::include_graphics("./README_files/static-figures/app2.png")
+```
 
 ## Learn More
 
@@ -121,6 +121,6 @@ Additionally, more information is available at the package [website](https://goo
 
 ```{r echo = FALSE, results = FALSE}
 # copy static figures to docs folder
-file.copy("./README_files", "./docs", recursive = TRUE)
+file.copy("./README_files", "./docs", overwrite = TRUE, recursive = TRUE)
 ```
 

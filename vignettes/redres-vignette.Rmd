@@ -23,13 +23,13 @@ knitr::opts_chunk$set(
 
 # Introducing redres
 
-<img align="right" width="135" height="150" src="figs/sticker.png">
-
 **redres** stands for **r**andom **e**ffect **d**iagnostic **res**iduals
 
 This package is meant to be a supplemental package to `lme4`.
 
-## Overview
+## Overview 
+
+<img align="right" width="150" height="175" src="figs/sticker.png">
 
 The Merriam-Webster dictionary defines [redress](https://www.merriam-webster.com/dictionary/redress) as "to set right". When we assign a linear mixed model to data, we assume (1) independence of our observations, (2) a linear relationship between the response and the explanatory variables, (3) constant variance and (4) normality of the error term. By inspecting our residuals we can diagnose erronous assumptions and missing structure, allowing us to set right the more egregious misspecifications. No model is perfect, but our residuals are a first line of defense against an inaccurate model and consequently poor inference.
 
@@ -91,18 +91,11 @@ $$
 
 ## Example Data
 
-`redres` contains a dataset called `paprika`, which will be used to demonstrate the functions in this vignette. The data is from a study on paprika plants grown under small-scale farming conditions in southern Africa. The original paper on the study can be found [here](https://link.springer.com/article/10.1007%2Fs10457-011-9415-2). The study was conducted in 2007 and 2008 in Malawi using a split plot design with five replicates. The researchers compared 4 fertilizer treatments and 6 plant varieties.
+`redres` contains a dataset called `paprika`, which will be used to demonstrate the functions in this vignette. The data is from a study on paprika plants grown under small-scale farming conditions in southern Africa. The original paper on the study can be found [here](https://link.springer.com/article/10.1007%2Fs10457-011-9415-2). The study was conducted in 2007 and 2008 in Malawi using a split plot design with five replicates. 
 
-|       Fertilizers        |      Plant Varieties     | 
-| ------------------------ | ------------------------ |
-| (1) control              | (1) Papri-King           |
-| (2) inorganic fertilizer | (2) Papri-Queen          |
-| (3) Gliricidia biomass   | (3) Papri-Excel          |
-| (4) Gliricidia biomass plus half the recommended dose of fertilizer for paprika   | (4) Papri-Supreme        | 
-|                          | (5) Papri-Ace            |
-|                          | (6) PX1140 4601)         |
+The researchers compared 4 fertilizer treatments and 6 plant varieties. The fertilizers were applied to the main plots, and the varieties were assigned to the subplots within a main plot. Within each replicate, 10 plants were randomly chosen from each fertilizer and variety treatment combination and observed over 20 weeks. 
 
-The fertilizers were applied to the main plots, and the varieties were assigned to the subplots within a main plot. Within each replicate, 10 plants were randomly chosen from each fertilizer and variety treatment combination and observed over 20 weeks. The dataset included in `redres` contains observations from week 4 of the data in 2008. It is stored as a tibble with 1070 rows and 5 variables. The variables are
+The dataset included in `redres` contains observations from week 4 of the data in 2008. It is stored as a tibble with 1070 rows and 5 variables. The variables are
 
 - `rep`: replicate number
 - `treatment`: fertilizer treatment

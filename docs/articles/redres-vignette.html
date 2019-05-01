@@ -92,12 +92,12 @@
 <div id="introducing-redres" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introducing-redres" class="anchor"></a>Introducing redres</h1>
-<p><img align="right" width="135" height="150" src="figs/sticker.png"></p>
 <p><strong>redres</strong> stands for <strong>r</strong>andom <strong>e</strong>ffect <strong>d</strong>iagnostic <strong>res</strong>iduals</p>
 <p>This package is meant to be a supplemental package to <code>lme4</code>.</p>
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
+<p><img align="right" width="150" height="175" src="figs/sticker.png"></p>
 <p>The Merriam-Webster dictionary defines <a href="https://www.merriam-webster.com/dictionary/redress">redress</a> as “to set right”. When we assign a linear mixed model to data, we assume (1) independence of our observations, (2) a linear relationship between the response and the explanatory variables, (3) constant variance and (4) normality of the error term. By inspecting our residuals we can diagnose erronous assumptions and missing structure, allowing us to set right the more egregious misspecifications. No model is perfect, but our residuals are a first line of defense against an inaccurate model and consequently poor inference.</p>
 </div>
 <div id="package-structure" class="section level2">
@@ -161,44 +161,9 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <div id="example-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-data" class="anchor"></a>Example Data</h2>
-<p><code>redres</code> contains a dataset called <code>paprika</code>, which will be used to demonstrate the functions in this vignette. The data is from a study on paprika plants grown under small-scale farming conditions in southern Africa. The original paper on the study can be found <a href="https://link.springer.com/article/10.1007%2Fs10457-011-9415-2">here</a>. The study was conducted in 2007 and 2008 in Malawi using a split plot design with five replicates. The researchers compared 4 fertilizer treatments and 6 plant varieties.</p>
-<table class="table">
-<colgroup>
-<col width="34%">
-<col width="34%">
-</colgroup>
-<thead><tr class="header">
-<th>Fertilizers</th>
-<th>Plant Varieties</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td>(1) control</td>
-<td>(1) Papri-King</td>
-</tr>
-<tr class="even">
-<td>(2) inorganic fertilizer</td>
-<td>(2) Papri-Queen</td>
-</tr>
-<tr class="odd">
-<td>(3) Gliricidia biomass</td>
-<td>(3) Papri-Excel</td>
-</tr>
-<tr class="even">
-<td>(4) Gliricidia biomass plus half the recommended dose of fertilizer for paprika</td>
-<td>(4) Papri-Supreme</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td>(5) Papri-Ace</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>(6) PX1140 4601)</td>
-</tr>
-</tbody>
-</table>
-<p>The fertilizers were applied to the main plots, and the varieties were assigned to the subplots within a main plot. Within each replicate, 10 plants were randomly chosen from each fertilizer and variety treatment combination and observed over 20 weeks. The dataset included in <code>redres</code> contains observations from week 4 of the data in 2008. It is stored as a tibble with 1070 rows and 5 variables. The variables are</p>
+<p><code>redres</code> contains a dataset called <code>paprika</code>, which will be used to demonstrate the functions in this vignette. The data is from a study on paprika plants grown under small-scale farming conditions in southern Africa. The original paper on the study can be found <a href="https://link.springer.com/article/10.1007%2Fs10457-011-9415-2">here</a>. The study was conducted in 2007 and 2008 in Malawi using a split plot design with five replicates.</p>
+<p>The researchers compared 4 fertilizer treatments and 6 plant varieties. The fertilizers were applied to the main plots, and the varieties were assigned to the subplots within a main plot. Within each replicate, 10 plants were randomly chosen from each fertilizer and variety treatment combination and observed over 20 weeks.</p>
+<p>The dataset included in <code>redres</code> contains observations from week 4 of the data in 2008. It is stored as a tibble with 1070 rows and 5 variables. The variables are</p>
 <ul>
 <li>
 <code>rep</code>: replicate number</li>
@@ -523,13 +488,13 @@ paprika_plus <span class="op">%&gt;%</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creates a shiny app with only model</span>
 <span class="kw"><a href="../reference/redres_app.html">redres_app</a></span>(m)</code></pre></div>
 <p>Two selection widgets shown in the <code>Residual Plot</code> tab are for choosing <a href="#types">residual types</a></p>
-<p><img src="figs/resid_type.png" width="70%" style="display: block; margin: auto;"></p>
+<p><img src="../../../../STAT%20585/project/redres/vignettes/figs/resid_type.png" width="70%" style="display: block; margin: auto;"></p>
 <p>and x-axis variables.</p>
-<p><img src="figs/xvar.png" width="70%" style="display: block; margin: auto;"></p>
+<p><img src="../../../../STAT%20585/project/redres/vignettes/figs/xvar.png" width="70%" style="display: block; margin: auto;"></p>
 <p>The <code>Quantile Plots</code> tab shown below contains random effects normal quantile plot</p>
-<p><img src="figs/rand_eff_qq.png" width="70%" style="display: block; margin: auto;"></p>
+<p><img src="../../../../STAT%20585/project/redres/vignettes/figs/rand_eff_qq.png" width="70%" style="display: block; margin: auto;"></p>
 <p>and error term normal quantile plot.</p>
-<p><img src="figs/error_qq.png" width="70%" style="display: block; margin: auto;"></p>
+<p><img src="../../../../STAT%20585/project/redres/vignettes/figs/error_qq.png" width="70%" style="display: block; margin: auto;"></p>
 <ul>
 <li>Two fitted models:</li>
 </ul>
@@ -550,9 +515,9 @@ cmbd &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocume
 <span class="co"># Creates a shiny app with two models</span>
 <span class="kw"><a href="../reference/redres_app.html">redres_app</a></span>(cmbd)</code></pre></div>
 <p>The plots are shown side by side if there are two inputted model. For variables on the x-axis, different model can use different selected variables.</p>
-<p><img src="figs/resid_two_model.png" width="70%" style="display: block; margin: auto;"></p>
+<p><img src="../../../../STAT%20585/project/redres/vignettes/figs/resid_two_model.png" width="70%" style="display: block; margin: auto;"></p>
 <p>And the following show one of the quantile plots:</p>
-<p><img src="figs/error_qq_two_mod.png" width="70%" style="display: block; margin: auto;"></p>
+<p><img src="../../../../STAT%20585/project/redres/vignettes/figs/error_qq_two_mod.png" width="70%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 </div>

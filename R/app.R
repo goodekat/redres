@@ -36,6 +36,17 @@
 # Function for running shiny app
 redres_app <- function(model) {
 
+  # create the app
+  redresApp <- create_app(model)
+
+  # run the app
+  shiny::runApp(redresApp, display.mode = "normal")
+
+}
+
+# Function to create the app
+create_app <- function(model){
+
   # error checks for input model(s)
   if (length(model) == 1){
     checkmate::expect_class(model, "lmerMod",
@@ -50,19 +61,19 @@ redres_app <- function(model) {
   }
 
   # create ui and server with the input model
-  ui <- ui_fun(model)
-  server <- server_fun(model)
+  ui <- create_ui(model)
+  server <- create_server(model)
 
   # create the app
   redresApp <- shinyApp(ui, server)
 
-  # run the app
-  shiny::runApp(redresApp, display.mode = "normal")
+  # return the app
+  return(redresApp)
 
 }
 
 # function to create the app ui given the model
-ui_fun <- function(model){
+create_ui <- function(model){
 
   navbarPage(
     title = "redres app",
@@ -113,9 +124,9 @@ ui_fun <- function(model){
 }
 
 # function to create the app server given the model
-server_fun <- function (model) {
+create_server <- function(model){
 
-  shiny::shinyServer( function(input, output) {
+  shiny::shinyServer(function(input, output) {
 
     output$resid <- renderPlot({
 
@@ -175,6 +186,6 @@ server_fun <- function (model) {
       }
     })
   })
-}
 
+}
 
