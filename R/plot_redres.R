@@ -1,37 +1,39 @@
 #' Diagnostic residual plot for linear mixed models
 #'
 #' @description
-#' Plot of specified residual type versus fitted values for a linear mixed effects model
-#' fitted using \code{lmer}. Use plot to assess whether the assumptions of constant
-#' variance and linear form are adequate.
+#' Creates a plot of residuals versus fitted values or model variable. This plot can be used to assess whether the assumptions of constant
+#' variance and linear form assumptions are adequate.
 #'
-#' @param model Model fit using \code{lmer}.
+#' @param model Model fit using \code{lmer} from \code{lme4}.
 #' @param type String identifying type of residual. Default is "raw_cond".
 #'             See \code{\link{redres}} for details of available types.
 #' @param xvar String indicates the variable to be plotted at the x-axis. By default,
-#'             the fitted values are plotted on the x-axis. This option allows the user
-#'             to choose a different variable to plotted. Any variables used in the
+#'             the fitted values are plotted on the x-axis. Any variable used in the
 #'             lmer model can be specified.
 #'
+#' @importFrom checkmate expect_choice expect_class expect_string
 #' @importFrom broom augment
-#' @importFrom ggplot2 aes_string geom_point ggplot xlab ylab geom_hline theme_bw
+#' @importFrom ggplot2 aes_string geom_hline geom_point ggplot theme_bw xlab ylab
 #' @export plot_redres
 #'
-#' @return A plot of residuals versus fitted values.
+#' @return A residual plot in the form of a \code{ggplot2} object.
 #'
 #' @examples
-#' # Fit a linear mixed effects model
+#' # fits a linear mixed effects model
 #' library(lme4)
 #' fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
 #'
-#' # Plot raw conditional residuals by fitted values.
+#' # plots raw conditional residuals by fitted values.
 #' plot_redres(fm1)
 #'
-#' # Plot raw conditional residuals by selected variables `Days`.
+#' # plots raw conditional residuals by selected variables `Days`.
 #' plot_redres(fm1, xvar = "Days")
 #'
-#' # Plot standardized conditional residuals by fitted values.
+#' # plots standardized conditional residuals by fitted values.
 #' plot_redres(fm1, type = "std_cond")
+#'
+#' # edits theme of ggplot2 object
+#' plot_redres(fm1, type = "pearson_mar") + theme_grey()
 
 plot_redres <- function(model, type = "raw_cond", xvar = NULL) {
 
@@ -42,7 +44,7 @@ plot_redres <- function(model, type = "raw_cond", xvar = NULL) {
   checkmate::expect_choice(type, choices = c("raw_cond", "raw_mar", "pearson_cond", "pearson_mar", "std_cond", "std_mar"),
                            info = "The residual type specified is not available in plot_redres.")
   if(!is.null(xvar) == TRUE) {
-    checkmate::expect_string(xvar, info = "The input variablecovr::report() for plot_redres must be a string.")
+    checkmate::expect_string(xvar, info = "The input variable for plot_redres must be a string.")
   }
 
   # Put residuals and fitted values in a data frame

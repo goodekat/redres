@@ -7,35 +7,36 @@
 plot_redres(model, type = "raw_cond", xvar = NULL)
 }
 \arguments{
-\item{model}{Model fit using \code{lmer}.}
+\item{model}{Model fit using \code{lmer} from \code{lme4}.}
 
 \item{type}{String identifying type of residual. Default is "raw_cond".
 See \code{\link{redres}} for details of available types.}
 
 \item{xvar}{String indicates the variable to be plotted at the x-axis. By default,
-the fitted values are plotted on the x-axis. This option allows the user
-to choose a different variable to plotted. Any variables used in the
+the fitted values are plotted on the x-axis. Any variable used in the
 lmer model can be specified.}
 }
 \value{
-A plot of residuals versus fitted values.
+A residual plot in the form of a \code{ggplot2} object.
 }
 \description{
-Plot of specified residual type versus fitted values for a linear mixed effects model
-fitted using \code{lmer}. Use plot to assess whether the assumptions of constant
-variance and linear form are adequate.
+Creates a plot of residuals versus fitted values or model variable. This plot can be used to assess whether the assumptions of constant
+variance and linear form assumptions are adequate.
 }
 \examples{
-# Fit a linear mixed effects model
+# fits a linear mixed effects model
 library(lme4)
 fm1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
 
-# Plot raw conditional residuals by fitted values.
+# plots raw conditional residuals by fitted values.
 plot_redres(fm1)
 
-# Plot raw conditional residuals by selected variables `Days`.
+# plots raw conditional residuals by selected variables `Days`.
 plot_redres(fm1, xvar = "Days")
 
-# Plot standardized conditional residuals by fitted values.
+# plots standardized conditional residuals by fitted values.
 plot_redres(fm1, type = "std_cond")
+
+# edits theme of ggplot2 object
+plot_redres(fm1, type = "pearson_mar") + theme_grey()
 }
