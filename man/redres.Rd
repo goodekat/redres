@@ -7,21 +7,18 @@
 redres(model, type = "raw_cond")
 }
 \arguments{
-\item{model}{Model fit using \code{lmer} from lme4 for which residuals will be computed.}
+\item{model}{Model fit using \code{lmer} from \code{lme4}.}
 
 \item{type}{String identifying type of residual. Default is "raw_cond". See details for the options available.}
 }
 \value{
-Returns residuals according to type specified.
+Returns a vector of residuals according to type specified. Residuals appear in the same order as the observations used to fit the model.
 }
 \description{
-Computes residuals for linear mixed models fit using \code{lmer} from the lme4.
-It can return seven types of residuals inlcuding options that are not available
-from lme4. These types are conditional raw, Pearson, and studentized, marginal
-raw, Pearson, and studentized.
+Computes residuals for a given linear mixed model.
 }
 \details{
-Residual types available
+Residual types available:
 \itemize{
   \item \code{"pearson_cond"}: Pearson conditional residuals
   \item \code{"pearson_mar"}: Pearson marginal residuals
@@ -30,7 +27,7 @@ Residual types available
   \item \code{"std_cond"}: studentized conditional residuals
   \item \code{"std_mar"}: studentized marginal residuals
 }
-See the vignette for details on how residual types are computed.
+See the \href{https://goodekat.github.io/redres/articles/redres-vignette.html#extracting-residuals}{vignette} for details on how residual types are computed.
 }
 \examples{
 # fits a linear mixed effects model

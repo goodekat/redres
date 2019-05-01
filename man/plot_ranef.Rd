@@ -7,7 +7,7 @@
 plot_ranef(model)
 }
 \arguments{
-\item{model}{Model fit using \code{lmer}.}
+\item{model}{Model fit using \code{lmer} from \code{lme4}.}
 }
 \value{
 A grid of normal quantile plots for the random effects.

@@ -1,18 +1,15 @@
 #' Compute residuals for a linear mixed model
 #'
 #' @description
-#' Computes residuals for linear mixed models fit using \code{lmer} from the lme4.
-#' It can return seven types of residuals inlcuding options that are not available
-#' from lme4. These types are conditional raw, Pearson, and studentized, marginal
-#' raw, Pearson, and studentized.
+#' Computes residuals for a given linear mixed model.
 #'
 #' @usage redres(model, type = "raw_cond")
 #'
-#' @param model Model fit using \code{lmer} from lme4 for which residuals will be computed.
+#' @param model Model fit using \code{lmer} from \code{lme4}.
 #' @param type String identifying type of residual. Default is "raw_cond". See details for the options available.
 #'
 #' @details
-#' Residual types available
+#' Residual types available:
 #' \itemize{
 #'   \item \code{"pearson_cond"}: Pearson conditional residuals
 #'   \item \code{"pearson_mar"}: Pearson marginal residuals
@@ -21,13 +18,12 @@
 #'   \item \code{"std_cond"}: studentized conditional residuals
 #'   \item \code{"std_mar"}: studentized marginal residuals
 #' }
-#' See the vignette for details on how residual types are computed.
+#' See the \href{https://goodekat.github.io/redres/articles/redres-vignette.html#extracting-residuals}{vignette} for details on how residual types are computed.
 #'
-#' @importFrom assertthat assert_that
-#' @importFrom checkmate expect_string
+#' @importFrom checkmate expect_choice expect_class expect_string
 #' @export redres
 #'
-#' @return Returns residuals according to type specified.
+#' @return Returns a vector of residuals according to type specified. Residuals appear in the same order as the observations used to fit the model.
 #'
 #' @examples
 #' # fits a linear mixed effects model

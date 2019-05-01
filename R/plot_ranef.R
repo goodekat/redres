@@ -5,8 +5,9 @@
 #' random effects are assumed to be normally distributed. This plot can be used to assess the
 #' validity of that assumption.
 #'
-#' @param model Model fit using \code{lmer}.
+#' @param model Model fit using \code{lmer} from \code{lme4}.
 #'
+#' @importFrom checkmate expect_class
 #' @importFrom cowplot plot_grid
 #' @importFrom ggplot2 aes_string ggplot theme_bw xlab ylab
 #' @importFrom lme4 ranef
