@@ -1,6 +1,6 @@
 
-redres
-======
+redres <img align="right" width="135" height="150" src="README_files/static-figures/sticker.png">
+=================================================================================================
 
 `redres` is an R package developed to help with diagnosing linear mixed models fit using the function `lmer` from the lme4 package. This package both computes residuals types and creates plots that are not available from lme4.
 
