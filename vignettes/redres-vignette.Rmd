@@ -29,7 +29,7 @@ This package is meant to be a supplemental package to `lme4`.
 
 ## Overview 
 
-<img align="right" width="135" height="150" src="figs/sticker.png">
+<img align="right" width="150" height="175" src="figs/sticker.png">
 
 The Merriam-Webster dictionary defines [redress](https://www.merriam-webster.com/dictionary/redress) as "to set right". When we assign a linear mixed model to data, we assume (1) independence of our observations, (2) a linear relationship between the response and the explanatory variables, (3) constant variance and (4) normality of the error term. By inspecting our residuals we can diagnose erronous assumptions and missing structure, allowing us to set right the more egregious misspecifications. No model is perfect, but our residuals are a first line of defense against an inaccurate model and consequently poor inference.
 
