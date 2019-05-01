@@ -32,9 +32,8 @@
 
 <meta property="og:title" content="Diagnostic residual plot for linear mixed models — plot_redres" />
 
-<meta property="og:description" content="Plot of specified residual type versus fitted values for a linear mixed effects model
-fitted using lmer. Use plot to assess whether the assumptions of constant
-variance and linear form are adequate." />
+<meta property="og:description" content="Creates a plot of residuals versus fitted values or model variable. This plot can be used to assess whether the assumptions of constant
+variance and linear form assumptions are adequate." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -120,9 +119,8 @@ variance and linear form are adequate." />
 
     <div class="ref-description">
     
-    <p>Plot of specified residual type versus fitted values for a linear mixed effects model
-fitted using <code>lmer</code>. Use plot to assess whether the assumptions of constant
-variance and linear form are adequate.</p>
+    <p>Creates a plot of residuals versus fitted values or model variable. This plot can be used to assess whether the assumptions of constant
+variance and linear form assumptions are adequate.</p>
     
     </div>
 
@@ -133,7 +131,7 @@ variance and linear form are adequate.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Model fit using <code>lmer</code>.</p></td>
+      <td><p>Model fit using <code>lmer</code> from <code>lme4</code>.</p></td>
     </tr>
     <tr>
       <th>type</th>
@@ -143,28 +141,30 @@ See <code><a href='redres.html'>redres</a></code> for details of available types
     <tr>
       <th>xvar</th>
       <td><p>String indicates the variable to be plotted at the x-axis. By default,
-the fitted values are plotted on the x-axis. This option allows the user
-to choose a different variable to plotted. Any variables used in the
+the fitted values are plotted on the x-axis. Any variable used in the
 lmer model can be specified.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A plot of residuals versus fitted values.</p>
+    <p>A residual plot in the form of a <code>ggplot2</code> object.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Fit a linear mixed effects model</span>
+    <pre class="examples"><div class='input'><span class='co'># fits a linear mixed effects model</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lme4</span>)
 <span class='no'>fm1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Reaction</span> ~ <span class='no'>Days</span> + (<span class='no'>Days</span> <span class='kw'>|</span> <span class='no'>Subject</span>), <span class='no'>sleepstudy</span>)
 
-<span class='co'># Plot raw conditional residuals by fitted values.</span>
+<span class='co'># plots raw conditional residuals by fitted values.</span>
 <span class='fu'>plot_redres</span>(<span class='no'>fm1</span>)</div><div class='img'><img src='plot_redres-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Plot raw conditional residuals by selected variables `Days`.</span>
+<span class='co'># plots raw conditional residuals by selected variables `Days`.</span>
 <span class='fu'>plot_redres</span>(<span class='no'>fm1</span>, <span class='kw'>xvar</span> <span class='kw'>=</span> <span class='st'>"Days"</span>)</div><div class='img'><img src='plot_redres-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Plot standardized conditional residuals by fitted values.</span>
-<span class='fu'>plot_redres</span>(<span class='no'>fm1</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"std_cond"</span>)</div><div class='img'><img src='plot_redres-3.png' alt='' width='700' height='433' /></div></pre>
+<span class='co'># plots standardized conditional residuals by fitted values.</span>
+<span class='fu'>plot_redres</span>(<span class='no'>fm1</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"std_cond"</span>)</div><div class='img'><img src='plot_redres-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># edits theme of ggplot2 object</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>ggplot2</span>)
+<span class='fu'>plot_redres</span>(<span class='no'>fm1</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pearson_mar"</span>) + <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_grey</a></span>()</div><div class='img'><img src='plot_redres-4.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

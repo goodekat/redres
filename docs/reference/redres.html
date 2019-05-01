@@ -32,10 +32,7 @@
 
 <meta property="og:title" content="Compute residuals for a linear mixed model — redres" />
 
-<meta property="og:description" content="Computes residuals for linear mixed models fit using lmer from the lme4.
-It can return seven types of residuals inlcuding options that are not available
-from lme4. These types are conditional raw, Pearson, and studentized, marginal
-raw, Pearson, and studentized." />
+<meta property="og:description" content="Computes residuals for a given linear mixed model." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -121,10 +118,7 @@ raw, Pearson, and studentized." />
 
     <div class="ref-description">
     
-    <p>Computes residuals for linear mixed models fit using <code>lmer</code> from the lme4.
-It can return seven types of residuals inlcuding options that are not available
-from lme4. These types are conditional raw, Pearson, and studentized, marginal
-raw, Pearson, and studentized.</p>
+    <p>Computes residuals for a given linear mixed model.</p>
     
     </div>
 
@@ -135,7 +129,7 @@ raw, Pearson, and studentized.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Model fit using <code>lmer</code> from lme4 for which residuals will be computed.</p></td>
+      <td><p>Model fit using <code>lmer</code> from <code>lme4</code>.</p></td>
     </tr>
     <tr>
       <th>type</th>
@@ -145,18 +139,18 @@ raw, Pearson, and studentized.</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns residuals according to type specified.</p>
+    <p>Returns a vector of residuals according to type specified. Residuals appear in the same order as the observations used to fit the model.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Residual types available</p><ul>
+    <p>Residual types available:</p><ul>
 <li><p><code>"pearson_cond"</code>: Pearson conditional residuals</p></li>
 <li><p><code>"pearson_mar"</code>: Pearson marginal residuals</p></li>
 <li><p><code>"raw_cond"</code>: raw conditional residuals (default)</p></li>
 <li><p><code>"raw_mar"</code>: raw marginal residuals</p></li>
 <li><p><code>"std_cond"</code>: studentized conditional residuals</p></li>
 <li><p><code>"std_mar"</code>: studentized marginal residuals</p></li>
-</ul><p>See the vignette for details on how residual types are computed.</p>
+</ul><p>See the <a href='https://goodekat.github.io/redres/articles/redres-vignette.html#extracting-residuals'>vignette</a> for details on how residual types are computed.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
