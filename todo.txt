@@ -3,14 +3,12 @@ To Do
 --------
 
 Package:
-  - KM: proof read documentation
   - KG: add code coverage discussion to README
-  - KG: fix static image issue with README
   - KM: proof read README
   - KG & KM: make sure webpage is working as it should
 
 Shiny app:
-  - J+YZ+H: figure out how to test the app (maybe could have an error check)
+  - YZ: figure out how to test the server part of the app
   - add a description to the first page of the readme
 
 Vignette (use paprika data for whole vignette):
@@ -20,4 +18,4 @@ Presentation:
   - done!
 
 Other:
- - KG & KM: final check of project against rubric and project expectations
+ - all: final check of project against rubric and project expectations
