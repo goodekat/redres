@@ -17,11 +17,13 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.align = "center",
-  fig.width = 5
+  fig.width = 6
 )
 ```
 
 # Introducing redres
+
+<img align="right" width="135" height="150" src="figs/sticker.png">
 
 ## Overview
 
@@ -55,15 +57,51 @@ library(redres)
 
 ## Example Data
 
+`redres` contains a dataset called `paprika`, which will be used to demonstrate the functions in this vignette. The data is from a study on paprika plants grown under small-scale farming conditions in southern Africa. The original paper on the study can be found [here](https://link.springer.com/article/10.1007%2Fs10457-011-9415-2). The study was conducted in 2007 and 2008 in Malawi using a split plot design with five replicates. The researchers compared 4 fertilizer treatments and 6 plant varieties.
+
+|       Fertilizers        |      Plant Varieties     | 
+| ------------------------ | ------------------------ |
+| (1) control              | (1) Papri-King           |
+| (2) inorganic fertilizer | (2) Papri-Queen          |
+| (3) Gliricidia biomass   | (3) Papri-Excel          |
+| (4) Gliricidia biomass plus half the recommended dose of fertilizer for paprika   | (4) Papri-Supreme        | 
+|                          | (5) Papri-Ace            |
+|                          | (6) PX1140 4601)         |
+
+The fertilizers were applied to the main plots, and the varieties were assigned to the subplots within a main plot. Within each replicate, 10 plants were randomly chosen from each fertilizer and variety treatment combination and observed over 20 weeks. The dataset included in `redres` contains observations from week 4 of the data in 2008. It is stored as a tibble with 1070 rows and 5 variables. The variables are
+
+- `rep`: replicate number
+- `treatment`: fertilizer treatment
+- `variety`: plant variety
+- `plant`: plant number (nested within rep, treatment, and variety)
+- `height`: height of the plant (cm)
+
+The first six rows of the data and a histogram of the variable `height` are shown below.
+
 ```{r}
 # Prints the first 6 rows of the paprika data
 head(paprika)
 
+# Creates a histogram of the height variable
+library(ggplot2)
+ggplot(paprika, aes(x = height)) + 
+  geom_histogram(bins = 35) + 
+  theme_bw()
+```
+
+The code below fits a linear mixed effects model to the `paprika` dataset. This model will be used throughout this vignette. The terms included in the model are described below.
+
+- `rep` is included as a fixed effect in the model as a blocking variable. 
+- `treatment` is included as a fixed main effect
+- `variety` is also included as a fixed main effect
+- `treatment:variety` is included as an interaction term
+- `rep:treatment` is included as a random effect to account for correlation within a main plot due to the split plot design
+- `rep:treatment:variety` is also included as a random effect to account for dependency between the 10 plants within a rep and treatment by variety combination
+
+```{r}
 # Loads the lme4 libraries
 library(lme4)
-m <- lmer(height ~ rep + treatment*variety + 
-            (1|rep:treatment) + 
-            (1|rep:treatment:variety), 
+m <- lmer(height ~ rep + treatment*variety + (1|rep:treatment) + (1|rep:treatment:variety), 
           data = paprika)
 ```
 
@@ -189,7 +227,6 @@ The user can then use these residuals as desired. For example, the user could ma
 # Loads helpful libraries 
 library(dplyr)
 library(tidyr)
-library(ggplot2)
 
 # Creates histograms of the residual types
 paprika_plus %>%
@@ -345,7 +382,7 @@ The code below shows how to create a `shiny` app. By inputting the model argumen
 redres_app(m)
 ```
 
-Two seletction widgets shown in the `Residual Plot` tab are for choosing [residual types](#types)
+Two selection widgets shown in the `Residual Plot` tab are for choosing [residual types](#types)
 
 ```{r, out.width = '70%', fig.align = 'center', echo = FALSE}
 knitr::include_graphics('figs/resid_type.png')
@@ -371,7 +408,7 @@ knitr::include_graphics('figs/error_qq.png')
 
 - Two fitted models:
 
-Input the model argument as `cmbd` which contains a list of two models to do model conparison using `shiny` app.
+Input the model argument as `cmbd` which contains a list of two models to do model comparison using `shiny` app.
 
 ```{r, eval = FALSE}
 # Fit a different linear mixed model with paprika data
