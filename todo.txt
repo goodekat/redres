@@ -14,8 +14,7 @@ Shiny app:
   - add a description to the first page of the readme
 
 Vignette (use paprika data for whole vignette):
-  - KM: introduction
-  - edit
+  - KM & KG: edit
 
 Presentation:
   - done!
