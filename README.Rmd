@@ -103,10 +103,8 @@ plot_ranef(m)
 redres_app(m)
 ```
 
-```{r echo = FALSE, fig.pos = "center"}
-knitr::include_graphics("./README_files/static-figures/app1.png")
-knitr::include_graphics("./README_files/static-figures/app2.png")
-```
+<img align="center" width="600" src="README_files/static-figures/app1.png">
+<img align="center" width="600" src="README_files/static-figures/app2.png">
 
 ## Learn More
 

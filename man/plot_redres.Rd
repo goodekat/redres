@@ -38,5 +38,6 @@ plot_redres(fm1, xvar = "Days")
 plot_redres(fm1, type = "std_cond")
 
 # edits theme of ggplot2 object
+library(ggplot2)
 plot_redres(fm1, type = "pearson_mar") + theme_grey()
 }

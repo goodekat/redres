@@ -109,7 +109,7 @@ plot_ranef(m)
 redres_app(m)
 ```
 
-<img src="./README_files/static-figures/app1.png" width="1887" /><img src="./README_files/static-figures/app2.png" width="1802" />
+<img align="center" width="600" src="README_files/static-figures/app1.png"> <img align="center" width="600" src="README_files/static-figures/app2.png">
 
 Learn More
 ----------
