@@ -463,7 +463,8 @@ paprika_plus <span class="op">%&gt;%</span>
 <div id="redres_app" class="section level2">
 <h2 class="hasAnchor">
 <a href="#redres_app" class="anchor"></a>Shiny App</h2>
-<p>The function <code>redres_app</code> includes a shiny app that helps demonstrate how the plotting functions <code>plot_redres</code>, <code>plot_resqq</code> and <code>plot_ranef</code> can be used. It can also be used to visually comparing two linear mixed models and conducting model selection through pairwise comparison. There two main tabs in this <code>shiny</code> app, one includes the residual plot with a choice of all <a href="#types">residual types</a> and a choice of different x-axis variables (all the x-axis variables are extracted from the input model) and another one includes the normal quantile plots.</p>
+<p>The function <code>redres_app</code> opens a Shiny app that generates output for the plotting functions <code>plot_redres</code>, <code>plot_resqq</code> and <code>plot_ranef</code>. There are two main tabs in the app, one for the residual plot and another for the quantile plots. The residual plot gives the user a choice of all <a href="#types">residual types</a> and x-axis variables. The available x-axis variables are extracted from the input model.</p>
+<p>When a list of two models is input into the function <code>redres_app</code>, the app shows a side-by-side comparison of the plots. The user then is able to compare visually the two linear mixed models and conduct model selection.</p>
 </div>
 <div id="usage-2" class="section level2">
 <h2 class="hasAnchor">
@@ -484,17 +485,17 @@ paprika_plus <span class="op">%&gt;%</span>
 <ul>
 <li>One fitted model:</li>
 </ul>
-<p>The code below shows how to create a <code>shiny</code> app. By inputting the model argument as <code>m</code>, a <code>shiny</code> app which has two main tabs mentioned above is returned.</p>
+<p>The code below shows how to create a <code>shiny</code> app. By inputting the model argument as <code>m</code>, a <code>shiny</code> app window is returned.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creates a shiny app with only model</span>
 <span class="kw"><a href="../reference/redres_app.html">redres_app</a></span>(m)</code></pre></div>
 <p>Two selection widgets shown in the <code>Residual Plot</code> tab are for choosing <a href="#types">residual types</a></p>
-<p><img src="../../../../STAT%20585/project/redres/vignettes/figs/resid_type.png" width="70%" style="display: block; margin: auto;"></p>
+<p><img align="center" width="600" src="figs/resid_type.png"></p>
 <p>and x-axis variables.</p>
-<p><img src="../../../../STAT%20585/project/redres/vignettes/figs/xvar.png" width="70%" style="display: block; margin: auto;"></p>
-<p>The <code>Quantile Plots</code> tab shown below contains random effects normal quantile plot</p>
-<p><img src="../../../../STAT%20585/project/redres/vignettes/figs/rand_eff_qq.png" width="70%" style="display: block; margin: auto;"></p>
+<p><img align="center" width="600" src="figs/xvar.png"></p>
+<p>The <code>Quantile Plots</code> tab shown below contains a random effects normal quantile plot</p>
+<p><img align="center" width="600" src="figs/rand_eff_qq.png"></p>
 <p>and error term normal quantile plot.</p>
-<p><img src="../../../../STAT%20585/project/redres/vignettes/figs/error_qq.png" width="70%" style="display: block; margin: auto;"></p>
+<p><img align="center" width="600" src="figs/error_qq.png"></p>
 <ul>
 <li>Two fitted models:</li>
 </ul>
@@ -514,10 +515,10 @@ cmbd &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocume
 
 <span class="co"># Creates a shiny app with two models</span>
 <span class="kw"><a href="../reference/redres_app.html">redres_app</a></span>(cmbd)</code></pre></div>
-<p>The plots are shown side by side if there are two inputted model. For variables on the x-axis, different model can use different selected variables.</p>
-<p><img src="../../../../STAT%20585/project/redres/vignettes/figs/resid_two_model.png" width="70%" style="display: block; margin: auto;"></p>
+<p>The plots are shown side by side if there are two inputted models. For variables on the x-axis, different model can have different selected variables.</p>
+<p><img align="center" width="600" src="figs/resid_two_model.png"></p>
 <p>And the following show one of the quantile plots:</p>
-<p><img src="../../../../STAT%20585/project/redres/vignettes/figs/error_qq_two_mod.png" width="70%" style="display: block; margin: auto;"></p>
+<p><img align="center" width="600" src="figs/error_qq_two_mod.png"></p>
 </div>
 </div>
 </div>
