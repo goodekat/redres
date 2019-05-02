@@ -80,7 +80,7 @@
       <h1>redres: Redress Your Mixed Model Assumptions</h1>
                         <h4 class="author">R Package Version 0.0.0.9</h4>
             
-            <h4 class="date">2019-05-01</h4>
+            <h4 class="date">2019-05-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/goodekat/redres.git/blob/master/vignettes/redres-vignette.Rmd"><code>vignettes/redres-vignette.Rmd</code></a></small>
       <div class="hidden name"><code>redres-vignette.Rmd</code></div>
@@ -105,39 +105,29 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <div id="package-structure" class="section level2">
 <h2 class="hasAnchor">
 <a href="#package-structure" class="anchor"></a>Package Structure</h2>
-<p><code>redres</code> contains various functions to help with model assumptions. The package is set up so that the functions fall under one of three model assessment categories. These categories distinguish between the type of model assessment experience the user would like. The three categories and their associated functions are listed below.</p>
+<p><code>redres</code> is structured so the package functions fall under one of three categories. These categories are divided based on the type of model assessment experience the functions provide.</p>
 <ol style="list-style-type: decimal">
 <li>
-<a href="#redres">Residual extraction</a>
-<ul>
-<li>
-<a href="#compute_redres"><code>redres</code></a>: computes and returns residuals given a model and a specified residual type</li>
-</ul>
-</li>
+<a href="#compute_redres">Residual extraction</a>: The first manner in which <code>redres</code> can be used is to obtain residuals from a model. This can be done using the main function in the package named <a href="#compute_redres"><strong><code>compute_redres</code></strong></a> to compute and return a vector of residuals of a specified type. The user can then make use of the residuals to perform their own methods of assessment.</li>
 </ol>
 <ol start="2" style="list-style-type: decimal">
 <li>
-<a href="#plots">Diagnostic plot creation</a>
+<a href="#plots">Diagnostic plot creation</a>: The second way to utilize <code>redres</code> is to easily create diagnostic plots from a model with one of the following functions.
 <ul>
 <li>
-<a href="#plot_redres"><code>plot_redres</code></a>: This function creates a plot of residuals versus fitted values for a given residual type. The <a href="#types">available types</a> are described later in the vignette.</li>
+<a href="#plot_redres"><strong><code>plot_redres</code></strong></a>: Creates a plot of residuals versus fitted values or a model variable for a given residual type</li>
 <li>
-<a href="#plot_resqq"><code>plot_resqq</code></a>: creates a normal quantile plot for conditional residuals</li>
+<a href="#plot_resqq"><strong><code>plot_resqq</code></strong></a>: Creates a normal quantile plot for conditional residuals.</li>
 <li>
-<a href="#plot_raneff"><code>plot_raneff</code></a>: creates a normal quantile plot for the random effects</li>
+<a href="#plot_raneff"><strong><code>plot_raneff</code></strong></a>: Creates a normal quantile plot for the random effects</li>
 </ul>
 </li>
 </ol>
 <ol start="3" style="list-style-type: decimal">
 <li>
-<a href="#app">Interactive model assessment</a>
-<ul>
-<li>
-<a href="#redres_app"><code>redres_app</code></a>: This function opens an interactive Shiny app to interactively assess their model with package provided tools. Within the Shiny window, the user can view all the plots available in the <code>redres</code> package but with additional interactivity. Or the user can input two models into the app function for model selection.</li>
-</ul>
-</li>
+<a href="#app">Interactive model assessment</a>: Lastly, <code>redres</code> can be employed to facilitate an interactive model assessment experience. The function <a href="#launch_redres"><strong><code>launch_redres</code></strong></a> accepts one or two models and opens a Shiny app package provided diagnostic tools. Within the Shiny window, the user can view and interact with all the plots available in the <code>redres</code> package. If two models are input to the function, plots from both models are shown side by side to help with model selection.</li>
 </ol>
-<p>This vignette is set up to mimic the package structure. The sections after the introduction are dedicated to one of the three package uses.</p>
+<p>This vignette is set up to mimic the package structure. The sections after the introduction are dedicated to one of the three package uses. These sections contain additional details on the functions (such as the available <a href="#types">available types</a>), explanations of how to interpret output, and example applications of the functions.</p>
 </div>
 <div id="linear-mixed-model-theory-and-assumptions" class="section level2">
 <h2 class="hasAnchor">
@@ -232,20 +222,20 @@ m &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumenta
           <span class="dt">data =</span> paprika)</code></pre></div>
 </div>
 </div>
-<div id="redres" class="section level1">
+<div id="compute_redres" class="section level1">
 <h1 class="hasAnchor">
-<a href="#redres" class="anchor"></a>Extracting Residuals</h1>
-<p>One of the ways to utilize <code>redres</code> is to extract residuals from a model fit using <code>lmer</code>. This can be done using the function in the package named <code>redres</code> to compute residuals based on a specified type.</p>
+<a href="#compute_redres" class="anchor"></a>Extracting Residuals</h1>
+<p>One of the ways to utilize <code>redres</code> is to extract residuals from a model fit using <code>lmer</code>. This can be done using the function in the package named <code>compute_redres</code> to compute residuals based on a specified type.</p>
 <div id="types" class="section level2">
 <h2 class="hasAnchor">
 <a href="#types" class="anchor"></a>Residual Types</h2>
-<p><code>redres</code> can compute both marginal and conditional residuals for the following types:</p>
+<p><code>compute_redres</code> can compute both marginal and conditional residuals for the following types:</p>
 <ul>
 <li>raw</li>
 <li>Pearson</li>
 <li>studentized</li>
 </ul>
-<p>It is not necessary to consider all residual types when diagnosing a mixed model. Certain types are beneficial in different situations. For example, conditional residuals are useful for checking the effect of the random terms in the model as opposed to marginal residuals that do not account for the random effects, and studentized residuals are useful for checking constant variance with more complex variance structures. However, we have chosen to include all of these types so that the user may select which type (or types) is (are) useful for their situation. By default, <code>redres</code> returns raw conditional residuals since these are the most appropriate for a wide range of cases.</p>
+<p>It is not necessary to consider all residual types when diagnosing a mixed model. Certain types are beneficial in different situations. For example, conditional residuals are useful for checking the effect of the random terms in the model as opposed to marginal residuals that do not account for the random effects, and studentized residuals are useful for checking constant variance with more complex variance structures. However, we have chosen to include all of these types so that the user may select which type (or types) is (are) useful for their situation. By default, <code>compute_redres</code> returns raw conditional residuals since these are the most appropriate for a wide range of cases.</p>
 <p>The formulas for how the residual types are computed in <code>redres</code> are listed below. Note that the manner in which some of the residual types are computed differ from the <code>resid</code> function in <code>lme4</code>. These changes were made so the names of the residual types more intuitive with the computations used.</p>
 <div id="raw-residuals" class="section level3">
 <h3 class="hasAnchor">
@@ -282,7 +272,7 @@ m &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumenta
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<p>The function <code>redres</code> can compute the residuals types defined in the previous section for models fit using <code>lmer</code>.</p>
+<p>The function <code>compute_redres</code> can compute the residuals types defined in the previous section for models fit using <code>lmer</code>.</p>
 <p><strong>Inputs</strong></p>
 <ul>
 <li>
@@ -309,18 +299,18 @@ m &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumenta
 <p><strong>Output</strong></p>
 <ul>
 <li>
-<code>redres</code> returns a vector of residuals according to the type specified in the order that the data observations are input into <code>lmer</code>.</li>
+<code>compute_redres</code> returns a vector of residuals according to the type specified in the order that the data observations are input into <code>lmer</code>.</li>
 </ul>
 <p><strong>Functionality</strong></p>
-<p>The code below demonstrates the use of <code>redres</code> to compute several types of residuals from the model <code>m</code>. These residuals are put into a dataframe and joined with the <code>paprika</code> data.</p>
+<p>The code below demonstrates the use of <code>compute_redres</code> to compute several types of residuals from the model <code>m</code>. These residuals are put into a dataframe and joined with the <code>paprika</code> data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Computes the default residuals (raw conditional)</span>
-raw_cond &lt;-<span class="st"> </span><span class="kw"><a href="../reference/redres.html">redres</a></span>(m)
+raw_cond &lt;-<span class="st"> </span><span class="kw"><a href="../reference/compute_redres.html">compute_redres</a></span>(m)
 
 <span class="co"># Computes the Pearson marginal residuals</span>
-pearson_mar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/redres.html">redres</a></span>(m, <span class="dt">type =</span> <span class="st">"pearson_mar"</span>)
+pearson_mar &lt;-<span class="st"> </span><span class="kw"><a href="../reference/compute_redres.html">compute_redres</a></span>(m, <span class="dt">type =</span> <span class="st">"pearson_mar"</span>)
 
 <span class="co"># Computes the studentized conditional residuals</span>
-std_cond &lt;-<span class="st"> </span><span class="kw"><a href="../reference/redres.html">redres</a></span>(m, <span class="dt">type =</span> <span class="st">"std_cond"</span>)
+std_cond &lt;-<span class="st"> </span><span class="kw"><a href="../reference/compute_redres.html">compute_redres</a></span>(m, <span class="dt">type =</span> <span class="st">"std_cond"</span>)
 
 <span class="co"># Joins the residuals to the paprika data</span>
 paprika_plus &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(paprika, raw_cond, pearson_mar, std_cond)
@@ -399,7 +389,7 @@ paprika_plus <span class="op">%&gt;%</span>
 <li>
 <code>model</code>: A model fit using <code>lmer</code> for which the residuals will be computed.</li>
 <li>
-<code>type</code>: A character string identifying the type of residual that will be computed. The same options available with <a href="#redres"><code>redres</code></a> are available for <code>plot_redres</code>. By default, the conditional raw residuals are plotted.</li>
+<code>type</code>: A character string identifying the type of residual that will be computed. The same options available with <a href="#compute_redres"><code>compute_redres</code></a> are available for <code>plot_redres</code>. By default, the conditional raw residuals are plotted.</li>
 <li>
 <code>xvar</code>: A character string identifying the variable to be plotted at the x-axis. By default, the fitted values are plotted on the x-axis.</li>
 </ul>
@@ -475,18 +465,18 @@ paprika_plus <span class="op">%&gt;%</span>
 <div id="app" class="section level1">
 <h1 class="hasAnchor">
 <a href="#app" class="anchor"></a>Interacting with Residuals</h1>
-<div id="redres_app" class="section level2">
+<div id="launch_redres" class="section level2">
 <h2 class="hasAnchor">
-<a href="#redres_app" class="anchor"></a>Shiny App</h2>
-<p>The function <code>redres_app</code> opens a Shiny app that generates output for the plotting functions <code>plot_redres</code>, <code>plot_resqq</code> and <code>plot_ranef</code>. There are two main tabs in the app, one for the residual plot and another for the quantile plots. The residual plot gives the user a choice of all <a href="#types">residual types</a> and x-axis variables. The available x-axis variables are extracted from the input model.</p>
-<p>When a list of two models is input into the function <code>redres_app</code>, the app shows a side-by-side comparison of the plots. The user then is able to compare visually the two linear mixed models and conduct model selection.</p>
+<a href="#launch_redres" class="anchor"></a>Shiny App</h2>
+<p>The function <code>launch_redres</code> opens a Shiny app that generates output for the plotting functions <code>plot_redres</code>, <code>plot_resqq</code> and <code>plot_ranef</code>. There are two main tabs in the app, one for the residual plot and another for the quantile plots. The residual plot gives the user a choice of all <a href="#types">residual types</a> and x-axis variables. The available x-axis variables are extracted from the input model.</p>
+<p>When a list of two models is input into the function <code>launch_redres</code>, the app shows a side-by-side comparison of the plots. The user then is able to compare visually the two linear mixed models and conduct model selection.</p>
 </div>
 <div id="usage-2" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage-2" class="anchor"></a>Usage</h2>
 <div id="plot_app" class="section level3">
 <h3 class="hasAnchor">
-<a href="#plot_app" class="anchor"></a>redres_app</h3>
+<a href="#plot_app" class="anchor"></a>launch_redres</h3>
 <p><strong>Inputs</strong></p>
 <ul>
 <li>
@@ -502,7 +492,7 @@ paprika_plus <span class="op">%&gt;%</span>
 </ul>
 <p>The code below shows how to create a <code>shiny</code> app. By inputting the model argument as <code>m</code>, a <code>shiny</code> app window is returned.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creates a shiny app with only model</span>
-<span class="kw"><a href="../reference/redres_app.html">redres_app</a></span>(m)</code></pre></div>
+<span class="kw"><a href="../reference/launch_redres.html">launch_redres</a></span>(m)</code></pre></div>
 <p>Two selection widgets shown in the <code>Residual Plot</code> tab are for choosing <a href="#types">residual types</a></p>
 <p><img align="center" width="600" src="figs/resid_type.png"></p>
 <p>and x-axis variables.</p>
@@ -529,7 +519,7 @@ m_log &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocum
 cmbd &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(m, m_log)
 
 <span class="co"># Creates a shiny app with two models</span>
-<span class="kw"><a href="../reference/redres_app.html">redres_app</a></span>(cmbd)</code></pre></div>
+<span class="kw"><a href="../reference/launch_redres.html">launch_redres</a></span>(cmbd)</code></pre></div>
 <p>The plots are shown side by side if there are two inputted models. For variables on the x-axis, different model can have different selected variables.</p>
 <p><img align="center" width="600" src="figs/resid_two_model.png"></p>
 <p>And the following show one of the quantile plots:</p>
@@ -553,7 +543,7 @@ cmbd &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocume
       </ul>
 </li>
       <li>
-<a href="#redres">Extracting Residuals</a><ul class="nav nav-pills nav-stacked">
+<a href="#compute_redres">Extracting Residuals</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#types">Residual Types</a></li>
       <li><a href="#usage">Usage</a></li>
       </ul>
@@ -566,7 +556,7 @@ cmbd &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocume
 </li>
       <li>
 <a href="#app">Interacting with Residuals</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#redres_app">Shiny App</a></li>
+<li><a href="#launch_redres">Shiny App</a></li>
       <li><a href="#usage-2">Usage</a></li>
       </ul>
 </li>

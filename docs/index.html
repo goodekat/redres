@@ -104,10 +104,10 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <h2 class="hasAnchor">
 <a href="#functions" class="anchor"></a>Functions</h2>
 <p>The package contains the following functions.</p>
-<div id="redres-1" class="section level4">
+<div id="compute_redres" class="section level4">
 <h4 class="hasAnchor">
-<a href="#redres-1" class="anchor"></a>redres</h4>
-<p><code>redres</code> computes residuals given an <code>lmer</code> model and a specified residual type. The available residuals types are listed below.</p>
+<a href="#compute_redres" class="anchor"></a>compute_redres</h4>
+<p><code>compute_redres</code> computes residuals given an <code>lmer</code> model and a specified residual type. The available residuals types are listed below.</p>
 <ul>
 <li>
 <code>"pearson_cond"</code>: Pearson conditional residuals</li>
@@ -127,13 +127,13 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 m &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/lme4/topics/lmer">lmer</a></span>(Reaction <span class="op">~</span><span class="st"> </span>Days <span class="op">+</span><span class="st"> </span>(Days <span class="op">|</span><span class="st"> </span>Subject), <span class="dt">data =</span> sleepstudy)
 
 <span class="co"># computes the default residuals (raw conditional)</span>
-rc_resids &lt;-<span class="st"> </span><span class="kw"><a href="reference/redres.html">redres</a></span>(m)
+rc_resids &lt;-<span class="st"> </span><span class="kw"><a href="reference/compute_redres.html">compute_redres</a></span>(m)
 
 <span class="co"># computes the Pearson marginal residuals</span>
-pm_resids &lt;-<span class="st"> </span><span class="kw"><a href="reference/redres.html">redres</a></span>(m, <span class="dt">type =</span> <span class="st">"pearson_mar"</span>)
+pm_resids &lt;-<span class="st"> </span><span class="kw"><a href="reference/compute_redres.html">compute_redres</a></span>(m, <span class="dt">type =</span> <span class="st">"pearson_mar"</span>)
 
 <span class="co"># computes the studentized conditional residuals</span>
-sc_resids &lt;-<span class="st"> </span><span class="kw"><a href="reference/redres.html">redres</a></span>(m, <span class="dt">type =</span> <span class="st">"std_cond"</span>)
+sc_resids &lt;-<span class="st"> </span><span class="kw"><a href="reference/compute_redres.html">compute_redres</a></span>(m, <span class="dt">type =</span> <span class="st">"std_cond"</span>)
 
 <span class="co"># puts the residuals in a data frame and prints the first six rows</span>
 resids &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(rc_resids, pm_resids, sc_resids)
@@ -170,12 +170,12 @@ resids &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocu
 <span class="kw"><a href="reference/plot_ranef.html">plot_ranef</a></span>(m)</code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
-<div id="redres_app" class="section level4">
+<div id="launch_redres" class="section level4">
 <h4 class="hasAnchor">
-<a href="#redres_app" class="anchor"></a>redres_app</h4>
-<p><code>redres_app</code> opens a Shiny app that includes interactive panels to view the diagnostic plots from a model. The function can be used by inputting one or two models into the app in the form of a vector. If two models are input, the residual plots will be shown side by side in the app. Screen shots of the app are shown below.</p>
+<a href="#launch_redres" class="anchor"></a>launch_redres</h4>
+<p><code>launch_redres</code> opens a Shiny app that includes interactive panels to view the diagnostic plots from a model. The function can be used by inputting one or two models into the app in the form of a vector. If two models are input, the residual plots will be shown side by side in the app. Screen shots of the app are shown below.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># opens the app</span>
-<span class="kw"><a href="reference/redres_app.html">redres_app</a></span>(m)</code></pre></div>
+<span class="kw"><a href="reference/launch_redres.html">launch_redres</a></span>(m)</code></pre></div>
 <p><img align="center" width="600" src="README_files/static-figures/app1.png"><img align="center" width="600" src="README_files/static-figures/app2.png"></p>
 </div>
 </div>

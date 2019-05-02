@@ -1,4 +1,4 @@
-context("test-redres_app")
+context("test-launch_redres")
 
 # read data from stat510 of Iowa State University and adjust factor variables
 d = read.delim("http://dnett.github.io/S510/SeedlingDryWeight2.txt")
@@ -14,11 +14,11 @@ model_lm <- lm(SeedlingWeight ~ Genotype, data = d)
 
 # test error messages
 test_that("check-app-errors", {
-  expect_error(redres_app(1))
-  expect_error(redres_app(model_lm))
-  expect_error(redres_app(c(model, model, model)))
-  expect_error(redres_app(c(model, 1)))
-  expect_error(redres_app(c(model_lm, model)))
+  expect_error(launch_redres(1))
+  expect_error(launch_redres(model_lm))
+  expect_error(launch_redres(c(model, model, model)))
+  expect_error(launch_redres(c(model, 1)))
+  expect_error(launch_redres(c(model_lm, model)))
   expect_error(create_ui(1))
 })
 

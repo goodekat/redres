@@ -3,7 +3,7 @@
 #' @description
 #' Computes residuals for a given linear mixed model.
 #'
-#' @usage redres(model, type = "raw_cond")
+#' @usage compute_redres(model, type = "raw_cond")
 #'
 #' @param model Model fit using \code{lmer} from \code{lme4}.
 #' @param type String identifying type of residual. Default is "raw_cond". See details for the options available.
@@ -21,7 +21,7 @@
 #' See the \href{https://goodekat.github.io/redres/articles/redres-vignette.html#extracting-residuals}{vignette} for details on how residual types are computed.
 #'
 #' @importFrom checkmate expect_choice expect_class expect_string
-#' @export redres
+#' @export compute_redres
 #'
 #' @return Returns a vector of residuals according to type specified. Residuals appear in the same order as the observations used to fit the model.
 #'
@@ -31,19 +31,19 @@
 #' fm1 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
 #'
 #' # computes the default residuals (raw conditional)
-#' redres(fm1)
+#' compute_redres(fm1)
 #'
 #' # changes the residual type to studentized marginal
-#' redres(fm1, type = "std_mar")
+#' compute_redres(fm1, type = "std_mar")
 
-redres <- function(model, type = "raw_cond"){
+compute_redres <- function(model, type = "raw_cond"){
 
   # Error checks
   checkmate::expect_class(model, "lmerMod",
-                          info = "The input model is not accepted by redres. Model must be fit using 'lmer'.")
-  checkmate::expect_string(type, info = "The input residual type for redres must be a string.")
+                          info = "The input model is not accepted by compute_redres. Model must be fit using 'lmer'.")
+  checkmate::expect_string(type, info = "The input residual type for compute_redres must be a string.")
   checkmate::expect_choice(type, choices = c("raw_cond", "raw_mar", "pearson_cond", "pearson_mar", "std_cond", "std_mar"),
-                           info = "The residual type specified is not available in redres.")
+                           info = "The residual type specified is not available in compute_redres.")
 
 
   # Compute residuals based on type specified

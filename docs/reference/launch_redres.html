@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Normal quantile plots for random effects — plot_ranef • redres</title>
+<title>Shiny App for 'redressing' linear mixed models — launch_redres • redres</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,11 +30,13 @@
 
 
 
-<meta property="og:title" content="Normal quantile plots for random effects — plot_ranef" />
+<meta property="og:title" content="Shiny App for 'redressing' linear mixed models — launch_redres" />
 
-<meta property="og:description" content="Plots each random effect in the model against the normal quantiles. For linear mixed models
-random effects are assumed to be normally distributed. This plot can be used to assess the
-validity of that assumption." />
+<meta property="og:description" content="This is a shiny app for model diagnoistic of mixed model using lmer function from lme4 package.
+This app includes residual plot computed from six types of residuals (conditional raw, Pearson, and
+studentized, marginal raw, Pearson, and studentized) and normal quantile plot using of random effect
+and error term. This app can also be used to do model selection through pairwise comparison
+two models from different linear mixed models using lmer function." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -113,50 +115,51 @@ validity of that assumption." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Normal quantile plots for random effects</h1>
-    <small class="dont-index">Source: <a href='https://github.com/goodekat/redres.git/blob/master/R/plot_ranef.R'><code>R/plot_ranef.R</code></a></small>
-    <div class="hidden name"><code>plot_ranef.Rd</code></div>
+    <h1>Shiny App for 'redressing' linear mixed models</h1>
+    <small class="dont-index">Source: <a href='https://github.com/goodekat/redres.git/blob/master/R/launch_app.R'><code>R/launch_app.R</code></a></small>
+    <div class="hidden name"><code>launch_redres.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Plots each random effect in the model against the normal quantiles. For linear mixed models
-random effects are assumed to be normally distributed. This plot can be used to assess the
-validity of that assumption.</p>
+    <p>This is a shiny app for model diagnoistic of mixed model using <code>lmer</code> function from lme4 package.
+This app includes residual plot computed from six types of residuals (conditional raw, Pearson, and
+studentized, marginal raw, Pearson, and studentized) and normal quantile plot using of random effect
+and error term. This app can also be used to do model selection through pairwise comparison
+two models from different linear mixed models using lmer function.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>plot_ranef</span>(<span class='no'>model</span>)</pre>
+    <pre class="usage"><span class='fu'>launch_redres</span>(<span class='no'>model</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Model fit using <code>lmer</code> from <code>lme4</code>.</p></td>
+      <td><p>Model fit using <code>lmer</code> function from lme4 package.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A grid of normal quantile plots for the random effects.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># fits a linear mixed effects model</span>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># fits a linear mixed effects model</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lme4</span>)
-<span class='no'>fm1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Reaction</span> ~ <span class='no'>Days</span> + (<span class='no'>Days</span> <span class='kw'>|</span> <span class='no'>Subject</span>), <span class='no'>sleepstudy</span>)
-
-<span class='co'># plots normal quantiles of random effects vector to assess normality</span>
-<span class='fu'>plot_ranef</span>(<span class='no'>fm1</span>)</div><div class='img'><img src='plot_ranef-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>fm1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Reaction</span> ~ <span class='no'>Days</span> + (<span class='no'>Days</span> <span class='kw'>|</span> <span class='no'>Subject</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleepstudy</span>)
+<span class='fu'>launch_redres</span>(<span class='kw'>model</span> <span class='kw'>=</span> <span class='no'>fm1</span>)
+<span class='co'># comparing two different linear mixed effects models</span>
+<span class='no'>fm1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Reaction</span> ~ <span class='no'>Days</span> + (<span class='no'>Days</span> <span class='kw'>|</span> <span class='no'>Subject</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleepstudy</span>)
+<span class='no'>fm2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Reaction</span> ~ <span class='no'>Days</span> + (<span class='fl'>1</span><span class='kw'>|</span><span class='no'>Subject</span>) + (<span class='fl'>0</span>+<span class='no'>Days</span><span class='kw'>|</span><span class='no'>Subject</span>), <span class='no'>sleepstudy</span>)
+<span class='no'>cmbd</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='no'>fm1</span>,<span class='no'>fm2</span>)
+<span class='fu'>launch_redres</span>(<span class='kw'>model</span> <span class='kw'>=</span> <span class='no'>cmbd</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

@@ -10,12 +10,12 @@
 #'
 #' @param model Model fit using \code{lmer} function from lme4 package.
 #'
-#' @usage redres_app(model)
+#' @usage launch_redres(model)
 #'
 #' @importFrom cowplot plot_grid
 #' @importFrom ggplot2 ggtitle labs
 #' @import shiny
-#' @export redres_app
+#' @export launch_redres
 #'
 #'
 #' @examples
@@ -23,18 +23,18 @@
 #' # fits a linear mixed effects model
 #' library(lme4)
 #' fm1 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
-#' redres_app(model = fm1)
+#' launch_redres(model = fm1)
 
 #' # comparing two different linear mixed effects models
 #' fm1 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
 #' fm2 <- lmer(Reaction ~ Days + (1|Subject) + (0+Days|Subject), sleepstudy)
 #' cmbd <- c(fm1,fm2)
-#' redres_app(model = cmbd)
+#' launch_redres(model = cmbd)
 #' }
 
 
 # Function for running shiny app
-redres_app <- function(model) {
+launch_redres <- function(model) {
 
   # create the app
   redresApp <- create_app(model)
@@ -57,7 +57,7 @@ create_app <- function(model){
     checkmate::expect_class(model[[2]], "lmerMod",
                             info = "The second input model is not accepted by redres. Model must be fit using 'lmer'.")
   } else {
-    stop("redres_app currently only accepts 1 or 2 models.")
+    stop("launch_redres currently only accepts 1 or 2 models.")
   }
 
   # create ui and server with the input model

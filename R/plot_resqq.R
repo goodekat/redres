@@ -37,7 +37,7 @@ plot_resqq <- function(model){
                           info = "The input model is not accepted by plot_resqq. Model must be fit using 'lmer'.")
 
   # building dataframe
-  g_df <- data.frame(y = model@resp$y, Residual = redres(model, type = "raw_cond"))
+  g_df <- data.frame(y = model@resp$y, Residual = compute_redres(model, type = "raw_cond"))
 
   # quantile plot from qqplotr
   ggplot(data = g_df, aes_string(sample = "Residual")) +

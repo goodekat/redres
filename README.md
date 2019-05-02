@@ -29,9 +29,9 @@ Functions
 
 The package contains the following functions.
 
-#### redres
+#### compute\_redres
 
-`redres` computes residuals given an `lmer` model and a specified residual type. The available residuals types are listed below.
+`compute_redres` computes residuals given an `lmer` model and a specified residual type. The available residuals types are listed below.
 
 -   `"pearson_cond"`: Pearson conditional residuals
 -   `"pearson_mar"`: Pearson marginal residuals
@@ -46,13 +46,13 @@ library(lme4)
 m <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
 
 # computes the default residuals (raw conditional)
-rc_resids <- redres(m)
+rc_resids <- compute_redres(m)
 
 # computes the Pearson marginal residuals
-pm_resids <- redres(m, type = "pearson_mar")
+pm_resids <- compute_redres(m, type = "pearson_mar")
 
 # computes the studentized conditional residuals
-sc_resids <- redres(m, type = "std_cond")
+sc_resids <- compute_redres(m, type = "std_cond")
 
 # puts the residuals in a data frame and prints the first six rows
 resids <- data.frame(rc_resids, pm_resids, sc_resids)
@@ -100,13 +100,13 @@ plot_ranef(m)
 
 ![](README_files/figure-markdown_github/unnamed-chunk-6-1.png)
 
-#### redres\_app
+#### launch\_redres
 
-`redres_app` opens a Shiny app that includes interactive panels to view the diagnostic plots from a model. The function can be used by inputting one or two models into the app in the form of a vector. If two models are input, the residual plots will be shown side by side in the app. Screen shots of the app are shown below.
+`launch_redres` opens a Shiny app that includes interactive panels to view the diagnostic plots from a model. The function can be used by inputting one or two models into the app in the form of a vector. If two models are input, the residual plots will be shown side by side in the app. Screen shots of the app are shown below.
 
 ``` r
 # opens the app
-redres_app(m)
+launch_redres(m)
 ```
 
 <img align="center" width="600" src="README_files/static-figures/app1.png"> <img align="center" width="600" src="README_files/static-figures/app2.png">
