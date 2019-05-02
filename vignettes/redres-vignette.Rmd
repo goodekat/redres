@@ -17,15 +17,25 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.align = "center",
-  fig.width = 6
+  fig.width = 4
 )
 ```
 
-# Introducing redres
+# Introduction
 
-`redres` is an R package developed to help with diagnosing linear mixed models fit using the function `lmer` from the `lme4` package. It is meant as a supplemental package to `lme4`.
+`redres` is an R package developed to help with diagnosing linear mixed models fit using the function `lmer` from the `lme4` package. It is meant as a supplemental package to `lme4`. The package can be installed from GitHub using devtools and then loaded in the normal way.
 
-## Overview 
+```{r eval = FALSE}
+# Installs redres from GitHub
+devtools::install_github("goodekat/redres")
+```
+
+```{r}
+# Loads the package
+library(redres)
+```
+
+## Overview
 
 <img align="right" width="150" height="175" src="figs/sticker.png">
 
@@ -51,20 +61,6 @@ knitr::opts_chunk$set(
     - [`redres_app`](#redres_app): This function opens an interactive Shiny app to interactively assess their model with package provided tools. Within the Shiny window, the user can view all the plots available in the `redres` package but with additional interactivity. Or the user can input two models into the app function for model selection.
 
 This vignette is set up to mimic the package structure. The sections after the introduction are dedicated to one of the three package uses.
-
-## Installation
-
-The package can be installed from GitHub using devtools and then loaded in the normal way.
-
-```{r eval = FALSE}
-# Installs redres from GitHub
-devtools::install_github("goodekat/redres")
-```
-
-```{r}
-# Loads the package
-library(redres)
-```
 
 ## Linear Mixed Model Theory and Assumptions
 
@@ -93,8 +89,6 @@ $$
 \end{bmatrix}
 \end{pmatrix}.
 $$
-
-
 
 (1) independence of our observations, (2) a linear relationship between the response and the explanatory variables, (3) constant variance and (4) normality of the error term.
 
@@ -134,9 +128,11 @@ The code below fits a linear mixed effects model to the `paprika` dataset. This 
 - `rep:treatment` is included as a random effect to account for correlation within a main plot due to the split plot design
 - `rep:treatment:variety` is also included as a random effect to account for dependency between the 10 plants within a rep and treatment by variety combination
 
-```{r}
-# Loads the lme4 libraries
+```{r message = FALSE}
+# Loads the lme4 package
 library(lme4)
+
+# Fits a linear mixed effects model
 m <- lmer(height ~ rep + treatment*variety + (1|rep:treatment) + (1|rep:treatment:variety), 
           data = paprika)
 ```

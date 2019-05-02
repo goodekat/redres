@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">redres</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9</span>
       </span>
     </div>
 
@@ -78,7 +78,7 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>redres: Redress Your Mixed Model Assumptions</h1>
-                        <h4 class="author">R Package Version 0.1.0.9</h4>
+                        <h4 class="author">R Package Version 0.0.0.9</h4>
             
             <h4 class="date">2019-05-01</h4>
       
@@ -89,44 +89,56 @@
 
     
     
-<div id="introducing-redres" class="section level1">
+<div id="introduction" class="section level1">
 <h1 class="hasAnchor">
-<a href="#introducing-redres" class="anchor"></a>Introducing redres</h1>
-<p><strong>redres</strong> stands for <strong>r</strong>andom <strong>e</strong>ffect <strong>d</strong>iagnostic <strong>res</strong>iduals</p>
-<p>This package is meant to be a supplemental package to <code>lme4</code>.</p>
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
-<p><img align="right" width="150" height="175" src="figs/sticker.png"></p>
-<p>The Merriam-Webster dictionary defines <a href="https://www.merriam-webster.com/dictionary/redress">redress</a> as “to set right”. When we assign a linear mixed model to data, we assume (1) independence of our observations, (2) a linear relationship between the response and the explanatory variables, (3) constant variance and (4) normality of the error term. By inspecting our residuals we can diagnose erronous assumptions and missing structure, allowing us to set right the more egregious misspecifications. No model is perfect, but our residuals are a first line of defense against an inaccurate model and consequently poor inference.</p>
-</div>
-<div id="package-structure" class="section level2">
-<h2 class="hasAnchor">
-<a href="#package-structure" class="anchor"></a>Package Structure</h2>
-<p><code>redres</code> contains various functions that provide different ways to assess model assumptions for linear mixed models fit using <code>lmer</code>. For a user who wants to obtain the residual value for each observation in their data set, the function <code>redres</code> allows the user to input a model and specify one of six available residual types. The <a href="#types">available types</a> are described in detail below. Additionally the package provides several default plots to visually assess the fit of a given mixed model. Calling the plot functions and reading the output are described in the section on <a href="#plots">plotting</a>. Both, the residual functions and the plotting functions, generate static output within the user’s R session.</p>
-<p>Alternatively, user can use the function <code>redres_app</code> that opens a Shiny app to interactively assess their model with package provided tools. Within the Shiny window, the user can view all the plots available in the <code>redres</code> package but with additional interactivity. Or the user can input two models into the app function for model selection.</p>
-<p>A brief description of each function is listed below.</p>
-<ul>
-<li>
-<a href="#redres">redres</a>: computes and returns residuals given a model and a specified residual type</li>
-<li>
-<a href="#plot_redres">plot_redres</a>: creates a plot of residuals versus fitted values for a given residual type</li>
-<li>
-<a href="#plot_resqq">plot_resqq</a>: creates a normal quantile plot for conditional residuals</li>
-<li>
-<a href="#plot_raneff">plot_raneff</a>: creates a normal quantile plot for the random effects</li>
-<li>
-<a href="#redres_app">redres_app</a>: opens an interactive Shiny app with</li>
-</ul>
-</div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>The package can be installed from GitHub using devtools and then loaded in the normal way.</p>
+<a href="#introduction" class="anchor"></a>Introduction</h1>
+<p><code>redres</code> is an R package developed to help with diagnosing linear mixed models fit using the function <code>lmer</code> from the <code>lme4</code> package. It is meant as a supplemental package to <code>lme4</code>. The package can be installed from GitHub using devtools and then loaded in the normal way.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Installs redres from GitHub</span>
 devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"goodekat/redres"</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Loads the package</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(redres)</code></pre></div>
+<div id="overview" class="section level2">
+<h2 class="hasAnchor">
+<a href="#overview" class="anchor"></a>Overview</h2>
+<p><img align="right" width="150" height="175" src="figs/sticker.png"></p>
+<p><strong>redres</strong> stands for <strong>r</strong>andom <strong>e</strong>ffect <strong>d</strong>iagnostic <strong>res</strong>iduals. This name was chosen based on the word redress, which the Merriam-Webster dictionary <a href="https://www.merriam-webster.com/dictionary/redress">defines</a> as “to set right”. When we fit a linear mixed model to data, we make several assumptions. These assumptions can be diagnosed by inspecting the residuals from the model. <em>Residuals allow us to set right</em> the more egregious misspecifications. No model is perfect, but residuals are an important line of defense against an inaccurate model and, consequently, poor inference.</p>
+</div>
+<div id="package-structure" class="section level2">
+<h2 class="hasAnchor">
+<a href="#package-structure" class="anchor"></a>Package Structure</h2>
+<p><code>redres</code> contains various functions to help with model assumptions. The package is set up so that the functions fall under one of three model assessment categories. These categories distinguish between the type of model assessment experience the user would like. The three categories and their associated functions are listed below.</p>
+<ol style="list-style-type: decimal">
+<li>
+<a href="#redres">Residual extraction</a>
+<ul>
+<li>
+<a href="#compute_redres"><code>redres</code></a>: computes and returns residuals given a model and a specified residual type</li>
+</ul>
+</li>
+</ol>
+<ol start="2" style="list-style-type: decimal">
+<li>
+<a href="#plots">Diagnostic plot creation</a>
+<ul>
+<li>
+<a href="#plot_redres"><code>plot_redres</code></a>: This function creates a plot of residuals versus fitted values for a given residual type. The <a href="#types">available types</a> are described later in the vignette.</li>
+<li>
+<a href="#plot_resqq"><code>plot_resqq</code></a>: creates a normal quantile plot for conditional residuals</li>
+<li>
+<a href="#plot_raneff"><code>plot_raneff</code></a>: creates a normal quantile plot for the random effects</li>
+</ul>
+</li>
+</ol>
+<ol start="3" style="list-style-type: decimal">
+<li>
+<a href="#app">Interactive model assessment</a>
+<ul>
+<li>
+<a href="#redres_app"><code>redres_app</code></a>: This function opens an interactive Shiny app to interactively assess their model with package provided tools. Within the Shiny window, the user can view all the plots available in the <code>redres</code> package but with additional interactivity. Or the user can input two models into the app function for model selection.</li>
+</ul>
+</li>
+</ol>
+<p>This vignette is set up to mimic the package structure. The sections after the introduction are dedicated to one of the three package uses.</p>
 </div>
 <div id="linear-mixed-model-theory-and-assumptions" class="section level2">
 <h2 class="hasAnchor">
@@ -157,6 +169,9 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 \end{bmatrix}
 \end{pmatrix}.
 \]</span></p>
+<ol style="list-style-type: decimal">
+<li>independence of our observations, (2) a linear relationship between the response and the explanatory variables, (3) constant variance and (4) normality of the error term.</li>
+</ol>
 </div>
 <div id="example-data" class="section level2">
 <h2 class="hasAnchor">
@@ -194,7 +209,7 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(paprika, <span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> height)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_histogram">geom_histogram</a></span>(<span class="dt">bins =</span> <span class="dv">35</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_bw</a></span>()</code></pre></div>
-<p><img src="redres-vignette_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="redres-vignette_files/figure-html/unnamed-chunk-3-1.png" width="384" style="display: block; margin: auto;"></p>
 <p>The code below fits a linear mixed effects model to the <code>paprika</code> dataset. This model will be used throughout this vignette. The terms included in the model are described below.</p>
 <ul>
 <li>
@@ -210,16 +225,17 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <li>
 <code>rep:treatment:variety</code> is also included as a random effect to account for dependency between the 10 plants within a rep and treatment by variety combination</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Loads the lme4 libraries</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Loads the lme4 package</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lme4)
-<span class="co">#&gt; Loading required package: Matrix</span>
+
+<span class="co"># Fits a linear mixed effects model</span>
 m &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/lme4/topics/lmer">lmer</a></span>(height <span class="op">~</span><span class="st"> </span>rep <span class="op">+</span><span class="st"> </span>treatment<span class="op">*</span>variety <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>rep<span class="op">:</span>treatment) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>rep<span class="op">:</span>treatment<span class="op">:</span>variety), 
           <span class="dt">data =</span> paprika)</code></pre></div>
 </div>
 </div>
-<div id="extracting-residuals" class="section level1">
+<div id="redres" class="section level1">
 <h1 class="hasAnchor">
-<a href="#extracting-residuals" class="anchor"></a>Extracting Residuals</h1>
+<a href="#redres" class="anchor"></a>Extracting Residuals</h1>
 <p>One of the ways to utilize <code>redres</code> is to extract residuals from a model fit using <code>lmer</code>. This can be done using the function in the package named <code>redres</code> to compute residuals based on a specified type.</p>
 <div id="types" class="section level2">
 <h2 class="hasAnchor">
@@ -396,28 +412,28 @@ paprika_plus <span class="op">%&gt;%</span>
 <p>The code below shows how to create the most basic plot using <code>plot_redres</code>. By inputting the model <code>m</code>, a plot of the conditional raw residuals versus the fitted values is returned.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creates the default residual plot</span>
 <span class="kw"><a href="../reference/plot_redres.html">plot_redres</a></span>(m)</code></pre></div>
-<p><img src="redres-vignette_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="redres-vignette_files/figure-html/unnamed-chunk-7-1.png" width="384" style="display: block; margin: auto;"></p>
 <p>Here we see that while there does not appear to be any linear trend in our data, there is the classic “fan” shape indicating inconstant variance. As the fitted values increase, the vertical spread of the residuals also decreasing. The lack of any other form in the residuals suggests that the linear form assumption is reasonable. We do want to try alternative model formulations in order to address the inconstant variance and then we would need to reassess linearity for the new model.</p>
 <p>Perhaps additionally we are interested in the marginal effect of variety, so we want to see the residuals by variety of paprika planted. The plot below suggests that variety does not provide us with extra structure for modeling height.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Residual plot of raw conditional residuals against variety fixed effect.</span>
 <span class="kw"><a href="../reference/plot_redres.html">plot_redres</a></span>(m, <span class="dt">xvar =</span> <span class="st">"variety"</span>)</code></pre></div>
-<p><img src="redres-vignette_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="redres-vignette_files/figure-html/unnamed-chunk-8-1.png" width="384" style="display: block; margin: auto;"></p>
 <p>The type of residuals can be changed using the <code>type</code> option as shown in the code below.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creates the residual plot with studentized marginal residuals</span>
 <span class="kw"><a href="../reference/plot_redres.html">plot_redres</a></span>(m, <span class="dt">type =</span> <span class="st">"std_mar"</span>)</code></pre></div>
-<p><img src="redres-vignette_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="redres-vignette_files/figure-html/unnamed-chunk-9-1.png" width="384" style="display: block; margin: auto;"></p>
 <p>We notice in the marginal residuals an upward trend as the fitted values increase. From our experimental design we suspect that this trend might be related to the replications. When we plot the residuals now by replication ID we see the same upward trend as replication ID increases. If we plot by treatment we do not see this trend.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_redres.html">plot_redres</a></span>(m, <span class="dt">type =</span> <span class="st">"std_mar"</span>, <span class="dt">xvar =</span> <span class="st">"rep"</span>)</code></pre></div>
-<p><img src="redres-vignette_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="redres-vignette_files/figure-html/unnamed-chunk-10-1.png" width="384" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_redres.html">plot_redres</a></span>(m, <span class="dt">type =</span> <span class="st">"std_mar"</span>, <span class="dt">xvar =</span> <span class="st">"treatment"</span>)</code></pre></div>
-<p><img src="redres-vignette_files/figure-html/unnamed-chunk-10-2.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="redres-vignette_files/figure-html/unnamed-chunk-10-2.png" width="384" style="display: block; margin: auto;"></p>
 <p>All plots created using the <code>redres</code> package are formatted to use <code>theme_bw</code> from <code>ggplot2</code>. However, since <code>plot_redres</code> returns a ggplot object, it is possible to use functions provided by <code>ggplot2</code> to adjust the formatting of the plot.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Applies ggplot2 formatting functions to the output from plot_resid</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)
 <span class="kw"><a href="../reference/plot_redres.html">plot_redres</a></span>(m, <span class="dt">type =</span> <span class="st">"pearson_cond"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_classic</a></span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">title =</span> <span class="st">"Residual Plot"</span>)</code></pre></div>
-<p><img src="redres-vignette_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="redres-vignette_files/figure-html/unnamed-chunk-11-1.png" width="384" style="display: block; margin: auto;"></p>
 </div>
 <div id="plot_resqq" class="section level3">
 <h3 class="hasAnchor">
@@ -434,7 +450,7 @@ paprika_plus <span class="op">%&gt;%</span>
 <p><strong>Functionality</strong></p>
 <p>We can check our normal assumption on the error terms for our paprika model using <code>plot_resqq</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_resqq.html">plot_resqq</a></span>(m)</code></pre></div>
-<p><img src="redres-vignette_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="redres-vignette_files/figure-html/unnamed-chunk-12-1.png" width="384" style="display: block; margin: auto;"></p>
 <p>From the quantile plot, we see that along the middle of the distribution (around zero) the points fall in roughly a straight line with no S-shaped curvature. Even though there are some points falling outside the confidence bands at the tails of the distribution - the extreme values of -20 and 20 - we still would consider the normal assumption reasonable. It is not uncommon to see outliers near the tails where the probability decreases.</p>
 </div>
 <div id="plot_ranef" class="section level3">
@@ -452,14 +468,14 @@ paprika_plus <span class="op">%&gt;%</span>
 <p><strong>Functionality</strong></p>
 <p>We now check our normal assumption on the random effects for our paprika model using <code>plot_ranef</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_ranef.html">plot_ranef</a></span>(m)</code></pre></div>
-<p><img src="redres-vignette_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="redres-vignette_files/figure-html/unnamed-chunk-13-1.png" width="384" style="display: block; margin: auto;"></p>
 <p>Our model <code>m</code> had two random effects - a random intercept for <span class="math inline">\(rep \times treatment \times variety\)</span> and another random intercept for <span class="math inline">\(rep \times treatment\)</span>. Therefore, we get a grid of two plots where the random effect term is identified along the y-axis. We see that the points fall along the straight reference line and well-within the confidence bands. We can conclude that the normal assumption for both random effect terms is not violated.</p>
 </div>
 </div>
 </div>
-<div id="interacting-with-residuals" class="section level1">
+<div id="app" class="section level1">
 <h1 class="hasAnchor">
-<a href="#interacting-with-residuals" class="anchor"></a>Interacting with Residuals</h1>
+<a href="#app" class="anchor"></a>Interacting with Residuals</h1>
 <div id="redres_app" class="section level2">
 <h2 class="hasAnchor">
 <a href="#redres_app" class="anchor"></a>Shiny App</h2>
@@ -530,16 +546,15 @@ cmbd &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocume
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li>
-<a href="#introducing-redres">Introducing redres</a><ul class="nav nav-pills nav-stacked">
+<a href="#introduction">Introduction</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#overview">Overview</a></li>
       <li><a href="#package-structure">Package Structure</a></li>
-      <li><a href="#installation">Installation</a></li>
       <li><a href="#linear-mixed-model-theory-and-assumptions">Linear Mixed Model Theory and Assumptions</a></li>
       <li><a href="#example-data">Example Data</a></li>
       </ul>
 </li>
       <li>
-<a href="#extracting-residuals">Extracting Residuals</a><ul class="nav nav-pills nav-stacked">
+<a href="#redres">Extracting Residuals</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#types">Residual Types</a></li>
       <li><a href="#usage">Usage</a></li>
       </ul>
@@ -551,7 +566,7 @@ cmbd &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocume
       </ul>
 </li>
       <li>
-<a href="#interacting-with-residuals">Interacting with Residuals</a><ul class="nav nav-pills nav-stacked">
+<a href="#app">Interacting with Residuals</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#redres_app">Shiny App</a></li>
       <li><a href="#usage-2">Usage</a></li>
       </ul>
