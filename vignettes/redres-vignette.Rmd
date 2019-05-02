@@ -377,7 +377,9 @@ Our model `m` had two random effects - a random intercept for $rep \times treatm
 
 ## Shiny App {#redres_app}
 
-The function `redres_app` includes a shiny app that helps demonstrate how the plotting functions `plot_redres`, `plot_resqq` and `plot_ranef` can be used. It can also be used to visually comparing two linear mixed models and conducting model selection through pairwise comparison. There two main tabs in this `shiny` app, one includes the residual plot with a choice of all [residual types](#types) and a choice of different x-axis variables (all the x-axis variables are extracted from the input model) and another one includes the normal quantile plots.
+The function `redres_app` opens a Shiny app that generates output for the plotting functions `plot_redres`, `plot_resqq` and `plot_ranef`. There are two main tabs in the app, one for the residual plot and another for the quantile plots. The residual plot gives the user a choice of all [residual types](#types) and x-axis variables. The available x-axis variables are extracted from the input model.  
+
+When a list of two models is input into the function `redres_app`, the app shows a side-by-side comparison of the plots. The user then is able to compare visually the two linear mixed models and conduct model selection.
 
 ## Usage
 
@@ -395,7 +397,7 @@ The function `redres_app` includes a shiny app that helps demonstrate how the pl
 
 - One fitted model:
 
-The code below shows how to create a `shiny` app. By inputting the model argument as `m`, a `shiny` app which has two main tabs mentioned above is returned.
+The code below shows how to create a `shiny` app. By inputting the model argument as `m`, a `shiny` app window is returned.
 
 ```{r, eval = FALSE}
 # Creates a shiny app with only model
@@ -414,7 +416,7 @@ and x-axis variables.
 knitr::include_graphics('figs/xvar.png')
 ```
 
-The `Quantile Plots` tab shown below contains random effects normal quantile plot
+The `Quantile Plots` tab shown below contains a random effects normal quantile plot
 
 ```{r, out.width = '70%', fig.align = 'center', echo = FALSE}
 knitr::include_graphics('figs/rand_eff_qq.png')
@@ -448,7 +450,7 @@ cmbd <- c(m, m_log)
 redres_app(cmbd)
 ```
 
-The plots are shown side by side if there are two inputted model. For variables on the x-axis, different model can use different selected variables.
+The plots are shown side by side if there are two inputted models. For variables on the x-axis, different model can have different selected variables.
 
 ```{r, out.width = '70%', fig.align = 'center', echo = FALSE}
 knitr::include_graphics('figs/resid_two_model.png')
