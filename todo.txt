@@ -4,11 +4,11 @@ To Do
 
 Package:
   - KM: proof read README
-  - KG & KM: make sure webpage is working as it should
+  - all: make sure webpage is working as it should
 
 Shiny app:
   - YZ: figure out how to test the server part of the app
-  - YZ: add a description to the first page of the app
+  - JZ: add a description to the first page of the app
 
 Vignette:
   - KG: final edit

@@ -16,10 +16,11 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.align = "center",
-  fig.width = 4
+  fig.align = "center"
 )
 ```
+
+<br>
 
 # Introduction
 
@@ -41,24 +42,26 @@ library(redres)
 
 ## Package Structure
 
-`redres` is structured so the package functions fall under one of three categories. These categories are divided based on the type of model assessment experience the functions provide.
+`redres` is structured so the available functions fall under one of three categories. These categories identify the type of model assessment experience the functions provide.
 
-1. [Residual extraction](#compute_redres): The first manner in which `redres` can be used is to obtain residuals from a model. This can be done using the main function in the package named [**`compute_redres`**](#compute_redres) to compute and return a vector of residuals of a specified type. The user can then make use of the residuals to perform their own methods of assessment.
+1. [Residual extraction](#compute_redres): The first manner in which `redres` can be used is to obtain residuals from a model. This is done using the function [**`compute_redres`**](#compute_redres) to extract and return a vector of residuals of a specified type. The user can then perform their own methods of assessment with the residuals. The available [residual types](#types) are described later in the vignette.
 
 \vspace{0.25cm}
 
-2. [Diagnostic plot creation](#plots): The second way to utilize `redres` is to easily create diagnostic plots from a model with one of the following functions.
-    - [**`plot_redres`**](#plot_redres): Creates a plot of residuals versus fitted values or a model variable for a given residual type
-    - [**`plot_resqq`**](#plot_resqq): Creates a normal quantile plot for conditional residuals.
+2. [Diagnostic plot creation](#plots): The second way to utilize `redres` is to easily create diagnostic plots associated with a model using the following functions.
+    - [**`plot_redres`**](#plot_redres): Creates a plot of residuals versus fitted values, the response variable, or explanatory variables for a given residual type
+    - [**`plot_resqq`**](#plot_resqq): Creates a normal quantile plot for conditional residuals
     - [**`plot_raneff`**](#plot_raneff): Creates a normal quantile plot for the random effects
     
 \vspace{0.25cm}
 
-3. [Interactive model assessment](#app): Lastly, `redres` can be employed to facilitate an interactive model assessment experience. The function [**`launch_redres`**](#launch_redres) accepts one or two models and opens a Shiny app package provided diagnostic tools. Within the Shiny window, the user can view and interact with all the plots available in the `redres` package. If two models are input to the function, plots from both models are shown side by side to help with model selection.
+3. [Interactive model assessment](#app): Lastly, `redres` can be employed to facilitate an interactive model assessment experience. The function [**`launch_redres`**](#launch_redres) accepts one or two models and opens a Shiny app with diagnostic tools. Within the Shiny window, the user can view and interact with all plots available in the `redres` package. If two models are input, plots from both models are shown side by side to assist with model selection.
 
-This vignette is set up to mimic the package structure. The sections after the introduction are dedicated to one of the three package uses. These sections contain additional details on the functions (such as the available [available types](#types)), explanations of how to interpret output, and example applications of the functions.
+This vignette is set up to mimic the package structure. The sections after the introduction are dedicated to one of the three package uses. Additional details on the functions are included in these sections along with explanations of how to interpret the output and examples.
 
-## Linear Mixed Model Theory and Assumptions
+## Linear Mixed Models
+
+Since `redres` is meant to supplement `lme4`, it is assumed that the user has previous experience with mixed models. However, a review of mixed model theory and assumptions are included here.
 
 The linear mixed effects model can be written as
   $$\textbf{Y}=\textbf{X}\boldsymbol{\beta}+\textbf{Z}\boldsymbol{\gamma}+\boldsymbol{\epsilon}$$
@@ -75,7 +78,7 @@ Under this set up,
   $$E[\textbf{Y}]=\textbf{X}\boldsymbol{\beta} \ \ \ \mbox{ and } \ \ \ 
   Var[\textbf{Y}]=\textbf{ZGZ}'+\textbf{R}=\textbf{V}.$$
   
-It is assumed that
+It is customary to assume that
 $$ 
 \begin{bmatrix} \boldsymbol{\gamma} \\ \boldsymbol{\epsilon} \end{bmatrix}
 \sim N 
@@ -85,14 +88,20 @@ $$
 \end{bmatrix}
 \end{pmatrix}.
 $$
+Based on this set up, we are assuming that we have
 
-(1) independence of our observations, (2) a linear relationship between the response and the explanatory variables, (3) constant variance and (4) normality of the error term.
+(1) independence of our observations,
+(2) a linear relationship between the response and the explanatory variables,
+(3) constant variance, and 
+(4) normality of the random effects and error term.
+
+Assumptions 2 through 4 can be checked using residuals and diagnostic plots such as those provided by `redres`.
 
 ## Example Data
 
 `redres` contains a dataset called `paprika`, which will be used to demonstrate the functions in this vignette. The data is from a study on paprika plants grown under small-scale farming conditions in southern Africa. The original paper on the study can be found [here](https://link.springer.com/article/10.1007%2Fs10457-011-9415-2). The study was conducted in 2007 and 2008 in Malawi using a split plot design with five replicates. 
 
-The researchers compared 4 fertilizer treatments and 6 plant varieties. The fertilizers were applied to the main plots, and the varieties were assigned to the subplots within a main plot. Within each replicate, 10 plants were randomly chosen from each fertilizer and variety treatment combination and observed over 20 weeks. 
+The researchers compared 4 fertilizer treatments and 6 plant varieties. The fertilizers were applied to the main plots, and the varieties were assigned to the subplots within a main plot. Within each replicate, 10 plants were randomly chosen from a fertilizer and variety treatment combination and observed over 20 weeks. 
 
 The dataset included in `redres` contains observations from week 4 of the data in 2008. It is stored as a tibble with 1070 rows and 5 variables. The variables are
 
@@ -102,9 +111,9 @@ The dataset included in `redres` contains observations from week 4 of the data i
 - `plant`: plant number (nested within rep, treatment, and variety)
 - `height`: height of the plant (cm)
 
-The first six rows of the data and a histogram of the variable `height` are shown below.
+The first six rows of the data and a histogram of the response variable `height` are shown below.
 
-```{r}
+```{r fig.width = 4, fig.height = 2}
 # Prints the first 6 rows of the paprika data
 head(paprika)
 
@@ -117,12 +126,12 @@ ggplot(paprika, aes(x = height)) +
 
 The code below fits a linear mixed effects model to the `paprika` dataset. This model will be used throughout this vignette. The terms included in the model are described below.
 
-- `rep` is included as a fixed effect in the model as a blocking variable. 
+- `rep` is treated as a blocking variable and included as a fixed effect
 - `treatment` is included as a fixed main effect
-- `variety` is also included as a fixed main effect
-- `treatment:variety` is included as an interaction term
+- `variety` is included as a fixed main effect
+- `treatment:variety` is included as a fixed interaction term
 - `rep:treatment` is included as a random effect to account for correlation within a main plot due to the split plot design
-- `rep:treatment:variety` is also included as a random effect to account for dependency between the 10 plants within a rep and treatment by variety combination
+- `rep:treatment:variety` is included as a random effect to account for dependency between the 10 plants from a treatment by variety combination within a rep
 
 ```{r message = FALSE}
 # Loads the lme4 package
@@ -133,9 +142,11 @@ m <- lmer(height ~ rep + treatment*variety + (1|rep:treatment) + (1|rep:treatmen
           data = paprika)
 ```
 
+<br>
+
 # Extracting Residuals {#compute_redres}
 
-One of the ways to utilize `redres` is to extract residuals from a model fit using `lmer`. This can be done using the function in the package named `compute_redres` to compute residuals based on a specified type.
+One of the ways to utilize `redres` is to extract residuals from a model fit using `lmer`. This can be done using the function in the package named `compute_redres`. A variety of residual types are available.
 
 ## Residual Types {#types}
 
@@ -145,13 +156,13 @@ One of the ways to utilize `redres` is to extract residuals from a model fit usi
 - Pearson
 - studentized
 
-It is not necessary to consider all residual types when diagnosing a mixed model. Certain types are beneficial in different situations. For example, conditional residuals are useful for checking the effect of the random terms in the model as opposed to marginal residuals that do not account for the random effects, and studentized residuals are useful for checking constant variance with more complex variance structures. However, we have chosen to include all of these types so that the user may select which type (or types) is (are) useful for their situation. By default, `compute_redres` returns raw conditional residuals since these are the most appropriate for a wide range of cases.
+It is not necessary to consider all residual types when diagnosing a mixed model. Certain types are beneficial in certain situations. For example, conditional residuals are useful for checking the effect of the random terms in the model as opposed to marginal residuals that do not account for the random effects. Studentized residuals are useful for checking constant variance with more complex variance structures. We have chosen to include all of these types so that the user may select which type (or types) is (are) useful for their situation. By default, `compute_redres` returns raw conditional residuals since these are appropriate for a wide range of cases.
 
-The formulas for how the residual types are computed in `redres` are listed below. Note that the manner in which some of the residual types are computed differ from the `resid` function in `lme4`. These changes were made so the names of the residual types more intuitive with the computations used. 
+The formulas for how the residual types are computed in `redres` are listed below. Note that some of these computations differ from the `residual` function in `lme4`. These changes were made so the names provide a more intuitive understanding of how the types are computed.
 
 ### Raw Residuals
 
-The raw residuals are computed as the observed response values minus the predicted response values where the marginal version does not account for the random effects while the conditional version does. These are computed as follows.
+The raw residuals are computed as the observed response values minus the predicted response values. The marginal version does not account for the random effects while the conditional version does.
 
 \vspace{0.25cm}
 
@@ -163,7 +174,7 @@ The raw residuals are computed as the observed response values minus the predict
 
 ### Pearson Residuals
 
-The Pearson residuals are computed as the raw residuals divided by the square root of the estimated variance of the response values. Both marginal and conditional versions are available as follows.
+The Pearson residuals are computed as the raw residuals divided by the square root of the estimated variance of the response values.
 
 \vspace{0.25cm}
 
@@ -175,9 +186,9 @@ The Pearson residuals are computed as the raw residuals divided by the square ro
 
 ### Studentized
 
-The studentized residuals are computed as the raw residuals divided by the square root of the estimated variance of the raw residuals. Again, both marginal and conditional versions are available.
+The studentized residuals are computed as the raw residuals divided by the square root of the estimated variance of the raw residuals.
 
-- **marginal** Pearson residuals
+- **marginal** studentized residuals
   $$r_i^{m,std}=\frac{r_i^m}{\sqrt{\widehat{Var}[r_i^m]}}$$
   
 - **conditional** studentized residuals
@@ -191,28 +202,26 @@ $$\textbf{Q}=\textbf{X}(\textbf{X}'\widehat{\textbf{V}}^{-1}\textbf{X})^{-}\text
 
 ## Usage
 
-The function `compute_redres` can compute the residuals types defined in the previous section for models fit using `lmer`.
+The function `compute_redres` computes residuals for a given linear mixed model based on a specified residual type.
 
 **Inputs**
 
-- `model`: A model fit using `lmer` for which the residuals will be computed.
-- `type`:	A character string identifying the type of residual that will be computed. By default, the raw conditional residuals are returned. The following are the options available for type.
+- `model`: Model fit using lmer from lme4.
+- `type`:	String identifying type of residual. The following options are available:
       - `"pearson_cond"`: Pearson conditional residuals
       - `"pearson_mar"`: Pearson marginal residuals
-      - `"raw_cond"`: raw conditional residuals (default)
+      - `"raw_cond"`: raw conditional residuals (*default*)
       - `"raw_mar"`: raw marginal residuals
       - `"std_cond"`: studentized conditional residuals
       - `"std_mar"`: studentized marginal residuals  
       
-See the section on [residual types](#types) for details on how the residuals are computed and their purpose.
-
 **Output**
 
-- `compute_redres` returns a vector of residuals according to the type specified in the order that the data observations are input into `lmer`.
+- Returns a vector of residuals according to type specified. Residuals appear in the same order as the observations used to fit the model.
 
 **Functionality** 
 
-The code below demonstrates the use of `compute_redres` to compute several types of residuals from the model `m`. These residuals are put into a dataframe and joined with the `paprika` data.
+The code below demonstrates the use of `compute_redres` to compute several types of residuals from the `paprika` model. The residuals are joined with the `paprika` data, and the first six rows are printed.
 
 ```{r}
 # Computes the default residuals (raw conditional)
@@ -227,13 +236,13 @@ std_cond <- compute_redres(m, type = "std_cond")
 # Joins the residuals to the paprika data
 paprika_plus <- cbind(paprika, raw_cond, pearson_mar, std_cond)
 
-# Prints the head of the dataframe
+# Prints the head of the data
 head(paprika_plus)
 ```
 
 The user can then use these residuals as desired. For example, the user could make their own plots or perform tests on the residuals. The code below performs a Shapiro-Wilk test for normality on the raw conditional residuals and creates histograms of the three residual types.
 
-```{r message = FALSE, fig.width = 8}
+```{r message = FALSE, fig.width = 6, fig.height = 2}
 # Performs a test for normality on the raw conditional residuals
 shapiro.test(paprika_plus$raw_cond)
 
@@ -250,91 +259,99 @@ paprika_plus %>%
   theme_bw()
 ```
 
+<br>
+
 # Plotting Residuals {#plots}
 
-The package includes three `plot` functions that allow the user to visually assess the general assumptions of a linear mixed model (using `ggplot2` graphics).
-
-- [`plot_redres`](#plot_redres): creates a plot of the residuals versus the fitted values or model variables
-- [`plot_resqq`](#plot_resqq):  creates a normal quantile plot of the residuals
-- [`plot_ranef`](#plot_ranef):  creates a normal quantile plot of the random effects
+`redres` can also be used to assess linear mixed model assumptions by creating diagnostic plots using the functions of [`plot_redres`](#plot_redres), [`plot_resqq`](#plot_resqq), and [`plot_ranef`](#plot_ranef).
 
 ## Plot Types
 
-`redres` makes use of two types of plots (residual and quantile plots) to assess the model assumptions. How these plots are created and used are described below.
+Two types of plots (residual and quantile plots) are utilized by `redres`.
 
 ### Residual Plots 
 
-Plots of the residuals by either the fitted values or explanatory variables (covariates) are used to verify linearity and constant variance. If no curvature or additional linear trends are identified in the residual plot, we say that the linear form is a reasonable assumption. To assess our variance assumptions, we are looking for constant variance. Here using a scaled residual, either the studentized or Pearson, is necessary to account for additional variance structures modeled outside of the error term. We want the vertical spread of the residuals to be approximately the same for all x-axis values.
+Plots of the residuals versus fitted values, the response variable, or explanatory variables (covariates) are used to verify linearity and constant variance. If no curvature or additional linear trends are identified in the residual plot, we say that the linear form is a reasonable assumption. To assess the constant variance assumption, we want the vertical spread of the residuals to be approximately the same in the y-axis direction for all x-axis values. Using a scaled residual, either the studentized or Pearson, is necessary to account for additional variance structures modeled outside of the error term.
 
-Residual plots can be called using the `plot_redres` function. The user has the ability to specify either fitted values or a explanatory variable from the model. Additionally any of the six [types of residuals](#types) can be used in the plot.
+Residual plots can be rendered via `redres` using the `plot_redres` function. The user has the ability to specify either fitted values or a explanatory variable from the model. Additionally any of the six [types of residuals](#types) can be used in the plot.
 
 ### Quantile plots
 
-Quantile plots are used to verify visually if data follows are particular distribution. Data points are plotted along the quantiles of the assumed distributed. The data is expected to follow an approximately straight line, at least along the middle quantiles. The points are assessed for any extreme curvation that would indicate a departure from the assumed distribution. Typically curvature at the extreme ends of the quantiles (around 0 and 1) are ignored as data is sparse here and distributions behave more erratically at the boundaries of the parameter space. We have added confidence bands to guide the user.  
+Quantile plots are used to visually verify if data follows are particular distribution. Data points are plotted along the quantiles of the assumed distributed. The data is expected to follow an approximately straight line (at least along the middle quantiles). The points are assessed for any extreme curvation that would indicate a departure from the assumed distribution. Typically curvature at the extreme ends of the quantiles (around 0 and 1) are ignored as data is sparse here and distributions behave more erratically at the boundaries of the parameter space.  
 
-The function `plot_ranef` plots each random effect vector along the normal quantiles. From the assumptions of the linear mixed model, each random effect specified is assumed to follow a normal distribution. Therefore, these plots can be used to assess if this assumption is met. Note that the number of plots generated by this function will vary for each model, with the number of plots being the number of random effects.
+The function `plot_ranef` plots each random effect vector versus normal quantiles. From the assumptions of the linear mixed model, each random effect specified is assumed to follow a normal distribution. Therefore, these plots can be used to assess if this assumption is met. We have added 95% confidence bands to guide the user. Note that the number of plots generated by this function will vary for each model based on the number of random effects.
 
-From above we can see that the error term is assumed to follow a normal distribution as well. The function `plot_resqq` provides a normal quantile plot with confidence bands for the raw conditional residuals. See [above](#types) for a description of the raw conditional residuals (type = `raw_cond`).
+The error term is assumed to follow a normal distribution as well. The function `plot_resqq` provides a normal quantile plot with 95% confidence bands for the raw conditional residuals to assess this assumption.
 
+Both of these functions generate the quantile plots using the R package `qqplotr`.
+ 
 ## Usage
 
 ### plot_redres {#plot_redres}
 
-The function `plot_redres` is included in the package to allow for the easy creation of a residual plot using `ggplot2` for a linear mixed model fit using `lmer`. `plot_redres` allows the user to specify any residual type to be plotted on the y-axis including those not provided by `lme4`.
+`plot_redres` creates a plot of residuals versus fitted values or model variable. This plot can be used to assess whether the assumptions of constant variance and linear form assumptions are adequate.
 
 **Inputs**
 
-- `model`: A model fit using `lmer` for which the residuals will be computed.
-- `type`:	A character string identifying the type of residual that will be computed. The same options available with [`compute_redres`](#compute_redres) are available for `plot_redres`. By default, the conditional raw residuals are plotted.
-- `xvar`: A character string identifying the variable to be plotted at the x-axis. By default, the fitted values are plotted on the x-axis.
+- `model`: Model fit using lmer from lme4.
+- `type`:	String identifying type of residual. Default is "raw_cond". The same options available with [`compute_redres`](#compute_redres) are available for `plot_redres`.
+- `xvar`: String indicating the variable to be plotted at the x-axis. By default, the fitted values are plotted on the x-axis. Any variable used in the lmer model can be specified.
 
 **Output**
 
-- A `ggplot2` object of a scatterplot of the model residuals of the type specified versus the specified x-variable.
+- A residual plot in the form of a `ggplot2` object.
 
 **Functionality**
 
-The code below shows how to create the most basic plot using `plot_redres`. By inputting the model `m`, a plot of the conditional raw residuals versus the fitted values is returned. 
+The code below shows how to create the most basic plot using `plot_redres`. By inputting the model `m`, a plot of the conditional raw residuals versus the fitted values is returned. We see that there is the classic "fan" shape indicating inconstant variance. As the fitted values increase, the vertical spread of the residuals also increases. The lack of any other trend in the residuals suggests that the linear form assumption is reasonable. We should try alternative model formulations in order to address the inconstant variance.
 
-```{r}
+```{r fig.height = 2.5, fig.width = 4}
 # Creates the default residual plot
 plot_redres(m)
 ```
 
-Here we see that while there does not appear to be any linear trend in our data, there is the classic "fan" shape indicating inconstant variance. As the fitted values increase, the vertical spread of the residuals also decreasing. The lack of any other form in the residuals suggests that the linear form assumption is reasonable. We do want to try alternative model formulations in order to address the inconstant variance and then we would need to reassess linearity for the new model.
-
-Perhaps additionally we are interested in the marginal effect of variety, so we want to see the residuals by variety of paprika planted. The plot below suggests that variety does not provide us with extra structure for modeling height.
+Perhaps we are additionally interested in the marginal effect of variety, so we want to see the residuals by variety of paprika planted. The code below adjusts the `xvar` option, and the resulting plot suggests that there is no need for any extra structure for modeling height.
  
-```{r}
-# Residual plot of raw conditional residuals against variety fixed effect.
+```{r fig.height = 2.5, fig.width = 4}
+# Plots the raw conditional residuals against the variety fixed effect
 plot_redres(m, xvar = "variety")
 ```
 
-The type of residuals can be changed using the `type` option as shown in the code below.
+The type of residuals can be changed using the `type` option as shown in the code below. The marginal residuals show an upward trend as the fitted values increase. From our experimental design, we suspect that this trend might be related to the replications.
 
-```{r}
-# Creates the residual plot with studentized marginal residuals
-plot_redres(m, type = "std_mar")
+```{r fig.height = 2.5, fig.width = 4}
+# Creates the residual plot with raw marginal residuals
+plot_redres(m, type = "raw_mar")
 ```
 
-We notice in the marginal residuals an upward trend as the fitted values increase. From our experimental design we suspect that this trend might be related to the replications. When we plot the residuals now by replication ID we see the same upward trend as replication ID increases. If we plot by treatment we do not see this trend.
+When we plot the residuals now by replication ID, we see the same upward trend as replication ID increases.
 
-```{r}
-plot_redres(m, type = "std_mar", xvar = "rep")
-plot_redres(m, type = "std_mar", xvar = "treatment")
+```{r fig.height = 2.5, fig.width = 4}
+# Plots the raw marginal residuals against rep
+plot_redres(m, type = "raw_mar", xvar = "rep")
 ```
 
-All plots created using the `redres` package are formatted to use `theme_bw` from `ggplot2`. However, since `plot_redres` returns a ggplot object, it is possible to use functions provided by `ggplot2` to adjust the formatting of the plot.
+If we plot the residuals by treatment, we do not see this trend.
 
-```{r}
-# Applies ggplot2 formatting functions to the output from plot_resid
+```{r fig.height = 2.5, fig.width = 4}
+# Plots the raw conditional residuals against treatment
+plot_redres(m, type = "raw_mar", xvar = "treatment")
+```
+
+All plots created using the `redres` package are formatted to use `theme_bw` from `ggplot2`. However, since `plot_redres` returns a `ggplot2` object, it is possible to use functions provided by `ggplot2` to add additional "layers" (such as formatting options) to the plot.
+
+```{r fig.height = 2.5, fig.width = 4}
+# Applies additional ggplot2 layers to the output from plot_redres
 library(ggplot2)
 plot_redres(m, type = "pearson_cond") +
+  geom_smooth(method = "loess") +
   theme_classic() +
   labs(title = "Residual Plot")
 ```
 
 ### plot_resqq {#plot_resqq}
+
+`plot_resqq` creates a normal quantile plot of the raw conditional residuals. For linear mixed models, these residuals are expected to be normally distributed. This plot can be used to assess this assumption.
 
 **Inputs**
 
@@ -348,7 +365,7 @@ plot_redres(m, type = "pearson_cond") +
 
 We can check our normal assumption on the error terms for our paprika model using `plot_resqq`.
 
-```{r}
+```{r fig.height = 2.5, fig.width = 4}
 plot_resqq(m)
 ```
 
@@ -368,11 +385,13 @@ From the quantile plot, we see that along the middle of the distribution (around
 
 We now check our normal assumption on the random effects for our paprika model using `plot_ranef`.
 
-```{r}
+```{r fig.height = 2.5, fig.width = 6}
 plot_ranef(m)
 ```
 
 Our model `m` had two random effects - a random intercept for $rep \times treatment \times variety$ and another random intercept for $rep \times treatment$. Therefore, we get a grid of two plots where the random effect term is identified along the y-axis. We see that the points fall along the straight reference line and well-within the confidence bands. We can conclude that the normal assumption for both random effect terms is not violated.
+
+<br>
 
 # Interacting with Residuals {#app}
 
@@ -407,19 +426,19 @@ launch_redres(m)
 
 Two selection widgets shown in the `Residual Plot` tab are for choosing [residual types](#types)
 
-<img align="center" width="600" src="figs/resid_type.png">
+<img align="center" height="250" src="figs/resid_type.png">
 
 and x-axis variables.
 
-<img align="center" width="600" src="figs/xvar.png">
+<img align="center" height="250" src="figs/xvar.png">
 
 The `Quantile Plots` tab shown below contains a random effects normal quantile plot
 
-<img align="center" width="600" src="figs/rand_eff_qq.png">
+<img align="center" height="250" width = "300" src="figs/rand_eff_qq.png">
 
 and error term normal quantile plot.
 
-<img align="center" width="600" src="figs/error_qq.png">
+<img align="center" height="250" width = "300" src="figs/error_qq.png">
 
 - Two fitted models:
 
@@ -445,11 +464,11 @@ launch_redres(cmbd)
 
 The plots are shown side by side if there are two inputted models. For variables on the x-axis, different model can have different selected variables.
 
-<img align="center" width="600" src="figs/resid_two_model.png">
+<img align="center" height="250" src="figs/resid_two_model.png">
 
 And the following show one of the quantile plots:
 
-<img align="center" width="600" src="figs/error_qq_two_mod.png">
+<img align="center" height="200" src="figs/error_qq_two_mod.png">
 
 ```{r echo = FALSE, results = FALSE}
 # copy static figures to docs folder

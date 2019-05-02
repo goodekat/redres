@@ -12,7 +12,7 @@ plot_redres(model, type = "raw_cond", xvar = NULL)
 \item{type}{String identifying type of residual. Default is "raw_cond".
 See \code{\link{compute_redres}} for details of available types.}
 
-\item{xvar}{String indicates the variable to be plotted at the x-axis. By default,
+\item{xvar}{String indicating the variable to be plotted at the x-axis. By default,
 the fitted values are plotted on the x-axis. Any variable used in the
 lmer model can be specified.}
 }
