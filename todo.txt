@@ -3,7 +3,6 @@ To Do
 --------
 
 Package:
-  - KG: add code coverage discussion to README
   - KM: proof read README
   - KG & KM: make sure webpage is working as it should
 
@@ -11,8 +10,8 @@ Shiny app:
   - YZ: figure out how to test the server part of the app
   - add a description to the first page of the readme
 
-Vignette (use paprika data for whole vignette):
-  - KM & KG: edit
+Vignette:
+  - KG: final edit
 
 Presentation:
   - done!
