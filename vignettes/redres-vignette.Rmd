@@ -459,3 +459,8 @@ And the following show one of the quantile plots:
 ```{r, out.width = '70%', fig.align = 'center', echo = FALSE}
 knitr::include_graphics('figs/error_qq_two_mod.png')
 ```
+
+```{r echo = FALSE, results = FALSE}
+# copy static figures to docs folder
+file.copy("./figs", "../docs/", overwrite = TRUE, recursive = TRUE)
+```

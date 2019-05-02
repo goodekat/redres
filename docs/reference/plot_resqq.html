@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Normal quantile plot for residuals. — plot_resqq • redres</title>
+<title>Normal quantile plot for residuals — plot_resqq • redres</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,11 @@
 
 
 
-<meta property="og:title" content="Normal quantile plot for residuals. — plot_resqq" />
+<meta property="og:title" content="Normal quantile plot for residuals — plot_resqq" />
 
-<meta property="og:description" content="Creates a normal quantile plot of the raw conditional residuals. By the assumptions
-of a model fit using lmer these residuals are expected to be normally distributed." />
+<meta property="og:description" content="Creates a normal quantile plot of the raw conditional residuals. For linear mixed models,
+these residuals are expected to be normally distributed. This plot can be used to assess
+this assumption." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -112,15 +113,16 @@ of a model fit using lmer these residuals are expected to be normally distribute
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Normal quantile plot for residuals.</h1>
+    <h1>Normal quantile plot for residuals</h1>
     <small class="dont-index">Source: <a href='https://github.com/goodekat/redres.git/blob/master/R/plot_resqq.R'><code>R/plot_resqq.R</code></a></small>
     <div class="hidden name"><code>plot_resqq.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Creates a normal quantile plot of the raw conditional residuals. By the assumptions
-of a model fit using <code>lmer</code> these residuals are expected to be normally distributed.</p>
+    <p>Creates a normal quantile plot of the raw conditional residuals. For linear mixed models,
+these residuals are expected to be normally distributed. This plot can be used to assess
+this assumption.</p>
     
     </div>
 
@@ -131,17 +133,17 @@ of a model fit using <code>lmer</code> these residuals are expected to be normal
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Model fit using <code>lmer</code>.</p></td>
+      <td><p>Model fit using <code>lmer</code> from <code>lme4</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A generalized residual quantile plot.</p>
+    <p>A normal quantile plot in the form of a <code>ggplot2</code> object.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Confidence bands are constructed from pointwise normal confidence intervals.</p>
+    <p>Confidence bands are constructed pointwise 95% normal confidence intervals.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -150,8 +152,11 @@ of a model fit using <code>lmer</code> these residuals are expected to be normal
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lme4</span>)
 <span class='no'>fm1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Reaction</span> ~ <span class='no'>Days</span> + (<span class='no'>Days</span> <span class='kw'>|</span> <span class='no'>Subject</span>), <span class='no'>sleepstudy</span>)
 
-<span class='co'># check that error term is normally distributed</span>
-<span class='fu'>plot_resqq</span>(<span class='no'>fm1</span>)</div><div class='img'><img src='plot_resqq-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='co'># checks that error term is normally distributed</span>
+<span class='fu'>plot_resqq</span>(<span class='no'>fm1</span>)</div><div class='img'><img src='plot_resqq-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># edits theme of ggplot2 object</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>ggplot2</span>)
+<span class='fu'>plot_resqq</span>(<span class='no'>fm1</span>) + <span class='fu'><a href='https://www.rdocumentation.org/packages/ggplot2/topics/ggtheme'>theme_grey</a></span>()</div><div class='img'><img src='plot_resqq-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
