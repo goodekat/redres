@@ -8,7 +8,7 @@ Package:
 
 Shiny app:
   - YZ: figure out how to test the server part of the app
-  - add a description to the first page of the app
+  - YZ: add a description to the first page of the app
 
 Vignette:
   - KG: final edit
