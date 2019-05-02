@@ -1,7 +1,7 @@
 Package: redres
 Type: Package
 Title: Residuals and Diagnostic Plots for Mixed Models
-Version: 0.1.0.9
+Version: 0.0.0.9
 Author: Katherine Goode, Kellie McClernon, Jing Zhao, Yudi Zhang, Yonghui Huo.
 Maintainer: Katherine Goode <kgoode@iastate.edu>
 Description: An R package that computes various types of residuals for linear mixed

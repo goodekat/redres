@@ -23,29 +23,34 @@ knitr::opts_chunk$set(
 
 # Introducing redres
 
-**redres** stands for **r**andom **e**ffect **d**iagnostic **res**iduals
-
-This package is meant to be a supplemental package to `lme4`.
+`redres` is an R package developed to help with diagnosing linear mixed models fit using the function `lmer` from the `lme4` package. It is meant as a supplemental package to `lme4`.
 
 ## Overview 
 
 <img align="right" width="150" height="175" src="figs/sticker.png">
 
-The Merriam-Webster dictionary defines [redress](https://www.merriam-webster.com/dictionary/redress) as "to set right". When we assign a linear mixed model to data, we assume (1) independence of our observations, (2) a linear relationship between the response and the explanatory variables, (3) constant variance and (4) normality of the error term. By inspecting our residuals we can diagnose erronous assumptions and missing structure, allowing us to set right the more egregious misspecifications. No model is perfect, but our residuals are a first line of defense against an inaccurate model and consequently poor inference.
+**redres** stands for **r**andom **e**ffect **d**iagnostic **res**iduals. This name was chosen based on the word redress, which the Merriam-Webster dictionary [defines](https://www.merriam-webster.com/dictionary/redress) as "to set right". When we fit a linear mixed model to data, we make several assumptions. These assumptions can be diagnosed by inspecting the residuals from the model. *Residuals allow us to set right* the more egregious misspecifications. No model is perfect, but residuals are an important line of defense against an inaccurate model and, consequently, poor inference.
 
 ## Package Structure
 
-`redres` contains various functions that provide different ways to assess model assumptions for linear mixed models fit using `lmer`. For a user who wants to obtain the residual value for each observation in their data set, the function `redres` allows the user to input a model and specify one of six available residual types. The [available types](#types) are described in detail below. Additionally the package provides several default plots to visually assess the fit of a given mixed model. Calling the plot functions and reading the output are described in the section on [plotting](#plots). Both, the residual functions and the plotting functions, generate static output within the user's R session.  
+`redres` contains various functions to help with model assumptions. The package is set up so that the functions fall under one of three model assessment categories. These categories distinguish between the type of model assessment experience the user would like. The three categories and their associated functions are listed below.
 
-Alternatively, user can use the function `redres_app` that opens a Shiny app to interactively assess their model with package provided tools. Within the Shiny window, the user can view all the plots available in the `redres` package but with additional interactivity. Or the user can input two models into the app function for model selection.
+1. [Residual extraction](#redres)
+    - [`redres`](#compute_redres): computes and returns residuals given a model and a specified residual type 
+    
+\vspace{0.25cm}
 
-A brief description of each function is listed below.
+2. [Diagnostic plot creation](#plots)
+    - [`plot_redres`](#plot_redres): This function creates a plot of residuals versus fitted values for a given residual type. The [available types](#types) are described later in the vignette.
+    - [`plot_resqq`](#plot_resqq): creates a normal quantile plot for conditional residuals
+    - [`plot_raneff`](#plot_raneff): creates a normal quantile plot for the random effects
+    
+\vspace{0.25cm}
 
-- [redres](#redres): computes and returns residuals given a model and a specified residual type
-- [plot_redres](#plot_redres): creates a plot of residuals versus fitted values for a given residual type
-- [plot_resqq](#plot_resqq): creates a normal quantile plot for conditional residuals
-- [plot_raneff](#plot_raneff): creates a normal quantile plot for the random effects
-- [redres_app](#redres_app): opens an interactive Shiny app with 
+3. [Interactive model assessment](#app)
+    - [`redres_app`](#redres_app): This function opens an interactive Shiny app to interactively assess their model with package provided tools. Within the Shiny window, the user can view all the plots available in the `redres` package but with additional interactivity. Or the user can input two models into the app function for model selection.
+
+This vignette is set up to mimic the package structure. The sections after the introduction are dedicated to one of the three package uses.
 
 ## Installation
 
@@ -88,6 +93,10 @@ $$
 \end{bmatrix}
 \end{pmatrix}.
 $$
+
+
+
+(1) independence of our observations, (2) a linear relationship between the response and the explanatory variables, (3) constant variance and (4) normality of the error term.
 
 ## Example Data
 
@@ -132,7 +141,7 @@ m <- lmer(height ~ rep + treatment*variety + (1|rep:treatment) + (1|rep:treatmen
           data = paprika)
 ```
 
-# Extracting Residuals
+# Extracting Residuals {#redres}
 
 One of the ways to utilize `redres` is to extract residuals from a model fit using `lmer`. This can be done using the function in the package named `redres` to compute residuals based on a specified type.
 
@@ -373,7 +382,7 @@ plot_ranef(m)
 
 Our model `m` had two random effects - a random intercept for $rep \times treatment \times variety$ and another random intercept for $rep \times treatment$. Therefore, we get a grid of two plots where the random effect term is identified along the y-axis. We see that the points fall along the straight reference line and well-within the confidence bands. We can conclude that the normal assumption for both random effect terms is not violated.
 
-# Interacting with Residuals
+# Interacting with Residuals {#app}
 
 ## Shiny App {#redres_app}
 
