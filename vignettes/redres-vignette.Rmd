@@ -37,8 +37,6 @@ library(redres)
 
 ## Overview
 
-<img align="right" width="150" height="175" src="figs/sticker.png">
-
 **redres** stands for **r**andom **e**ffect **d**iagnostic **res**iduals. This name was chosen based on the word redress, which the Merriam-Webster dictionary [defines](https://www.merriam-webster.com/dictionary/redress) as "to set right". When we fit a linear mixed model to data, we make several assumptions. These assumptions can be diagnosed by inspecting the residuals from the model. *Residuals allow us to set right* the more egregious misspecifications. No model is perfect, but residuals are an important line of defense against an inaccurate model and, consequently, poor inference.
 
 ## Package Structure
