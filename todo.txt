@@ -4,6 +4,3 @@ To Do
 
 Package:
   - KM: proof read README
-
-Shiny app:
-  - YZ: figure out how to test the server part of the app
