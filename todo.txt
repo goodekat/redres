@@ -11,7 +11,7 @@ Shiny app:
   - JZ: add a description to the first page of the app
 
 Vignette:
-  - KG: final edit
+  - done!
 
 Presentation:
   - done!

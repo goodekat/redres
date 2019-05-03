@@ -1,7 +1,7 @@
 #' Normal quantile plots for random effects
 #'
 #' @description
-#' Plots each random effect in the model against the normal quantiles. For linear mixed models
+#' Plots each random effect in the model against the normal quantiles. For linear mixed models,
 #' random effects are assumed to be normally distributed. This plot can be used to assess the
 #' validity of that assumption.
 #'

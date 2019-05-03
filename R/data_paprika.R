@@ -24,7 +24,7 @@
 #' and observed over 20 weeks. This dataset contains observations from week 4
 #' of the data in 2008.
 #'
-#' @source The data was obtained from \url{https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/25747},
+#' @source The data were obtained from \url{https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/25747},
 #' and the original paper on the study can be found at \url{https://link.springer.com/article/10.1007\%2Fs10457-011-9415-2}.
 
 "paprika"

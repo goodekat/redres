@@ -17,7 +17,7 @@ data(sleepstudy, package = "lme4")
 model_2 <- lme4::lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
 
 # test error messages
-test_that("check-plot_raneff", {
+test_that("check-plot_ranef", {
   expect_error(plot_ranef(1))
   expect_error(plot_ranef(model_lm))
 })

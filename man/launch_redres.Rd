@@ -7,7 +7,10 @@
 launch_redres(model)
 }
 \arguments{
-\item{model}{Model fit using \code{lmer} function from lme4 package.}
+\item{model}{A model (or two models wrapped in a list) fit using \code{lmer}.}
+}
+\value{
+A Shiny app with multiple tabs showing diagnostic plots.
 }
 \description{
 This is a shiny app for model diagnoistic of mixed model using \code{lmer} function from lme4 package.

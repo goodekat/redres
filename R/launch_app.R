@@ -8,7 +8,9 @@
 #' and error term. This app can also be used to do model selection through pairwise comparison
 #' two models from different linear mixed models using lmer function.
 #'
-#' @param model Model fit using \code{lmer} function from lme4 package.
+#' @param model A model (or two models wrapped in a list) fit using \code{lmer}.
+#'
+#' @return A Shiny app with multiple tabs showing diagnostic plots.
 #'
 #' @usage launch_redres(model)
 #'
@@ -16,7 +18,6 @@
 #' @importFrom ggplot2 ggtitle labs
 #' @import shiny
 #' @export launch_redres
-#'
 #'
 #' @examples
 #' \dontrun{

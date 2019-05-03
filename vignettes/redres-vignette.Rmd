@@ -44,14 +44,14 @@ library(redres)
 
 `redres` is structured so the available functions fall under one of three categories. These categories identify the type of model assessment experience the functions provide.
 
-1. [Residual extraction](#compute_redres): The first manner in which `redres` can be used is to obtain residuals from a model. This is done using the function [**`compute_redres`**](#compute_redres) to extract and return a vector of residuals of a specified type. The user can then perform their own methods of assessment with the residuals. The available [residual types](#types) are described later in the vignette.
+1. [Residual extraction](#resids): The first manner in which `redres` can be used is to obtain residuals from a model. This is done using the function [**`compute_redres`**](#compute_redres) to extract and return a vector of residuals of a specified type. The user can then perform their own methods of assessment with the residuals. The available [residual types](#types) are described later in the vignette.
 
 \vspace{0.25cm}
 
 2. [Diagnostic plot creation](#plots): The second way to utilize `redres` is to easily create diagnostic plots associated with a model using the following functions.
     - [**`plot_redres`**](#plot_redres): Creates a plot of residuals versus fitted values, the response variable, or explanatory variables for a given residual type
     - [**`plot_resqq`**](#plot_resqq): Creates a normal quantile plot for conditional residuals
-    - [**`plot_raneff`**](#plot_raneff): Creates a normal quantile plot for the random effects
+    - [**`plot_ranef`**](#plot_ranef): Creates a normal quantile plot for the random effects
     
 \vspace{0.25cm}
 
@@ -99,7 +99,7 @@ Assumptions 2 through 4 can be checked using residuals and diagnostic plots such
 
 ## Example Data
 
-`redres` contains a dataset called `paprika`, which will be used to demonstrate the functions in this vignette. The data is from a study on paprika plants grown under small-scale farming conditions in southern Africa. The original paper on the study can be found [here](https://link.springer.com/article/10.1007%2Fs10457-011-9415-2). The study was conducted in 2007 and 2008 in Malawi using a split plot design with five replicates. 
+`redres` contains a dataset called `paprika`, which will be used to demonstrate the functions in this vignette. The data are from a study on paprika plants grown under small-scale farming conditions in southern Africa. The original paper on the study can be found [here](https://link.springer.com/article/10.1007%2Fs10457-011-9415-2). The study was conducted in 2007 and 2008 in Malawi using a split plot design with five replicates. 
 
 The researchers compared 4 fertilizer treatments and 6 plant varieties. The fertilizers were applied to the main plots, and the varieties were assigned to the subplots within a main plot. Within each replicate, 10 plants were randomly chosen from a fertilizer and variety treatment combination and observed over 20 weeks. 
 
@@ -144,7 +144,7 @@ m <- lmer(height ~ rep + treatment*variety + (1|rep:treatment) + (1|rep:treatmen
 
 <br>
 
-# Extracting Residuals {#compute_redres}
+# Extracting Residuals {#resids}
 
 One of the ways to utilize `redres` is to extract residuals from a model fit using `lmer`. This can be done using the function in the package named `compute_redres`. A variety of residual types are available.
 
@@ -202,11 +202,13 @@ $$\textbf{Q}=\textbf{X}(\textbf{X}'\widehat{\textbf{V}}^{-1}\textbf{X})^{-}\text
 
 ## Usage
 
+### compute_redres {#compute_redres}
+
 The function `compute_redres` computes residuals for a given linear mixed model based on a specified residual type.
 
 **Inputs**
 
-- `model`: Model fit using lmer from lme4.
+- `model`: Model fit using 'lmer' from lme4.
 - `type`:	String identifying type of residual. The following options are available:
       - `"pearson_cond"`: Pearson conditional residuals
       - `"pearson_mar"`: Pearson marginal residuals
@@ -240,7 +242,7 @@ paprika_plus <- cbind(paprika, raw_cond, pearson_mar, std_cond)
 head(paprika_plus)
 ```
 
-The user can then use these residuals as desired. For example, the user could make their own plots or perform tests on the residuals. The code below performs a Shapiro-Wilk test for normality on the raw conditional residuals and creates histograms of the three residual types.
+The user can then use these residuals as desired. For example, the user could make their own plots or perform tests on the residuals. The code below performs a Shapiro-Wilk test for normality on the raw conditional residuals and creates histograms of the three residual types. The p-value from the normality test is extremely small, which suggests that there is evidence that the distribution of the residuals is different from a normal distribution. The histograms of the both the raw and studentized residuals show that the distribution of the residuals is symmetric and uni-modal but has more observations in the tails that would be expected from a normal distribution. 
 
 ```{r message = FALSE, fig.width = 6, fig.height = 2}
 # Performs a test for normality on the raw conditional residuals
@@ -277,13 +279,13 @@ Residual plots can be rendered via `redres` using the `plot_redres` function. Th
 
 ### Quantile plots
 
-Quantile plots are used to visually verify if data follows are particular distribution. Data points are plotted along the quantiles of the assumed distributed. The data is expected to follow an approximately straight line (at least along the middle quantiles). The points are assessed for any extreme curvation that would indicate a departure from the assumed distribution. Typically curvature at the extreme ends of the quantiles (around 0 and 1) are ignored as data is sparse here and distributions behave more erratically at the boundaries of the parameter space.  
+Quantile plots are used to visually verify if data follow a particular distribution. Data points are plotted along the quantiles of the assumed distributed. The data are expected to follow an approximately straight line (at least along the middle quantiles). The points are assessed for any extreme curvation that would indicate a departure from the assumed distribution. Typically curvature at the extreme ends of the quantiles (around 0 and 1) are ignored as data are sparse here and distributions behave more erratically at the boundaries of the parameter space.  
 
 The function `plot_ranef` plots each random effect vector versus normal quantiles. From the assumptions of the linear mixed model, each random effect specified is assumed to follow a normal distribution. Therefore, these plots can be used to assess if this assumption is met. We have added 95% confidence bands to guide the user. Note that the number of plots generated by this function will vary for each model based on the number of random effects.
 
 The error term is assumed to follow a normal distribution as well. The function `plot_resqq` provides a normal quantile plot with 95% confidence bands for the raw conditional residuals to assess this assumption.
 
-Both of these functions generate the quantile plots using the R package `qqplotr`.
+Both of these functions generate the quantile plots using the R package [`qqplotr`](https://github.com/aloy/qqplotr).
  
 ## Usage
 
@@ -293,9 +295,9 @@ Both of these functions generate the quantile plots using the R package `qqplotr
 
 **Inputs**
 
-- `model`: Model fit using lmer from lme4.
+- `model`: Model fit using 'lmer' from lme4.
 - `type`:	String identifying type of residual. Default is "raw_cond". The same options available with [`compute_redres`](#compute_redres) are available for `plot_redres`.
-- `xvar`: String indicating the variable to be plotted at the x-axis. By default, the fitted values are plotted on the x-axis. Any variable used in the lmer model can be specified.
+- `xvar`: String indicating the variable to be plotted at the x-axis. By default, the fitted values are plotted on the x-axis. Any variable used in the 'lmer' model can be specified.
 
 **Output**
 
@@ -359,19 +361,20 @@ plot_redres(m, type = "pearson_cond") +
 
 **Output**
 
-- A `ggplot2` object of a normal quantile plot for the raw conditional residuals with normal theory 95\% confidence bands.
+- A normal quantile plot in the form of a `ggplot2` object with normal theory 95\% confidence bands.
 
 **Functionality**
 
-We can check our normal assumption on the error terms for our paprika model using `plot_resqq`.
+We can check our normal assumption on the error terms for our `paprika` model using `plot_resqq`. From the quantile plot, we see that along the middle of the distribution (around zero) the points fall in roughly a straight line with no S-shaped curvature, but the points away from the center, deviate from the line suggesting that the residuals do not follow a normal distribution. This agrees with the result from the Shapiro-Wilk test performed earlier in the vignette. Since the deviation is not too drastic, and there are a lot of observations, we may choose to ignore this assumption violation and focus on the non-constant variance violation.
 
 ```{r fig.height = 2.5, fig.width = 4}
+# Creates the normal quantile plot of the residuals
 plot_resqq(m)
 ```
 
-From the quantile plot, we see that along the middle of the distribution (around zero) the points fall in roughly a straight line with no S-shaped curvature. Even though there are some points falling outside the confidence bands at the tails of the distribution - the extreme values of -20 and 20 - we still would consider the normal assumption reasonable. It is not uncommon to see outliers near the tails where the probability decreases.
-
 ### plot_ranef {#plot_ranef}
+
+`plot_ranef` plots each random effect in the model against the normal quantiles. For linear mixed models, random effects are assumed to be normally distributed. This plot can be used to assess the validity of that assumption.
 
 **Inputs**
 
@@ -383,27 +386,30 @@ From the quantile plot, we see that along the middle of the distribution (around
 
 **Functionality**
 
-We now check our normal assumption on the random effects for our paprika model using `plot_ranef`.
+We now check our normal assumption on the random effects for our `paprika` model using `plot_ranef`. Our model `m` has two random effects - a random intercept for $rep \times treatment \times variety$ and another random intercept for $rep \times treatment$. Therefore, `plot_ranef` produces a grid of two plots where the random effect term is identified along the y-axis. We see that the points fall along the straight reference lines and are well-within the confidence bands. We can conclude that the normal assumption for both random effect terms is not violated.
 
 ```{r fig.height = 2.5, fig.width = 6}
+# Creates the normal quantile plots for the random effects
 plot_ranef(m)
 ```
-
-Our model `m` had two random effects - a random intercept for $rep \times treatment \times variety$ and another random intercept for $rep \times treatment$. Therefore, we get a grid of two plots where the random effect term is identified along the y-axis. We see that the points fall along the straight reference line and well-within the confidence bands. We can conclude that the normal assumption for both random effect terms is not violated.
 
 <br>
 
 # Interacting with Residuals {#app}
 
-## Shiny App {#launch_redres}
+The final way to make use of `redres` is to interactively assess the model assumptions using a Shiny app accessed using the function `launch_redres`.
 
-The function `launch_redres` opens a Shiny app that generates output for the plotting functions `plot_redres`, `plot_resqq` and `plot_ranef`. There are two main tabs in the app, one for the residual plot and another for the quantile plots. The residual plot gives the user a choice of all [residual types](#types) and x-axis variables. The available x-axis variables are extracted from the input model.  
+## Shiny App
 
-When a list of two models is input into the function `launch_redres`, the app shows a side-by-side comparison of the plots. The user then is able to compare visually the two linear mixed models and conduct model selection.
+The function `launch_redres` opens a Shiny app that generates output for the plotting functions `plot_redres`, `plot_resqq`, and `plot_ranef`. There are two main tabs in the app, one for the residual plot and another for the quantile plots. The residual plot gives the user a choice of all [residual types](#types) and x-axis variables. The available x-axis variables are extracted from the input model.  
+
+When a list of two models is input into `launch_redres`, the app shows a side-by-side comparison of the plots. The user then is able to visually compare the two linear mixed models and conduct model selection.
 
 ## Usage
 
-### launch_redres {#plot_app}
+### launch_redres {#launch_redres}
+
+`launch_redres` opens a Shiny app for diagnosing mixed models.
 
 **Inputs**
 
@@ -415,60 +421,48 @@ When a list of two models is input into the function `launch_redres`, the app sh
 
 **Functionality** 
 
-- One fitted model:
-
-The code below shows how to create a `shiny` app. By inputting the model argument as `m`, a `shiny` app window is returned.
+*One model*: The code below shows how to access the `shiny` app using `launch_redres`. By inputting the model argument as `m`, a `shiny` app window will appear.
 
 ```{r, eval = FALSE}
 # Creates a shiny app with only model
 launch_redres(m)
 ```
 
-Two selection widgets shown in the `Residual Plot` tab are for choosing [residual types](#types)
-
-<img align="center" height="250" src="figs/resid_type.png">
-
-and x-axis variables.
+Two selection widgets are included in the `Residual Plot` tab allow the user to choose the [residual types](#types) to be shown on the y-axis and the variable to be plotted x-axis variable. These can be see in the screen shot of the app below.
 
 <img align="center" height="250" src="figs/xvar.png">
 
-The `Quantile Plots` tab shown below contains a random effects normal quantile plot
+The `Quantile Plots` page shown below contains two tabs. The first shows the random effects normal quantile plots, and the second shows the error term normal quantile plot.
 
 <img align="center" height="250" width = "300" src="figs/rand_eff_qq.png">
-
-and error term normal quantile plot.
-
 <img align="center" height="250" width = "300" src="figs/error_qq.png">
 
-- Two fitted models:
+*Two models*: In an attempt to redress the non-constant variance assumption with the `paprika` model, a second model is fit below with a log transformation of the response variable. The random effect of `rep:treatment` is also left out of the model, because when it is included in the model with a log transformed response, its associated variance component is estimated to be 0.
 
-Input the model argument as `cmbd` which contains a list of two models to do model comparison using `shiny` app.
-
-```{r, eval = FALSE}
-# Fit a different linear mixed model with paprika data
-m <- lmer(height ~ rep + treatment*variety + 
-            (1|rep:treatment:variety), 
-          data = paprika)
-
-# Fit a linear mixed model after log transform the response
-m_log <- lmer(log(height) ~ rep + treatment*variety + 
+```{r}
+# Fits a linear mixed model after log transforming the response
+mlog <- lmer(log(height) ~ rep + treatment*variety + 
                (1|rep:treatment:variety), 
              data = paprika)
+```
 
-# Combine the two models
-cmbd <- c(m, m_log)
+The two models can be combined in a list and input to `launch_redres` as shown below.
+
+```{r, eval = FALSE}
+# Combines the two models in a list
+cmbd <- list(m, mlog)
 
 # Creates a shiny app with two models
 launch_redres(cmbd)
 ```
 
-The plots are shown side by side if there are two inputted models. For variables on the x-axis, different model can have different selected variables.
+In this case, the Shiny app shows the residual plots side by side. Again, a selection is available for the residual type. For variables on the x-axis, separate selectors are included for each model to allow for cases when the two models have different variables.
 
 <img align="center" height="250" src="figs/resid_two_model.png">
 
-And the following show one of the quantile plots:
+The quantile plots are also shown side by side.
 
-<img align="center" height="200" src="figs/error_qq_two_mod.png">
+<img align="center" height="250" width = "300" src="figs/error_qq_two_mod.png">
 
 ```{r echo = FALSE, results = FALSE}
 # copy static figures to docs folder

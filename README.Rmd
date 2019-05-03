@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
   
 # redres <img align="right" width="150" height="175" src="README_files/static-figures/sticker.png">
 
-`redres` is an R package developed to help with diagnosing linear mixed models fit using the function `lmer` from the lme4 package. This package both computes residuals types and creates plots that are not available from lme4.
+`redres` is an R package developed to help with diagnosing linear mixed models fit using the function `lmer` from the `lme4` package. It is meant to supplement the `lme4` package. 
 
 <!-- badges: start -->
 [![Build Status](https://travis-ci.org/goodekat/redres.svg?branch=master)](https://travis-ci.org/goodekat/redres)
@@ -113,7 +113,7 @@ To learn more about `redres`, read through the [vignette](https://goodekat.githu
 - details on how the residuals are computed 
 - explanations of how to use the different residual types 
 - interpretations of the plots
-- an example using `redres` to assess the assumptions of a linear mixed model
+- examples using `redres` to assess the assumptions of a linear mixed model
 
 Additionally, more information is available at the package [website](https://goodekat.github.io/redres/).
 
