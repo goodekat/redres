@@ -131,19 +131,20 @@ create_server <- function(model){
 
   shiny::shinyServer(function(input, output) {
 
-    output$view <- renderDataTable({
+    output$view <- renderDataTable(
       if (length(model)== 1){
         model@frame
       } else {
-        model[[1]]@frame
-      }
-    })
+        dplyr::full_join(model[[1]]@frame, model[[2]]@frame)
+      },
+      options = list(pageLength = 5)
+    )
 
     output$oversummary <- renderDataTable({
       if (length(model) == 1) {
         summary(model@frame)
       } else {
-        summary(model[[1]]@frame)
+        summary(dplyr::full_join(model[[1]]@frame, model[[2]]@frame))
       }
     })
 

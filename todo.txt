@@ -4,17 +4,6 @@ To Do
 
 Package:
   - KM: proof read README
-  - all: make sure webpage is working as it should
 
 Shiny app:
   - YZ: figure out how to test the server part of the app
-  - JZ: add a description to the first page of the app
-
-Vignette:
-  - done!
-
-Presentation:
-  - done!
-
-Other:
- - all: final check of project against rubric and project expectations

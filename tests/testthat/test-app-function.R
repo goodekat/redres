@@ -29,3 +29,15 @@ test_that("functions-return-correct-classes", {
   expect_is(create_app(model), "shiny.appobj")
 })
 
+library(shinytest)
+
+test_that("app-works", {
+
+  # Don't run these tests on the CRAN build servers
+  skip_on_cran()
+
+  # Use compareImages=FALSE because the expected image screenshots were created
+  # on a Mac, and they will differ from screenshots taken on the CI platform,
+  # which runs on Linux.
+  expect_pass(testApp("apps/launch_redres/", compareImages = FALSE))
+})

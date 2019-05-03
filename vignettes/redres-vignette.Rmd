@@ -326,18 +326,13 @@ The type of residuals can be changed using the `type` option as shown in the cod
 plot_redres(m, type = "raw_mar")
 ```
 
-When we plot the residuals now by replication ID, we see the same upward trend as replication ID increases.
+When we plot the residuals now by replication ID, we see the same upward trend as replication ID increases. If we plot the residuals by treatment, we do not see this trend.
 
-```{r fig.height = 2.5, fig.width = 4}
-# Plots the raw marginal residuals against rep
-plot_redres(m, type = "raw_mar", xvar = "rep")
-```
-
-If we plot the residuals by treatment, we do not see this trend.
-
-```{r fig.height = 2.5, fig.width = 4}
-# Plots the raw conditional residuals against treatment
-plot_redres(m, type = "raw_mar", xvar = "treatment")
+```{r fig.height = 2.5, fig.width = 6}
+# Plots the raw marginal residuals against rep and treatment
+rep_plot <- plot_redres(m, type = "raw_mar", xvar = "rep")
+trt_plot <- plot_redres(m, type = "raw_mar", xvar = "treatment")
+cowplot::plot_grid(rep_plot, trt_plot)
 ```
 
 All plots created using the `redres` package are formatted to use `theme_bw` from `ggplot2`. However, since `plot_redres` returns a `ggplot2` object, it is possible to use functions provided by `ggplot2` to add additional "layers" (such as formatting options) to the plot.
@@ -456,13 +451,10 @@ cmbd <- list(m, mlog)
 launch_redres(cmbd)
 ```
 
-In this case, the Shiny app shows the residual plots side by side. Again, a selection is available for the residual type. For variables on the x-axis, separate selectors are included for each model to allow for cases when the two models have different variables.
+In this case, the Shiny app shows the residual plots side by side. Again, a selection is available for the residual type. For variables on the x-axis, separate selectors are included for each model to allow for cases when the two models have different variables. The quantile plots are also shown side by side.
 
-<img align="center" height="250" src="figs/resid_two_model.png">
-
-The quantile plots are also shown side by side.
-
-<img align="center" height="250" width = "300" src="figs/error_qq_two_mod.png">
+<img align="center" height="250" width = "350" src="figs/resid_two_model.png">
+<img align="center" height="250" width = "250" src="figs/error_qq_two_mod.png">
 
 ```{r echo = FALSE, results = FALSE}
 # copy static figures to docs folder
