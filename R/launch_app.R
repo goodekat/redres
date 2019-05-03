@@ -84,7 +84,8 @@ create_ui <- function(model){
     tabPanel("Overview",
              div(tags$header(p("Diagnostic Plots for Linear Mixed-effects Model",
                                style="font-size:40px")),
-                 align = "center", style="color:#ffffff; background-color: #4d728d")),
+                 align = "center", style="color:#ffffff; background-color: #4d728d"),
+             mainPanel(dataTableOutput("view"),dataTableOutput("oversummary"))),
 
     tabPanel("Residual Plot",
                sidebarPanel(
@@ -129,6 +130,22 @@ create_ui <- function(model){
 create_server <- function(model){
 
   shiny::shinyServer(function(input, output) {
+
+    output$view <- renderDataTable({
+      if (length(model)== 1){
+        model@frame
+      } else {
+        model[[1]]@frame
+      }
+    })
+
+    output$oversummary <- renderDataTable({
+      if (length(model) == 1) {
+        summary(model@frame)
+      } else {
+        summary(model[[1]]@frame)
+      }
+    })
 
     output$resid <- renderPlot({
 
