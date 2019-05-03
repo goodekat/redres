@@ -80,7 +80,7 @@
       <h1>redres: Redress Your Mixed Model Assumptions</h1>
                         <h4 class="author">R Package Version 0.0.0.9</h4>
             
-            <h4 class="date">2019-05-02</h4>
+            <h4 class="date">2019-05-03</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/goodekat/redres.git/blob/master/vignettes/redres-vignette.Rmd"><code>vignettes/redres-vignette.Rmd</code></a></small>
       <div class="hidden name"><code>redres-vignette.Rmd</code></div>
@@ -413,14 +413,12 @@ paprika_plus <span class="op">%&gt;%</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creates the residual plot with raw marginal residuals</span>
 <span class="kw"><a href="../reference/plot_redres.html">plot_redres</a></span>(m, <span class="dt">type =</span> <span class="st">"raw_mar"</span>)</code></pre></div>
 <p><img src="redres-vignette_files/figure-html/unnamed-chunk-9-1.png" width="384" style="display: block; margin: auto;"></p>
-<p>When we plot the residuals now by replication ID, we see the same upward trend as replication ID increases.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plots the raw marginal residuals against rep</span>
-<span class="kw"><a href="../reference/plot_redres.html">plot_redres</a></span>(m, <span class="dt">type =</span> <span class="st">"raw_mar"</span>, <span class="dt">xvar =</span> <span class="st">"rep"</span>)</code></pre></div>
-<p><img src="redres-vignette_files/figure-html/unnamed-chunk-10-1.png" width="384" style="display: block; margin: auto;"></p>
-<p>If we plot the residuals by treatment, we do not see this trend.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plots the raw conditional residuals against treatment</span>
-<span class="kw"><a href="../reference/plot_redres.html">plot_redres</a></span>(m, <span class="dt">type =</span> <span class="st">"raw_mar"</span>, <span class="dt">xvar =</span> <span class="st">"treatment"</span>)</code></pre></div>
-<p><img src="redres-vignette_files/figure-html/unnamed-chunk-11-1.png" width="384" style="display: block; margin: auto;"></p>
+<p>When we plot the residuals now by replication ID, we see the same upward trend as replication ID increases. If we plot the residuals by treatment, we do not see this trend.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plots the raw marginal residuals against rep and treatment</span>
+rep_plot &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plot_redres.html">plot_redres</a></span>(m, <span class="dt">type =</span> <span class="st">"raw_mar"</span>, <span class="dt">xvar =</span> <span class="st">"rep"</span>)
+trt_plot &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plot_redres.html">plot_redres</a></span>(m, <span class="dt">type =</span> <span class="st">"raw_mar"</span>, <span class="dt">xvar =</span> <span class="st">"treatment"</span>)
+cowplot<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/cowplot/topics/plot_grid">plot_grid</a></span>(rep_plot, trt_plot)</code></pre></div>
+<p><img src="redres-vignette_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>All plots created using the <code>redres</code> package are formatted to use <code>theme_bw</code> from <code>ggplot2</code>. However, since <code>plot_redres</code> returns a <code>ggplot2</code> object, it is possible to use functions provided by <code>ggplot2</code> to add additional “layers” (such as formatting options) to the plot.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Applies additional ggplot2 layers to the output from plot_redres</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)
@@ -428,7 +426,7 @@ paprika_plus <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/geom_smooth">geom_smooth</a></span>(<span class="dt">method =</span> <span class="st">"loess"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_classic</a></span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">title =</span> <span class="st">"Residual Plot"</span>)</code></pre></div>
-<p><img src="redres-vignette_files/figure-html/unnamed-chunk-12-1.png" width="384" style="display: block; margin: auto;"></p>
+<p><img src="redres-vignette_files/figure-html/unnamed-chunk-11-1.png" width="384" style="display: block; margin: auto;"></p>
 </div>
 <div id="plot_resqq" class="section level3">
 <h3 class="hasAnchor">
@@ -447,7 +445,7 @@ paprika_plus <span class="op">%&gt;%</span>
 <p>We can check our normal assumption on the error terms for our <code>paprika</code> model using <code>plot_resqq</code>. From the quantile plot, we see that along the middle of the distribution (around zero) the points fall in roughly a straight line with no S-shaped curvature, but the points away from the center, deviate from the line suggesting that the residuals do not follow a normal distribution. This agrees with the result from the Shapiro-Wilk test performed earlier in the vignette. Since the deviation is not too drastic, and there are a lot of observations, we may choose to ignore this assumption violation and focus on the non-constant variance violation.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creates the normal quantile plot of the residuals</span>
 <span class="kw"><a href="../reference/plot_resqq.html">plot_resqq</a></span>(m)</code></pre></div>
-<p><img src="redres-vignette_files/figure-html/unnamed-chunk-13-1.png" width="384" style="display: block; margin: auto;"></p>
+<p><img src="redres-vignette_files/figure-html/unnamed-chunk-12-1.png" width="384" style="display: block; margin: auto;"></p>
 </div>
 <div id="plot_ranef" class="section level3">
 <h3 class="hasAnchor">
@@ -466,7 +464,7 @@ paprika_plus <span class="op">%&gt;%</span>
 <p>We now check our normal assumption on the random effects for our <code>paprika</code> model using <code>plot_ranef</code>. Our model <code>m</code> has two random effects - a random intercept for <span class="math inline">\(rep \times treatment \times variety\)</span> and another random intercept for <span class="math inline">\(rep \times treatment\)</span>. Therefore, <code>plot_ranef</code> produces a grid of two plots where the random effect term is identified along the y-axis. We see that the points fall along the straight reference lines and are well-within the confidence bands. We can conclude that the normal assumption for both random effect terms is not violated.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creates the normal quantile plots for the random effects</span>
 <span class="kw"><a href="../reference/plot_ranef.html">plot_ranef</a></span>(m)</code></pre></div>
-<p><img src="redres-vignette_files/figure-html/unnamed-chunk-14-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="redres-vignette_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;"></p>
 <p><br></p>
 </div>
 </div>
@@ -516,10 +514,8 @@ cmbd &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocume
 
 <span class="co"># Creates a shiny app with two models</span>
 <span class="kw"><a href="../reference/launch_redres.html">launch_redres</a></span>(cmbd)</code></pre></div>
-<p>In this case, the Shiny app shows the residual plots side by side. Again, a selection is available for the residual type. For variables on the x-axis, separate selectors are included for each model to allow for cases when the two models have different variables.</p>
-<p><img align="center" height="250" src="figs/resid_two_model.png"></p>
-<p>The quantile plots are also shown side by side.</p>
-<p><img align="center" height="250" width="300" src="figs/error_qq_two_mod.png"></p>
+<p>In this case, the Shiny app shows the residual plots side by side. Again, a selection is available for the residual type. For variables on the x-axis, separate selectors are included for each model to allow for cases when the two models have different variables. The quantile plots are also shown side by side.</p>
+<p><img align="center" height="250" width="350" src="figs/resid_two_model.png"><img align="center" height="250" width="250" src="figs/error_qq_two_mod.png"></p>
 </div>
 </div>
 </div>
