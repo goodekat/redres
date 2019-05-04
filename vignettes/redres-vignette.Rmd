@@ -88,14 +88,11 @@ $$
 \end{bmatrix}
 \end{pmatrix}.
 $$
-Based on this set up, we are assuming that we have
+With this set up, we can assess the following assumptions using residuals and diagnostic plots.
 
-(1) independence of our observations,
-(2) a linear relationship between the response and the explanatory variables,
-(3) constant variance, and 
-(4) normality of the random effects and error term.
-
-Assumptions 2 through 4 can be checked using residuals and diagnostic plots such as those provided by `redres`.
+(1) Linear relationship between the response and the explanatory variables
+(2) Constant variance
+(3) Normality of the random effects and error term
 
 ## Example Data
 
