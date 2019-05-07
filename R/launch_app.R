@@ -3,7 +3,7 @@
 #'
 #' @description
 #' This is a shiny app for model diagnoistic of mixed model using \code{lmer} function from lme4 package.
-#' This app includes residual plot computed from six types of residuals (conditional raw, Pearson, and
+#' This app includes a residual plot computed from six types of residuals (conditional raw, Pearson, and
 #' studentized, marginal raw, Pearson, and studentized) and normal quantile plot using of random effect
 #' and error term. This app can also be used to do model selection through pairwise comparison
 #' two models from different linear mixed models using lmer function.
@@ -117,14 +117,14 @@ create_ui <- function(model){
                       column(width = 6,
                              h3("Model 1"),
                              if (length(model) != 1) {
-                               p("The R printout of the model input to launch_redres is shown below.")
+                               p("A printout of the call of the model input to launch_redres is shown below.")
                              } else {
-                               p("The R printout of the first model input to launch_redres is shown below.")
+                               p("A printout of the call of the first model input to launch_redres is shown below.")
                              }
                              ,
                              verbatimTextOutput("model1"),
                              if (length(model) != 1) h3("Model 2"),
-                             if (length(model) != 1) p("The R printout of the second model input to launch_redres is shown below."),
+                             if (length(model) != 1) p("A printout of the call of the second model input to launch_redres is shown below."),
                              if (length(model) != 1) verbatimTextOutput("model2")
                              ))),
 
@@ -184,15 +184,15 @@ create_server <- function(model){
     # Print the model
     output$model1 <- renderPrint(
       if (length(model) == 1) {
-        model
+        model@call
       } else {
-        model[[1]]
+        model[[1]]@call
       }
     )
 
     # Print the second model if two models are input
     if (length(model) == 2) {
-      output$model2 <- renderPrint(model[[2]])
+      output$model2 <- renderPrint(model[[2]]@call)
     }
 
     output$resid <- renderPlot({

@@ -420,6 +420,10 @@ When a list of two models is input into `launch_redres`, the app shows a side-by
 launch_redres(m)
 ```
 
+The first page includes a table of the data used to fit the model and a printout of the call of the model.
+
+<img align="center" height="250" src="figs/overview.png">
+
 Two selection widgets are included in the `Residual Plot` tab allow the user to choose the [residual types](#types) to be shown on the y-axis and the variable to be plotted x-axis variable. These can be see in the screen shot of the app below.
 
 <img align="center" height="250" src="figs/xvar.png">
@@ -450,8 +454,8 @@ launch_redres(cmbd)
 
 In this case, the Shiny app shows the residual plots side by side. Again, a selection is available for the residual type. For variables on the x-axis, separate selectors are included for each model to allow for cases when the two models have different variables. The quantile plots are also shown side by side.
 
-<img align="center" height="250" width = "350" src="figs/resid_two_model.png">
-<img align="center" height="250" width = "250" src="figs/error_qq_two_mod.png">
+<img align="center" height="200" src="figs/resid_two_model.png">
+<img align="center" height="200" src="figs/rand_eff_two_model.png">
 
 ```{r echo = FALSE, results = FALSE}
 # copy static figures to docs folder

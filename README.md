@@ -7,7 +7,7 @@ redres <img align="right" width="150" height="175" src="README_files/static-figu
 <!-- badges: start -->
 [![Build Status](https://travis-ci.org/goodekat/redres.svg?branch=master)](https://travis-ci.org/goodekat/redres) [![Codecov test coverage](https://codecov.io/gh/goodekat/redres/branch/master/graph/badge.svg)](https://codecov.io/gh/goodekat/redres?branch=master) <!-- badges: end -->
 
-Note that the code coverage is less than 90% due to our function that runs the Shiny app. The other functions in the package all have 100% code coverage. See the image below of the coverage report (taken on May 3, 2019).
+Note that the code coverage is less than 90% due to our function that runs the Shiny app. The other functions in the package all have 100% code coverage. See the image below of the coverage report (taken on May 6, 2019).
 
 <img align="center" width="600" src="README_files/static-figures/test-coverage.png">
 
@@ -113,7 +113,7 @@ plot_ranef(m)
 launch_redres(m)
 ```
 
-<img align="center" width="600" src="README_files/static-figures/app1.png"> <img align="center" width="600" src="README_files/static-figures/app2.png">
+<img align="center" width="600" src="README_files/static-figures/app1.png"> <img align="center" width="600" src="README_files/static-figures/app2.png"> <img align="center" width="600" src="README_files/static-figures/app3.png">
 
 Learn More
 ----------

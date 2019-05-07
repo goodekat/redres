@@ -80,7 +80,7 @@
       <h1>redres: Redress Your Mixed Model Assumptions</h1>
                         <h4 class="author">R Package Version 0.0.0.9</h4>
             
-            <h4 class="date">2019-05-03</h4>
+            <h4 class="date">2019-05-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/goodekat/redres.git/blob/master/vignettes/redres-vignette.Rmd"><code>vignettes/redres-vignette.Rmd</code></a></small>
       <div class="hidden name"><code>redres-vignette.Rmd</code></div>
@@ -497,6 +497,8 @@ cowplot<span class="op">::</span><span class="kw"><a href="https://www.rdocument
 <p><em>One model</em>: The code below shows how to access the <code>shiny</code> app using <code>launch_redres</code>. By inputting the model argument as <code>m</code>, a <code>shiny</code> app window will appear.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Creates a shiny app with only model</span>
 <span class="kw"><a href="../reference/launch_redres.html">launch_redres</a></span>(m)</code></pre></div>
+<p>The first page includes a table of the data used to fit the model and a printout of the call of the model.</p>
+<p><img align="center" height="250" src="figs/overview.png"></p>
 <p>Two selection widgets are included in the <code>Residual Plot</code> tab allow the user to choose the <a href="#types">residual types</a> to be shown on the y-axis and the variable to be plotted x-axis variable. These can be see in the screen shot of the app below.</p>
 <p><img align="center" height="250" src="figs/xvar.png"></p>
 <p>The <code>Quantile Plots</code> page shown below contains two tabs. The first shows the random effects normal quantile plots, and the second shows the error term normal quantile plot.</p>
@@ -513,7 +515,7 @@ cmbd &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocume
 <span class="co"># Creates a shiny app with two models</span>
 <span class="kw"><a href="../reference/launch_redres.html">launch_redres</a></span>(cmbd)</code></pre></div>
 <p>In this case, the Shiny app shows the residual plots side by side. Again, a selection is available for the residual type. For variables on the x-axis, separate selectors are included for each model to allow for cases when the two models have different variables. The quantile plots are also shown side by side.</p>
-<p><img align="center" height="250" width="350" src="figs/resid_two_model.png"><img align="center" height="250" width="250" src="figs/error_qq_two_mod.png"></p>
+<p><img align="center" height="200" src="figs/resid_two_model.png"><img align="center" height="200" src="figs/rand_eff_two_model.png"></p>
 </div>
 </div>
 </div>
