@@ -18,6 +18,7 @@ Imports:
   broom,
   checkmate,
   cowplot,
+  DT,
   ggplot2,
   knitr,
   lme4,

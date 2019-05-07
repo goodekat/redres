@@ -15,8 +15,9 @@
 #' @usage launch_redres(model)
 #'
 #' @importFrom cowplot plot_grid
+#' @importFrom DT dataTableOutput renderDataTable
 #' @importFrom ggplot2 ggtitle labs
-#' @import shiny
+#' @rawNamespace import(shiny, except = c(dataTableOutput, renderDataTable))
 #' @export launch_redres
 #'
 #' @examples
@@ -84,8 +85,48 @@ create_ui <- function(model){
     tabPanel("Overview",
              div(tags$header(p("Diagnostic Plots for Linear Mixed-effects Model",
                                style="font-size:40px")),
-                 align = "center", style="color:#ffffff; background-color: #4d728d"),
-             mainPanel(dataTableOutput("view"),dataTableOutput("oversummary"))),
+                 align = "center",
+                 style="color:#ffffff; background-color: #4d728d"),
+
+             fluidRow(column(width = 6,
+                             h3("App Overview"),
+                             if (length(model) == 1) {
+                               p("The redres Shiny app can be used to interactively view
+                               diagnostic plots for linear mixed models. This tab includes a table
+                               of the data and the model input to launch_redres. The other two
+                               tabs contain residual and quantile plots of the model.")
+                             } else {
+                               p("The redres Shiny app can be used to interactively view
+                               diagnostic plots for linear mixed models. This tab includes a table
+                                 of the data and the models input to launch_redres. The other two
+                                 tabs contain residual and quantile plots of the models.")
+                             }
+                             ,
+                             h3("Input Data"),
+                             if (length(model) == 1) {
+                               p("The data used to fit the model are included in the table below.
+                                 The columns can be sorted by clicking on the variable name, and
+                                 the search box can be used to filter the data.")
+                             } else {
+                               p("The datasets used to fit the two models have been joined (if they
+                                 contain different variables). These are included in the table below.
+                                 The columns can be sorted by clicking on the variable name, and
+                                 the search box can be used to filter the data.")
+                             },
+                             div(style = 'overflow-x: scroll', DT::dataTableOutput("view"))),
+                      column(width = 6,
+                             h3("Model 1"),
+                             if (length(model) != 1) {
+                               p("The R printout of the model input to launch_redres is shown below.")
+                             } else {
+                               p("The R printout of the first model input to launch_redres is shown below.")
+                             }
+                             ,
+                             verbatimTextOutput("model1"),
+                             if (length(model) != 1) h3("Model 2"),
+                             if (length(model) != 1) p("The R printout of the second model input to launch_redres is shown below."),
+                             if (length(model) != 1) verbatimTextOutput("model2")
+                             ))),
 
     tabPanel("Residual Plot",
                sidebarPanel(
@@ -131,22 +172,28 @@ create_server <- function(model){
 
   shiny::shinyServer(function(input, output) {
 
-    output$view <- renderDataTable(
-      if (length(model)== 1){
+    output$view <- DT::renderDataTable(
+      if (length(model) == 1){
         model@frame
       } else {
         dplyr::full_join(model[[1]]@frame, model[[2]]@frame)
       },
-      options = list(pageLength = 5)
+      options = list(pageLength = 10)
     )
 
-    output$oversummary <- renderDataTable({
+    # Print the model
+    output$model1 <- renderPrint(
       if (length(model) == 1) {
-        summary(model@frame)
+        model
       } else {
-        summary(dplyr::full_join(model[[1]]@frame, model[[2]]@frame))
+        model[[1]]
       }
-    })
+    )
+
+    # Print the second model if two models are input
+    if (length(model) == 2) {
+      output$model2 <- renderPrint(model[[2]])
+    }
 
     output$resid <- renderPlot({
 
