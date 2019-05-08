@@ -65,8 +65,8 @@ pm_resids <- compute_redres(m, type = "pearson_mar")
 # computes the studentized conditional residuals
 sc_resids <- compute_redres(m, type = "std_cond")
 
-# puts the residuals in a data frame and prints the first six rows
-resids <- data.frame(rc_resids, pm_resids, sc_resids)
+# puts the residuals in a data frame with observed response and prints the first six rows
+resids <- data.frame(sleepstudy$Reaction, rc_resids, pm_resids, sc_resids)
 head(resids)
 ```
 

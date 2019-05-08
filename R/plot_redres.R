@@ -7,7 +7,7 @@
 #' @param model Model fit using \code{lmer} from \code{lme4}.
 #' @param type String identifying type of residual. Default is "raw_cond".
 #'             See \code{\link{compute_redres}} for details of available types.
-#' @param xvar String indicating the variable to be plotted at the x-axis. By default,
+#' @param xvar String indicating the variable to be plotted on the x-axis. By default,
 #'             the fitted values are plotted on the x-axis. Any variable used in the
 #'             lmer model can be specified.
 #'
