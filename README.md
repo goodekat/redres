@@ -7,7 +7,7 @@ redres <img align="right" width="150" height="175" src="README_files/static-figu
 <!-- badges: start -->
 [![Build Status](https://travis-ci.org/goodekat/redres.svg?branch=master)](https://travis-ci.org/goodekat/redres) [![Codecov test coverage](https://codecov.io/gh/goodekat/redres/branch/master/graph/badge.svg)](https://codecov.io/gh/goodekat/redres?branch=master) <!-- badges: end -->
 
-Note that the code coverage is less than 90% due to our function that runs the Shiny app. The other functions in the package all have 100% code coverage. See the image below of the coverage report (taken on May 6, 2019).
+Note that the code coverage is less than 90% due to our function `launch_app` that runs the Shiny app. The other functions in the package all have 100% code coverage. See the image below of the coverage report (taken on May 6, 2019).
 
 <img align="center" width="600" src="README_files/static-figures/test-coverage.png">
 
@@ -35,7 +35,7 @@ The package contains the following functions.
 
 #### compute\_redres
 
-`compute_redres` computes residuals given an `lmer` model and a specified residual type. The available residuals types are listed below.
+`compute_redres` computes residuals given an `lmer` model and a specified residual type. The available residual types are listed below.
 
 -   `"pearson_cond"`: Pearson conditional residuals
 -   `"pearson_mar"`: Pearson marginal residuals
@@ -71,9 +71,9 @@ head(resids)
     ## 5  24.523024  1.48696343  1.0048545
     ## 6  62.694664  2.39619943  2.5789296
 
-#### plot\_resid
+#### plot\_redres
 
-`plot_resid` creates a plot (using `ggplot2`) of the residuals versus the fitted values given a model and a specified residual type. All residuals types listed for `redres` work with `plot_resid`.
+`plot_redres` creates a plot (using `ggplot2`) of the residuals versus the fitted values given a model and a specified residual type. All residual types listed for `redres` work with `plot_redres`.
 
 ``` r
 # creates a plot of the conditional studentized residuals versus the fitted values
@@ -106,7 +106,7 @@ plot_ranef(m)
 
 #### launch\_redres
 
-`launch_redres` opens a Shiny app that includes interactive panels to view the diagnostic plots from a model. The function can be used by inputting one or two models into the app in the form of a vector. If two models are input, the residual plots will be shown side by side in the app. Screen shots of the app are shown below.
+`launch_redres` opens a Shiny app that includes interactive panels to view the diagnostic plots from a model. The function can be used by inputting one or two models into the app in the form of a vector. If two models are input, the residual plots for each model will be shown side by side in the app. Screen shots of the app are shown below.
 
 ``` r
 # opens the app
