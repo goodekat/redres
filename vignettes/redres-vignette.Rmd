@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-`redres` is an R package developed to help with diagnosing linear mixed models fit using the function `lmer` from the `lme4` package. It is meant as a supplemental package to `lme4`. The package can be installed from GitHub using devtools and then loaded in the normal way.
+`redres` is an R package developed to help with diagnosing linear mixed models fit using the function `lmer` from the `lme4` package. It is meant as a supplemental package to `lme4`. The package can be installed from GitHub using devtools and then loaded in the usual way.
 
 ```{r eval = FALSE}
 # Installs redres from GitHub
@@ -44,7 +44,7 @@ library(redres)
 
 `redres` is structured so the available functions fall under one of three categories. These categories identify the type of model assessment experience the functions provide.
 
-1. [Residual extraction](#resids): The first manner in which `redres` can be used is to obtain residuals from a model. This is done using the function [**`compute_redres`**](#compute_redres) to extract and return a vector of residuals of a specified type. The user can then perform their own methods of assessment with the residuals. The available [residual types](#types) are described later in the vignette.
+1. [Residual extraction](#resids): The first manner in which `redres` can be used is to obtain residuals from a model. This is done using the function [**`compute_redres`**](#compute_redres) to extract and return a vector of residuals of a specified type. The user then can perform their own methods of assessment with the residuals. The available [residual types](#types) are described later in the vignette.
 
 \vspace{0.25cm}
 
@@ -55,7 +55,7 @@ library(redres)
     
 \vspace{0.25cm}
 
-3. [Interactive model assessment](#app): Lastly, `redres` can be employed to facilitate an interactive model assessment experience. The function [**`launch_redres`**](#launch_redres) accepts one or two models and opens a Shiny app with diagnostic tools. Within the Shiny window, the user can view and interact with all plots available in the `redres` package. If two models are input, plots from both models are shown side by side to assist with model selection.
+3. [Interactive model assessment](#app): Lastly, `redres` can be employed to facilitate an interactive model assessment experience. The function [**`launch_redres`**](#launch_redres) accepts one or two models and opens a Shiny app with diagnostic tools. Within the Shiny window, the user can view and interact with all plots available in the `redres` package. If two models are input, plots from each model are shown side by side to assist with model selection.
 
 This vignette is set up to mimic the package structure. The sections after the introduction are dedicated to one of the three package uses. Additional details on the functions are included in these sections along with explanations of how to interpret the output and examples.
 
@@ -155,7 +155,7 @@ One of the ways to utilize `redres` is to extract residuals from a model fit usi
 
 It is not necessary to consider all residual types when diagnosing a mixed model. Certain types are beneficial in certain situations. For example, conditional residuals are useful for checking the effect of the random terms in the model as opposed to marginal residuals that do not account for the random effects. Studentized residuals are useful for checking constant variance with more complex variance structures. We have chosen to include all of these types so that the user may select which type (or types) is (are) useful for their situation. By default, `compute_redres` returns raw conditional residuals since these are appropriate for a wide range of cases.
 
-The formulas for how the residual types are computed in `redres` are listed below. Note that some of these computations differ from the `residual` function in `lme4`. These changes were made so the names provide a more intuitive understanding of how the types are computed.
+The formulas for how the residual types are computed in `redres` are listed below. Note that some of these computations differ from the `residual` function in `lme4`. These changes were made so that the names provide a more intuitive understanding of how the types are computed.
 
 ### Raw Residuals
 
@@ -239,7 +239,7 @@ paprika_plus <- cbind(paprika, raw_cond, pearson_mar, std_cond)
 head(paprika_plus)
 ```
 
-The user can then use these residuals as desired. For example, the user could make their own plots or perform tests on the residuals. The code below performs a Shapiro-Wilk test for normality on the raw conditional residuals and creates histograms of the three residual types. The p-value from the normality test is extremely small, which suggests that there is evidence that the distribution of the residuals is different from a normal distribution. The histograms of the both the raw and studentized residuals show that the distribution of the residuals is symmetric and uni-modal but has more observations in the tails that would be expected from a normal distribution. 
+The user can then use these residuals as desired. For example, the user could make their own plots or perform tests on the residuals. The code below performs a Shapiro-Wilk test for normality on the raw conditional residuals and creates histograms of the three residual types. The p-value from the normality test is extremely small, which suggests that there is evidence that the distribution of the residuals is different from a normal distribution. The histograms of the both the raw and studentized residuals show that the distribution of the residuals is symmetric and uni-modal but has more observations in the tails than would be expected from a normal distribution. 
 
 ```{r message = FALSE, fig.width = 6, fig.height = 2}
 # Performs a test for normality on the raw conditional residuals
@@ -278,7 +278,7 @@ Residual plots can be rendered via `redres` using the `plot_redres` function. Th
 
 Quantile plots are used to visually verify if data follow a particular distribution. Data points are plotted along the quantiles of the assumed distributed. The data are expected to follow an approximately straight line (at least along the middle quantiles). The points are assessed for any extreme curvation that would indicate a departure from the assumed distribution. Typically curvature at the extreme ends of the quantiles (around 0 and 1) are ignored as data are sparse here and distributions behave more erratically at the boundaries of the parameter space.  
 
-The function `plot_ranef` plots each random effect vector versus normal quantiles. From the assumptions of the linear mixed model, each random effect specified is assumed to follow a normal distribution. Therefore, these plots can be used to assess if this assumption is met. We have added 95% confidence bands to guide the user. Note that the number of plots generated by this function will vary for each model based on the number of random effects.
+The function `plot_ranef` plots each random effect vector versus normal quantiles. From the assumptions of the linear mixed model, each random effect specified is assumed to follow a normal distribution. Therefore, these plots can be used to assess if this assumption is met. We have added 95% normal-theory confidence bands to guide the user. Note that the number of plots generated by this function will vary for each model based on the number of random effects.
 
 The error term is assumed to follow a normal distribution as well. The function `plot_resqq` provides a normal quantile plot with 95% confidence bands for the raw conditional residuals to assess this assumption.
 
@@ -293,8 +293,8 @@ Both of these functions generate the quantile plots using the R package [`qqplot
 **Inputs**
 
 - `model`: Model fit using 'lmer' from lme4.
-- `type`:	String identifying type of residual. Default is "raw_cond". The same options available with [`compute_redres`](#compute_redres) are available for `plot_redres`.
-- `xvar`: String indicating the variable to be plotted at the x-axis. By default, the fitted values are plotted on the x-axis. Any variable used in the 'lmer' model can be specified.
+- `type`:	String identifying type of residual. Default is 'raw_cond'. The same options available with [`compute_redres`](#compute_redres) are available for `plot_redres`.
+- `xvar`: String indicating the variable to be plotted on the x-axis. By default, the fitted values are plotted on the x-axis. Any variable used in the 'lmer' model can be specified.
 
 **Output**
 
@@ -357,7 +357,7 @@ plot_redres(m, type = "pearson_cond") +
 
 **Functionality**
 
-We can check our normal assumption on the error terms for our `paprika` model using `plot_resqq`. From the quantile plot, we see that along the middle of the distribution (around zero) the points fall in roughly a straight line with no S-shaped curvature, but the points away from the center, deviate from the line suggesting that the residuals do not follow a normal distribution. This agrees with the result from the Shapiro-Wilk test performed earlier in the vignette. Since the deviation is not too drastic, and there are a lot of observations, we may choose to ignore this assumption violation and focus on the non-constant variance violation.
+We can check our normal assumption on the error terms for our `paprika` model using `plot_resqq`. From the quantile plot, we see that along the middle of the distribution (around zero) the points fall in roughly a straight line with no S-shaped curvature, but the points away from the center deviate from the line suggesting that the residuals do not follow a normal distribution. This agrees with the result from the Shapiro-Wilk test performed earlier in the vignette. Since the deviation is not too drastic, and there are a lot of observations, we may choose to ignore this assumption violation and focus on the non-constant variance violation.
 
 ```{r fig.height = 2.5, fig.width = 4}
 # Creates the normal quantile plot of the residuals
@@ -374,7 +374,7 @@ plot_resqq(m)
 
 **Output**
 
-- A grid of normal quantile plots with normal theory 95\% confidence bands in the `ggplot2` framework for all random terms in the model.
+- A grid of normal quantile plots with normal theory 95% confidence bands in the `ggplot2` framework for all random terms in the model.
 
 **Functionality**
 
@@ -395,7 +395,7 @@ The final way to make use of `redres` is to interactively assess the model assum
 
 The function `launch_redres` opens a Shiny app that generates output for the plotting functions `plot_redres`, `plot_resqq`, and `plot_ranef`. There are two main tabs in the app, one for the residual plot and another for the quantile plots. The residual plot gives the user a choice of all [residual types](#types) and x-axis variables. The available x-axis variables are extracted from the input model.  
 
-When a list of two models is input into `launch_redres`, the app shows a side-by-side comparison of the plots. The user then is able to visually compare the two linear mixed models and conduct model selection.
+When a list of two models is input into `launch_redres`, the app shows a side-by-side comparison of the plots from each model. The user then is able to visually compare the two linear mixed models and conduct model selection.
 
 ## Usage
 
@@ -424,7 +424,7 @@ The first page includes a table of the data used to fit the model and a printout
 
 <img align="center" height="250" src="figs/overview.png">
 
-Two selection widgets are included in the `Residual Plot` tab allow the user to choose the [residual types](#types) to be shown on the y-axis and the variable to be plotted x-axis variable. These can be see in the screen shot of the app below.
+Two selection widgets are included in the `Residual Plot` tab that allow the user to choose the [residual types](#types) to be shown on the y-axis and the variable to be plotted x-axis variable. These can be see in the screen shot of the app below.
 
 <img align="center" height="250" src="figs/xvar.png">
 
