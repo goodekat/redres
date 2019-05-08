@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 [![Codecov test coverage](https://codecov.io/gh/goodekat/redres/branch/master/graph/badge.svg)](https://codecov.io/gh/goodekat/redres?branch=master)
 <!-- badges: end -->
 
-Note that the code coverage is less than 90% due to our function that runs the Shiny app. The other functions in the package all have 100% code coverage. See the image below of the coverage report (taken on May 6, 2019).
+Note that the code coverage is less than 90% due to our function `launch_app` that runs the Shiny app. The other functions in the package all have 100% code coverage. See the image below of the coverage report (taken on May 6, 2019).
 
 <img align="center" width="600" src="README_files/static-figures/test-coverage.png">
 
@@ -42,7 +42,7 @@ The package contains the following functions.
 
 #### compute_redres
 
-`compute_redres` computes residuals given an `lmer` model and a specified residual type. The available residuals types are listed below.
+`compute_redres` computes residuals given an `lmer` model and a specified residual type. The available residual types are listed below.
 
 - `"pearson_cond"`: Pearson conditional residuals
 - `"pearson_mar"`: Pearson marginal residuals
@@ -65,14 +65,14 @@ pm_resids <- compute_redres(m, type = "pearson_mar")
 # computes the studentized conditional residuals
 sc_resids <- compute_redres(m, type = "std_cond")
 
-# puts the residuals in a data frame and prints the first six rows
-resids <- data.frame(rc_resids, pm_resids, sc_resids)
+# puts the residuals in a data frame with the observations and prints the first six rows
+resids <- data.frame(sleepstudy$Reaction, rc_resids, pm_resids, sc_resids)
 head(resids)
 ```
 
 #### plot_resid
 
-`plot_resid` creates a plot (using `ggplot2`) of the residuals versus the fitted values given a model and a specified residual type. All residuals types listed for `redres` work with `plot_resid`.
+`plot_redres` creates a plot (using `ggplot2`) of the residuals versus the fitted values given a model and a specified residual type. All residual types listed for `redres` work with `plot_redres`.
 
 ```{r}
 # creates a plot of the conditional studentized residuals versus the fitted values
@@ -100,7 +100,7 @@ plot_ranef(m)
 
 #### launch_redres
 
-`launch_redres` opens a Shiny app that includes interactive panels to view the diagnostic plots from a model. The function can be used by inputting one or two models into the app in the form of a vector. If two models are input, the residual plots will be shown side by side in the app. Screen shots of the app are shown below.
+`launch_redres` opens a Shiny app that includes interactive panels to view the diagnostic plots from a model. The function can be used by inputting one or two models into the app in the form of a vector. If two models are input, the residual plots for each model will be shown side by side in the app. Screen shots of the app are shown below.
 
 ```{r eval = FALSE}
 # opens the app
