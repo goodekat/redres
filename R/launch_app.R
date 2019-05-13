@@ -2,7 +2,7 @@
 #' Shiny App for 'redressing' linear mixed models
 #'
 #' @description
-#' This is a shiny app for model diagnoistic of mixed model using \code{lmer} function from lme4 package.
+#' This is a shiny app for model diagnostic of mixed model using \code{lmer} function from lme4 package.
 #' This app includes a residual plot computed from six types of residuals (conditional raw, Pearson, and
 #' studentized, marginal raw, Pearson, and studentized) and normal quantile plot using of random effect
 #' and error term. This app can also be used to do model selection through pairwise comparison
