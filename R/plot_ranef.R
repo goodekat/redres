@@ -36,7 +36,7 @@ plot_ranef <- function(model){
   bmat <- as.data.frame(lme4::ranef(model))
 
   # converting each random effect vector into one line with nest
-  renest <- tidyr::nest(bmat, c("grp", "condval", "condsd"))
+  renest <- tidyr::nest(bmat, data = c("grp", "condval", "condsd"))
 
   # generating list of ggplot objects for each random effect vector
   plots <- purrr::pmap(list(renest$data, renest$grpvar, renest$term),

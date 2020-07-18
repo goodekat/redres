@@ -12,8 +12,8 @@
 #'             lmer model can be specified.
 #'
 #' @importFrom checkmate expect_choice expect_class expect_string
-#' @importFrom broom augment
 #' @importFrom ggplot2 aes_string geom_hline geom_point ggplot theme_bw xlab ylab
+#' @importFrom stats fitted
 #' @export plot_redres
 #'
 #' @return A residual plot in the form of a \code{ggplot2} object.
@@ -50,9 +50,9 @@ plot_redres <- function(model, type = "raw_cond", xvar = NULL) {
 
   # Put residuals and fitted values in a data frame
   df <- data.frame(Residual = compute_redres(model = model, type = type),
-                   Fitted = broom::augment(model)$.fitted)
+                   Fitted = fitted(model))
   if(!is.null(xvar) == TRUE) {
-    df$Xvar <- broom::augment(model)[[xvar]]
+    df$Xvar <- model@frame[[xvar]]
   }
 
   # Specify y-axis label based on residual type
