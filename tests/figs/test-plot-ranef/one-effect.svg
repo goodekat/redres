@@ -34,7 +34,9 @@
 <polyline points='187.03,544.84 187.03,5.48 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpMzIuOTF8NzE0LjUyfDU0NC44NHw1LjQ4)' />
 <polyline points='373.72,544.84 373.72,5.48 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpMzIuOTF8NzE0LjUyfDU0NC44NHw1LjQ4)' />
 <polyline points='560.41,544.84 560.41,5.48 ' style='stroke-width: 1.07; stroke: #EBEBEB; stroke-linecap: butt;' clip-path='url(#cpMzIuOTF8NzE0LjUyfDU0NC44NHw1LjQ4)' />
-<polygon points='63.90,288.57 189.56,262.45 271.58,236.23 340.77,210.29 406.66,182.79 475.85,150.99 557.88,108.75 683.54,30.00 683.54,261.75 557.88,287.87 475.85,314.09 406.66,340.03 340.77,367.53 271.58,399.33 189.56,441.57 63.90,520.32 ' style='stroke-width: 0.21; stroke: none; fill: #FBB4AE; fill-opacity: 0.40;' clip-path='url(#cpMzIuOTF8NzE0LjUyfDU0NC44NHw1LjQ4)' />
+<polygon points='63.90,288.57 189.56,262.45 271.58,236.23 340.77,210.29 406.66,182.79 475.85,150.99 557.88,108.75 683.54,30.00 683.54,261.75 557.88,287.87 475.85,314.09 406.66,340.03 340.77,367.53 271.58,399.33 189.56,441.57 63.90,520.32 ' style='stroke-width: 0.00; stroke: none; fill: #FBB4AE; fill-opacity: 0.40;' clip-path='url(#cpMzIuOTF8NzE0LjUyfDU0NC44NHw1LjQ4)' />
+<polyline points='63.90,288.57 189.56,262.45 271.58,236.23 340.77,210.29 406.66,182.79 475.85,150.99 557.88,108.75 683.54,30.00 ' style='stroke-width: 0.21; stroke: none;' clip-path='url(#cpMzIuOTF8NzE0LjUyfDU0NC44NHw1LjQ4)' />
+<polyline points='683.54,261.75 557.88,287.87 475.85,314.09 406.66,340.03 340.77,367.53 271.58,399.33 189.56,441.57 63.90,520.32 ' style='stroke-width: 0.21; stroke: none;' clip-path='url(#cpMzIuOTF8NzE0LjUyfDU0NC44NHw1LjQ4)' />
 <polyline points='63.90,404.45 683.54,145.87 ' style='stroke-width: 1.71; stroke: #FBB4AE; stroke-linecap: butt;' clip-path='url(#cpMzIuOTF8NzE0LjUyfDU0NC44NHw1LjQ4)' />
 <circle cx='63.90' cy='416.38' r='1.95pt' style='stroke-width: 0.71; fill: #000000;' clip-path='url(#cpMzIuOTF8NzE0LjUyfDU0NC44NHw1LjQ4)' />
 <circle cx='189.56' cy='355.02' r='1.95pt' style='stroke-width: 0.71; fill: #000000;' clip-path='url(#cpMzIuOTF8NzE0LjUyfDU0NC44NHw1LjQ4)' />
